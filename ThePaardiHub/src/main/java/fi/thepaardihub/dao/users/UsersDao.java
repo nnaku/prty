@@ -6,7 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import fi.thepaardihub.dao.users.repsitory.*;
+import fi.thepaardihub.dao.users.repository.*;
 import fi.thepaardihub.dao.users.tables.*;
 
 @Service

@@ -1,4 +1,4 @@
-package fi.thepaardihub.dao.users.repsitory;
+package fi.thepaardihub.dao.users.repository;
 
 import org.springframework.data.repository.CrudRepository;
 
