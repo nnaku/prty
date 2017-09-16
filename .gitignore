@@ -2,6 +2,19 @@
 /ThePaardiHub/.settings
 /ThePaardiHub/.classpath
 /ThePaardiHub/.project
+/ThePaardiHub/frontend/.babelrc
+/ThePaardiHub/frontend/.classpath
+/ThePaardiHub/frontend/.editorconfig
+/ThePaardiHub/frontend/.eslintignore
+/ThePaardiHub/frontend/.eslintrc.js
+/ThePaardiHub/frontend/.postcssrc.js
+/ThePaardiHub/frontend/.project
+/ThePaardiHub/backend/.settings
+/ThePaardiHub/backend/.classpath
+/ThePaardiHub/backend/.project
+/ThePaardiHub/backend/.springBeans
+
+
 #Java
 # Compiled class file
 *.class
