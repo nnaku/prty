@@ -66,7 +66,7 @@ MANIFEST.MF
 _site/
 activemq-data
 bin
-build
+
 build.log
 dependency-reduced-pom.xml
 dump.rdb
@@ -94,7 +94,7 @@ buildNumber.properties
 
 #NetBeans
 nbproject/private/
-build/
+
 nbbuild/
 dist/
 nbdist/
