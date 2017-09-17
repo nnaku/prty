@@ -1,6 +1,6 @@
 # thepaardihub
 
-> frontend for the thepaardihub -project
+> Frontend for the thepaardihub project
 
 ## Build Setup
 
