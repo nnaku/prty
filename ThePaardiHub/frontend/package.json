@@ -1,8 +1,8 @@
 {
   "name": "thepaardihub",
   "version": "1.0.0",
-  "description": "Frontend for the thepaardihub project",
-  "author": "",
+  "description": "frontend for the thepaardihub -project",
+  "author": "Matti Holopainen",
   "private": true,
   "scripts": {
     "dev": "node build/dev-server.js",

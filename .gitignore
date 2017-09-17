@@ -60,7 +60,7 @@ hs_err_pid*
 .recommenders
 .settings
 .springBeans
-/build
+
 /code
 MANIFEST.MF
 _site/
