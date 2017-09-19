@@ -1,13 +1,16 @@
 
+
 /ThePaardiHub/.settings
 /ThePaardiHub/.classpath
 /ThePaardiHub/.project
 
+/ThePaardihub/frontend/.settings
 /ThePaardiHub/frontend/.classpath
 /ThePaardiHub/frontend/.project
 /ThePaardiHub/backend/.settings
 /ThePaardiHub/backend/.classpath
 /ThePaardiHub/backend/.project
+/ThePaardiHub/backend/src/main/resources/public/
 
 
 
