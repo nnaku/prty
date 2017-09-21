@@ -1,4 +1,4 @@
-package fi.thepaardihub.dao.users.tables;
+ package fi.thepaardihub.dao.users.tables;
 
 import javax.persistence.*;
 

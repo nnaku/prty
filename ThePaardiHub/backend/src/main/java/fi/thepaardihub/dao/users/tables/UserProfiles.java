@@ -19,7 +19,7 @@ public class UserProfiles {
 	@Column(name = "Email", nullable = false)
 	private String email;
 
-	@OneToOne(optional = false, cascade = CascadeType.ALL, mappedBy = "userProfiles", targetEntity = UserAccounts.class)
+	@OneToOne(optional = false, cascade = CascadeType.ALL, mappedBy = "userProfiles")
 	private UserAccounts userAccounts;
 
 	public UserProfiles() {}
