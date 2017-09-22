@@ -1,26 +1,22 @@
+<style src="./components/Styles/styles.css"></style>
+
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
+
+    <div class="header">
+        <p>App.vue: Joten navit headerit yms yms. tänne!</p>
+    </div>
+    <p>App.vue: Tää näkyy näkyy joka sivulle!</p>
     <router-view></router-view>
+    <div class="footer">
+        <p>App.vue: Esim footer route-view:n alle</p>
+    </div>
   </div>
 </template>
 
+<!-- ei hajuakaan mitä tää tekee -->
 <script>
-
-
 export default {
   name: 'app',
- 
 }
 </script>
-
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>

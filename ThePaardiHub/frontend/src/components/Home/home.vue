@@ -1,8 +1,8 @@
 <script src="./home.js"></script>
-<style src="./styles.css"></style>
+<style src="../Styles/styles.css"></style>
 
 <template>
-  <div>
-
+  <div id="Home">
+      <p>Home.vue: Tää onki sit jo ihan muuta sisältöä!</p>
   </div>
 </template>
