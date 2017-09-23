@@ -2,11 +2,13 @@ package fi.thepaardihub.rest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import fi.thepaardihub.controllers.UserController;
 import fi.thepaardihub.dao.users.UsersDao;
 import fi.thepaardihub.dao.users.tables.*;
 import fi.thepaardihub.password.*;
@@ -15,11 +17,12 @@ import fi.thepaardihub.password.*;
 public class Rest {
 
 	// Currently this class is only used to test database connection
-	private UsersDao users;
+	private UserController users;
+	
 	private Password password = new Password();
 
 	@Autowired
-	public void setUsers(UsersDao users) {
+	public void setUsers(UserController users) {
 		this.users = users;
 	}
 
@@ -65,29 +68,18 @@ public class Rest {
 		return users.allRoles();
 
 	}
+	
+	@PostMapping("/createaccount")
+	public void createAccount(@RequestParam("username")String userName,@RequestParam("psw") String psw, @RequestParam("firstname")String firstName,@RequestParam("lastname") String lastName, @RequestParam("email")String email) {
+		users.createAccount(userName, psw, firstName, lastName, email);
+	}
+	
+	
 	@RequestMapping("/fake")
 	public void fakeData() {
-
 		
-		UserRoles banned = new UserRoles(0,"Banned");
-		UserRoles member = new UserRoles(1,"Member");
-		UserRoles admin = new UserRoles(9,"Admin");
-		UserRoles god = new UserRoles(99,"God");
+		users.fakeData();
 		
-		users.saveOrUpdateRoles(banned);
-		users.saveOrUpdateRoles(member);
-		users.saveOrUpdateRoles(admin);
-		users.saveOrUpdateRoles(god);
-		
-		UserAccounts add1 = new UserAccounts("nAku","asfeqkfjhseaoiutfrt","Aku","Kangas","Aku.Kangas@metropolia.fi");
-		UserAccounts add2 = new UserAccounts("Matti","asfeqkfjhseaoiutfrt","Matti","Holopainen","Matti.holopainen2@metropolia.fi");
-		UserAccounts add3 = new UserAccounts("Tiina","asfeqkfjhseaoiutfrt","Tiina","Ojala","Tiina.Ojala3@metropolia.fi");
-		UserAccounts add4 = new UserAccounts("Maarit","asfeqkfjhseaoiutfrt","Maarit","Saariniemi","Maarit.Saariniemi@Metropolia.fi");
-		
-		users.saveOrUpdateAccount(add1);
-		users.saveOrUpdateAccount(add2);
-		users.saveOrUpdateAccount(add3);
-		users.saveOrUpdateAccount(add4);
 	}
-
+	
 }

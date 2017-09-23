@@ -3,11 +3,13 @@ package fi.thepaardihub.dao.games;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import fi.thepaardihub.dao.games.repository.*;
 import fi.thepaardihub.dao.games.tables.Games;
 import fi.thepaardihub.dao.games.tables.Questions;
 
+@Service
 public class GamesDao {
 	
 	private GamesRepository gamesRepo;
