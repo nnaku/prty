@@ -31,9 +31,21 @@ public class UserAccounts {
 
 	public UserAccounts() {}
 	
+	
+
+	public UserAccounts(String userName, String passwordHash, String firstName, String lastName, String email) {
+		super();
+		this.userName = userName;
+		this.passwordHash = passwordHash;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+	}
+
+
 
 	public UserAccounts(int id, String userName, String passwordHash, String firstName, String lastName, String email,
-			int userRolesId, UserRoles userRoles) {
+			int userRolesId) {
 		super();
 		Id = id;
 		this.userName = userName;
@@ -42,7 +54,8 @@ public class UserAccounts {
 		this.lastName = lastName;
 		this.email = email;
 		this.userRolesId = userRolesId;
-		this.userRoles = userRoles;
+
+
 	}
 
 

@@ -8,17 +8,18 @@ import org.springframework.stereotype.Service;
 
 import fi.thepaardihub.dao.users.repository.*;
 import fi.thepaardihub.dao.users.tables.*;
+import fi.thepaardihub.password.Password;
 
 @Service
 public class UsersDao {
 
 	private UserAccountsRepository userAccRepo;
-	
+	private Password password;
 	private UserRolesRepository userRolesRepo;
 	
 	@Autowired
 	public UsersDao(UserAccountsRepository userAccRepo, UserRolesRepository userRolesRepo) {
-		
+		this.password= new Password();
 		this.userAccRepo = userAccRepo;
 		this.userRolesRepo = userRolesRepo;
 	}
@@ -36,5 +37,19 @@ public class UsersDao {
 		return roles;
 	}
 	
+	public UserAccounts saveOrUpdateAccount(UserAccounts add) {
+		userAccRepo.save(add);
+		return add;
+	}
 	
+	public UserRoles saveOrUpdateRoles(UserRoles add) {
+		userRolesRepo.save(add);
+		return add;
+	}
+	public void deleteUser(int id) {
+		userAccRepo.delete(id);
+	}
+	public void deletedRole(int id) {
+		userRolesRepo.delete(id);
+	}
 }
