@@ -8,50 +8,45 @@ public class UserAccounts {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "UserProfiles_ID", nullable = false)
-	private int userProfilesId;
+	@Column(name = "ID", nullable = false)
+	private int Id;
 	@Column(name = "UserName", nullable = false)
 	private String userName;
 	@Column(name = "PasswordHash", nullable = false)
 	private String passwordHash;
+	@Column(name = "FirstName")
+	private String firstName;
+	@Column(name = "LastName")
+	private String lastName;
+	@Column(name = "Email", nullable = false)
+	private String email;
 	@Column(name = "UserRoles_ID", nullable = false)
 	private int userRolesId = 1;
 
-	@OneToOne(optional = false)
-	@JoinColumn(name = "UserProfiles_ID", insertable = false, updatable = false)
-	private UserProfiles userProfiles;
+	
 
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "UserRoles_ID", referencedColumnName = "ID", insertable = false, updatable = false)
 	private UserRoles userRoles;
 
 	public UserAccounts() {}
-	public UserAccounts(int userProfilesId, String userName, String passwordHash, int userRolesId) {
+	
+
+	public UserAccounts(int id, String userName, String passwordHash, String firstName, String lastName, String email,
+			int userRolesId, UserRoles userRoles) {
 		super();
-		this.userProfilesId = userProfilesId;
+		Id = id;
 		this.userName = userName;
 		this.passwordHash = passwordHash;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
 		this.userRolesId = userRolesId;
+		this.userRoles = userRoles;
 	}
 
-	public UserAccounts(int userProfilesId, String userName, String passwordHash) {
-		super();
-		this.userProfilesId = userProfilesId;
-		this.userName = userName;
-		this.passwordHash = passwordHash;
-	}
 
-	public UserProfiles getUserProfiles() {
-		return userProfiles;
-	}
 
-	public void setUserProfiles(UserProfiles userProfiles) {
-		this.userProfiles = userProfiles;
-	}
-
-	public int getUserProfilesId() {
-		return userProfilesId;
-	}
 
 	public String getUserName() {
 		return userName;
@@ -73,14 +68,63 @@ public class UserAccounts {
 		return userRolesId;
 	}
 
+	
+
+	public int getId() {
+		return Id;
+	}
+
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+
+	public String getLastName() {
+		return lastName;
+	}
+
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+
+	public String getEmail() {
+		return email;
+	}
+
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+
+	public UserRoles getUserRoles() {
+		return userRoles;
+	}
+
+
+	public void setUserRoles(UserRoles userRoles) {
+		this.userRoles = userRoles;
+	}
+
+
 	public void setUserRolesId(int userRolesId) {
 		this.userRolesId = userRolesId;
 	}
 
+
 	@Override
 	public String toString() {
-		return "UserAccounts [userProfilesId=" + userProfilesId + ", userName=" + userName + ", passwordHash="
-				+ passwordHash + ", userRolesId=" + userRolesId + "]";
+		return "UserAccounts [Id=" + Id + ", userName=" + userName + ", passwordHash=" + passwordHash + ", firstName="
+				+ firstName + ", lastName=" + lastName + ", email=" + email + ", userRolesId=" + userRolesId
+				+ ", userRoles=" + userRoles + "]";
 	}
 
 }

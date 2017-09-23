@@ -1,4 +1,4 @@
-/*package fi.thepaardihub.dao.games;
+package fi.thepaardihub.dao.games;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -19,4 +19,3 @@ public class GamesDao {
 	
 
 }
-*/

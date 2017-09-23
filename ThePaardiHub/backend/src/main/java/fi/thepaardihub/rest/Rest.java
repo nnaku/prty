@@ -53,11 +53,6 @@ public class Rest {
 		return valid;
 	}
 
-	@RequestMapping("/profiles")
-	public @ResponseBody Iterable<UserProfiles> listProfiles() {
-		return users.allProfiles();
-
-	}
 
 	@RequestMapping("/accounts")
 	public @ResponseBody Iterable<UserAccounts> listAccounts() {

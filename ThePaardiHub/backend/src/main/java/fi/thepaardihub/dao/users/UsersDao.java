@@ -13,15 +13,13 @@ import fi.thepaardihub.dao.users.tables.*;
 public class UsersDao {
 
 	private UserAccountsRepository userAccRepo;
-	private UserProfilesRepository userProfRepo;
+	
 	private UserRolesRepository userRolesRepo;
 	
 	@Autowired
-	public UsersDao(UserAccountsRepository userAccRepo, UserProfilesRepository userProfRepo,
-			UserRolesRepository userRolesRepo) {
+	public UsersDao(UserAccountsRepository userAccRepo, UserRolesRepository userRolesRepo) {
 		
 		this.userAccRepo = userAccRepo;
-		this.userProfRepo = userProfRepo;
 		this.userRolesRepo = userRolesRepo;
 	}
 	
@@ -32,11 +30,6 @@ public class UsersDao {
 		return accounts;
 	}
 	
-	public List<UserProfiles> allProfiles(){
-		List<UserProfiles> profiles = new ArrayList();
-		userProfRepo.findAll().forEach(profiles::add);
-		return profiles;
-	}
 	public List<UserRoles> allRoles(){
 		List<UserRoles> roles = new ArrayList<>();
 		userRolesRepo.findAll().forEach(roles::add);

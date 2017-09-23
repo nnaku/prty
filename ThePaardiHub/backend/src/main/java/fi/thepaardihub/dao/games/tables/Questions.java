@@ -1,4 +1,4 @@
-/*package fi.thepaardihub.dao.games.tables;
+package fi.thepaardihub.dao.games.tables;
 
 import javax.persistence.*;
 
@@ -107,4 +107,3 @@ public class Questions {
 	
 	
 }
-*/
