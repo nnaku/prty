@@ -44,19 +44,7 @@ public class UserAccounts {
 
 
 
-	public UserAccounts(int id, String userName, String passwordHash, String firstName, String lastName, String email,
-			int userRolesId) {
-		super();
-		Id = id;
-		this.userName = userName;
-		this.passwordHash = passwordHash;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.email = email;
-		this.userRolesId = userRolesId;
-
-
-	}
+	
 
 
 

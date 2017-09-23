@@ -46,6 +46,11 @@ public class UsersDao {
 		userRolesRepo.save(add);
 		return add;
 	}
+	
+	public UserAccounts getUser(int id) {
+		return userAccRepo.findOne(id);
+	}
+	
 	public void deleteUser(int id) {
 		userAccRepo.delete(id);
 	}
