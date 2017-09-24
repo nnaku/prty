@@ -116,11 +116,6 @@ public class UserAccounts {
 	}
 
 
-	@Override
-	public String toString() {
-		return "UserAccounts [userName=" + userName + ", passwordHash=" + passwordHash + ", firstName="
-				+ firstName + ", lastName=" + lastName + ", email=" + email + ", userRolesId=" + userRolesId
-				+ ", userRoles=" + userRoles + "]";
-	}
+	
 
 }
