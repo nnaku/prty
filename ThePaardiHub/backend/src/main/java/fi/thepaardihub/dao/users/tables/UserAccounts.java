@@ -6,10 +6,7 @@ import javax.persistence.*;
 @Table(name = "useraccounts")
 public class UserAccounts {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "ID", nullable = false)
-	private int Id;
+	
 	@Column(name = "UserName", nullable = false)
 	private String userName;
 	@Column(name = "PasswordHash", nullable = false)
@@ -18,6 +15,7 @@ public class UserAccounts {
 	private String firstName;
 	@Column(name = "LastName")
 	private String lastName;
+	@Id
 	@Column(name = "Email", nullable = false)
 	private String email;
 	@Column(name = "UserRoles_ID", nullable = false)
@@ -71,10 +69,7 @@ public class UserAccounts {
 
 	
 
-	public int getId() {
-		return Id;
-	}
-
+	
 
 	public String getFirstName() {
 		return firstName;
@@ -123,7 +118,7 @@ public class UserAccounts {
 
 	@Override
 	public String toString() {
-		return "UserAccounts [Id=" + Id + ", userName=" + userName + ", passwordHash=" + passwordHash + ", firstName="
+		return "UserAccounts [userName=" + userName + ", passwordHash=" + passwordHash + ", firstName="
 				+ firstName + ", lastName=" + lastName + ", email=" + email + ", userRolesId=" + userRolesId
 				+ ", userRoles=" + userRoles + "]";
 	}

@@ -47,11 +47,11 @@ public class UsersDao {
 		return add;
 	}
 	
-	public UserAccounts getUser(int id) {
+	public UserAccounts getUser(String id) {
 		return userAccRepo.findOne(id);
 	}
 	
-	public void deleteUser(int id) {
+	public void deleteUser(String id) {
 		userAccRepo.delete(id);
 	}
 	public void deletedRole(int id) {

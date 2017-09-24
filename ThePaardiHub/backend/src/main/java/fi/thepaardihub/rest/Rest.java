@@ -73,7 +73,12 @@ public class Rest {
 	public void createAccount(@RequestParam("username")String userName,@RequestParam("psw") String psw, @RequestParam("firstname")String firstName,@RequestParam("lastname") String lastName, @RequestParam("email")String email) {
 		users.createAccount(userName, psw, firstName, lastName, email);
 	}
-	
+	@PostMapping("/login")
+	public UserAccounts login(@RequestParam("email") String email, @RequestParam("psw")String psw) {
+		UserAccounts retVal =users.login(email, psw);
+		System.out.println(retVal);
+		return retVal;
+	}
 	
 	@RequestMapping("/fake")
 	public void fakeData() {
