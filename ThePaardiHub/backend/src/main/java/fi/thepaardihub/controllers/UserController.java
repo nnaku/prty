@@ -50,7 +50,7 @@ public class UserController {
 
 			if (account != null) {
 				System.out.println("Not Null");
-				String hash =account.getPasswordHash();
+				String hash = account.getPasswordHash();
 				if (pswHasher.validPassword(psw, hash )) {
 					return account;
 				}
