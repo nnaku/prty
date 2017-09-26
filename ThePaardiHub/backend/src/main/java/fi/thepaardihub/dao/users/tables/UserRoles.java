@@ -17,7 +17,7 @@ public class UserRoles {
 	@Column(name="RoleName")
 	private String roleName;
 	
-	@OneToMany(mappedBy="userRoles", targetEntity=UserAccounts.class,fetch=FetchType.LAZY)
+	@OneToMany(mappedBy="userRoles", targetEntity=UserAccounts.class)
 	private Set<UserAccounts> userAccounts;
 	
 	public UserRoles() {}

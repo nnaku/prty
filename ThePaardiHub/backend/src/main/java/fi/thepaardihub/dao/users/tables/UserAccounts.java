@@ -23,9 +23,12 @@ public class UserAccounts {
 
 	
 
-	@ManyToOne(optional = false)
+	@ManyToOne(optional = false,fetch=FetchType.LAZY)
 	@JoinColumn(name = "UserRoles_ID", referencedColumnName = "ID", insertable = false, updatable = false)
 	private UserRoles userRoles;
+
+
+
 
 	public UserAccounts() {}
 	
@@ -116,6 +119,12 @@ public class UserAccounts {
 	}
 
 
-	
+	@Override
+	public String toString() {
+		return "UserAccounts [userName=" + userName + ", passwordHash=" + passwordHash + ", firstName=" + firstName
+				+ ", lastName=" + lastName + ", email=" + email + ", userRolesId=" + userRolesId + ", userRoles="
+				+ userRoles + "]";
+	}
+
 
 }

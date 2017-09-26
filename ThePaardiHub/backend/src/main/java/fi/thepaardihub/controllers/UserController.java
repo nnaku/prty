@@ -63,15 +63,15 @@ public class UserController {
 
 	public void fakeData() {
 		try {
-			UserRoles banned = new UserRoles(0, "Banned");
-			UserRoles member = new UserRoles(1, "Member");
-			UserRoles admin = new UserRoles(9, "Admin");
-			UserRoles god = new UserRoles(99, "God");
-
-			users.saveOrUpdateRoles(banned);
-			users.saveOrUpdateRoles(member);
-			users.saveOrUpdateRoles(admin);
-			users.saveOrUpdateRoles(god);
+//			UserRoles banned = new UserRoles(0, "Banned");
+//			UserRoles member = new UserRoles(1, "Member");
+//			UserRoles admin = new UserRoles(9, "Admin");
+//			UserRoles god = new UserRoles(99, "God");
+//
+//			users.saveOrUpdateRoles(banned);
+//			users.saveOrUpdateRoles(member);
+//			users.saveOrUpdateRoles(admin);
+//			users.saveOrUpdateRoles(god);
 
 			UserAccounts add1 = new UserAccounts("nAku", this.pswHasher.getSaltedHash("aku.kangas"), "Aku", "Kangas",
 					"Aku.Kangas@metropolia.fi");
