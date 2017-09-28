@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_thepaardihub" default="compile.module.thepaardihub">
+  <dirname property="module.thepaardihub.basedir" file="${ant.file.module_thepaardihub}"/>
+  
+  <property name="module.jdk.home.thepaardihub" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.thepaardihub" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.thepaardihub" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.thepaardihub" value="-encoding UTF-8 -source 1.6 -target 1.6 ${compiler.args}"/>
+  
+  <property name="thepaardihub.output.dir" value="${module.thepaardihub.basedir}/target/classes"/>
+  <property name="thepaardihub.testoutput.dir" value="${module.thepaardihub.basedir}/target/test-classes"/>
+  
+  <path id="thepaardihub.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="thepaardihub.module.production.classpath">
+    <path refid="${module.jdk.classpath.thepaardihub}"/>
+  </path>
+  
+  <path id="thepaardihub.runtime.production.module.classpath">
+    <pathelement location="${thepaardihub.output.dir}"/>
+  </path>
+  
+  <path id="thepaardihub.module.classpath">
+    <path refid="${module.jdk.classpath.thepaardihub}"/>
+    <pathelement location="${thepaardihub.output.dir}"/>
+    <path refid="library.maven:_junit:junit:4.12.classpath"/>
+    <path refid="library.maven:_org.hamcrest:hamcrest-core:1.3.classpath"/>
+  </path>
+  
+  <path id="thepaardihub.runtime.module.classpath">
+    <pathelement location="${thepaardihub.testoutput.dir}"/>
+    <pathelement location="${thepaardihub.output.dir}"/>
+    <path refid="library.maven:_junit:junit:4.12.classpath"/>
+    <path refid="library.maven:_org.hamcrest:hamcrest-core:1.3.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.thepaardihub">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.thepaardihub">
+    <patternset refid="excluded.from.module.thepaardihub"/>
+  </patternset>
+  
+  
+  <target name="compile.module.thepaardihub" depends="compile.module.thepaardihub.production,compile.module.thepaardihub.tests" description="Compile module ThePaardiHub"/>
+  
+  <target name="compile.module.thepaardihub.production" depends="register.custom.compilers" description="Compile module ThePaardiHub; production classes"/>
+  
+  <target name="compile.module.thepaardihub.tests" depends="register.custom.compilers,compile.module.thepaardihub.production" description="compile module ThePaardiHub; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.thepaardihub" description="cleanup module">
+    <delete dir="${thepaardihub.output.dir}"/>
+    <delete dir="${thepaardihub.testoutput.dir}"/>
+  </target>
+</project>
