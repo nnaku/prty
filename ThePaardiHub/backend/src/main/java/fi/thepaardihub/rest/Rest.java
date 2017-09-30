@@ -16,75 +16,93 @@ import fi.thepaardihub.password.*;
 @RestController
 public class Rest {
 
-	// Currently this class is only used to test database connection
-	private UserController users;
-	
-	private Password password = new Password();
+    // Currently this class is only used to test database connection
+    private UserController users;
 
-	@Autowired
-	public void setUsers(UserController users) {
-		this.users = users;
-	}
+    private Password password = new Password();
 
-	// Returns URL safe salted hash.
-	@RequestMapping(value = "/hash")
-	@ResponseBody
-	public String getHash(@RequestParam("passwd") String passwd) {
-		String hash = "";
-		try {
-			hash = password.getSaltedHash(passwd);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return "Error";
-		}
-		return "Given password: " + passwd + "<br>Salted hash: " + hash;
-	}
+    @Autowired
+    public void setUsers(UserController users) {
+        this.users = users;
+    }
 
-	// Returns boolean for password match.
-	@RequestMapping(value = "/password")
-	@ResponseBody
-	public Boolean validPassword(@RequestParam("passwd") String passwd) {
-		Boolean valid = false;
-		try {
-			valid = password.validPassword(passwd, password.getSaltedHash("Salasana123"));
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return false;
-		}
-		return valid;
-	}
+    // Returns URL safe salted hash.
+    @RequestMapping(value = "/hash")
+    @ResponseBody
+    public String getHash(@RequestParam("passwd") String passwd) {
+        String hash = "";
+        try {
+            hash = password.getSaltedHash(passwd);
+        } catch (Exception e) {
+
+            e.printStackTrace();
+            return "Error";
+        }
+        return "Given password: " + passwd + "<br>Salted hash: " + hash;
+    }
+
+    // Returns boolean for password match.
+    @RequestMapping(value = "/password")
+    @ResponseBody
+    public Boolean validPassword(@RequestParam("passwd") String passwd) {
+        Boolean valid = false;
+        try {
+            valid = password.validPassword(passwd, password.getSaltedHash("Salasana123"));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+        return valid;
+    }
 
 
-	@RequestMapping("/accounts")
-	public @ResponseBody Iterable<UserAccounts> listAccounts() {
-		return users.allAccounts();
+    @RequestMapping("/accounts")
+    public @ResponseBody
+    Iterable<UserAccounts> listAccounts() {
+        return users.allAccounts();
 
-	}
+    }
 
-	@RequestMapping("/roles")
-	public @ResponseBody Iterable<UserRoles> listRoles() {
-		return users.allRoles();
+    @RequestMapping("/roles")
+    public @ResponseBody
+    Iterable<UserRoles> listRoles() {
+        return users.allRoles();
 
-	}
-	
-	@PostMapping("/createaccount")
-	public void createAccount(@RequestParam("username")String userName,@RequestParam("psw") String psw, @RequestParam("firstname")String firstName,@RequestParam("lastname") String lastName, @RequestParam("email")String email) {
-		users.createAccount(userName, psw, firstName, lastName, email);
-	}
-	@PostMapping("/login")
-	public UserAccounts login(@RequestParam("email") String email, @RequestParam("psw")String psw) {
-		UserAccounts retVal =users.login(email, psw);
-		System.out.println(retVal);
-		return retVal;
-	}
-	
-	@RequestMapping("/fake")
-	public void fakeData() {
-		
-		users.fakeData();
-		
-	}
-	
+    }
+
+    /**
+     * Rest for userAccount creation
+     *
+     * @param userName  username of account that will be created
+     * @param psw       password of account that will be created
+     * @param firstName first name of account that will be created
+     * @param lastName  last name of account that will be created
+     * @param email     email of account that will be created
+     */
+    @PostMapping("/createaccount")
+    public void createAccount(@RequestParam("username") String userName, @RequestParam("psw") String psw, @RequestParam("firstname") String firstName, @RequestParam("lastname") String lastName, @RequestParam("email") String email) {
+        users.createAccount(userName, psw, firstName, lastName, email);
+    }
+
+    /**
+     * Rest for login
+     *
+     * @param email email of account user is trying to login
+     * @param psw   password of account user is trying to login
+     * @return UserAccount if login is successfully else null
+     */
+    @PostMapping("/login")
+    public UserAccounts login(@RequestParam("email") String email, @RequestParam("psw") String psw) {
+        UserAccounts retVal = users.login(email, psw);
+        System.out.println(retVal);
+        return retVal;
+    }
+
+    @RequestMapping("/fake")
+    public void fakeData() {
+
+        users.fakeData();
+
+    }
+
 }
