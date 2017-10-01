@@ -37,7 +37,12 @@ public class UserController {
      */
     public UserAccounts createAccount(String userName, String psw, String firstName, String lastName, String email) {
         try {
-            UserAccounts add = new UserAccounts(userName, pswHasher.getSaltedHash(psw), firstName, lastName, email);
+            UserAccounts add = new UserAccounts();
+            add.setUserName(userName);
+            add.setPasswordHash(pswHasher.getSaltedHash(psw));
+            add.setFirstName(firstName);
+            add.setLastName(lastName);
+            add.setEmail(email);
             users.saveOrUpdateAccount(add);
             return add;
         } catch (Exception e) {
@@ -80,15 +85,15 @@ public class UserController {
 
     public void fakeData() {
         try {
-//			UserRoles banned = new UserRoles(0, "Banned");
-//			UserRoles member = new UserRoles(1, "Member");
-//			UserRoles admin = new UserRoles(9, "Admin");
-//			UserRoles god = new UserRoles(99, "God");
-//
-//			users.saveOrUpdateRoles(banned);
-//			users.saveOrUpdateRoles(member);
-//			users.saveOrUpdateRoles(admin);
-//			users.saveOrUpdateRoles(god);
+            UserRoles banned = new UserRoles(0, "Banned");
+            UserRoles member = new UserRoles(1, "Member");
+            UserRoles admin = new UserRoles(9, "Admin");
+            UserRoles god = new UserRoles(99, "God");
+
+            users.saveOrUpdateRoles(banned);
+            users.saveOrUpdateRoles(member);
+            users.saveOrUpdateRoles(admin);
+            users.saveOrUpdateRoles(god);
 
             UserAccounts add1 = new UserAccounts("nAku", this.pswHasher.getSaltedHash("aku.kangas"), "Aku", "Kangas",
                     "Aku.Kangas@metropolia.fi");
