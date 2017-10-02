@@ -41,13 +41,13 @@ public class PasswordTest {
 	}
 	
 	@Test
-	public void emptyPasswors() throws Exception {
+	public void emptyPassword() throws Exception {
 		exception.expect(IllegalArgumentException.class);
 		passwd.getSaltedHash("");
 	}
 	
 	@Test
-	public void nullPasswors() throws Exception {
+	public void nullPassword() throws Exception {
 		exception.expect(IllegalArgumentException.class);
 		passwd.getSaltedHash(null);
 	}
