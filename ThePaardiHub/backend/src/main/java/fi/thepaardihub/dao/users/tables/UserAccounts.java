@@ -1,11 +1,21 @@
  package fi.thepaardihub.dao.users.tables;
 
+import java.io.Serializable;
+
 import javax.persistence.*;
+
+import com.google.gson.Gson;
+
 
 @Entity
 @Table(name = "useraccounts")
-public class UserAccounts {
+public class UserAccounts implements Serializable{
 
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	
 	@Column(name = "UserName", nullable = false)
 	private String userName;
@@ -70,10 +80,6 @@ public class UserAccounts {
 		return userRolesId;
 	}
 
-	
-
-	
-
 	public String getFirstName() {
 		return firstName;
 	}
@@ -119,12 +125,21 @@ public class UserAccounts {
 	}
 
 
+	public String toJson() {
+		String hashHide = passwordHash;
+		passwordHash = "";
+		String json = new Gson().toJson(this);
+		passwordHash = hashHide;
+		return json;
+	}
+	
 	@Override
 	public String toString() {
 		return "UserAccounts [userName=" + userName + ", passwordHash=" + passwordHash + ", firstName=" + firstName
 				+ ", lastName=" + lastName + ", email=" + email + ", userRolesId=" + userRolesId + ", userRoles="
 				+ userRoles + "]";
 	}
+	
 
 
 }

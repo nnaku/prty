@@ -36,4 +36,35 @@ public class Password {
 		return hashOfInput.equals(saltAndPass[1]);
 	}
 
+	public String passwordValidator(String password, String passwordVerify) {
+		// Checks for password misspelling
+		if (!password.equals(passwordVerify)) {
+			return "Passwords does not match!";
+		}
+		// Checks for at least 8 characters
+		else if (password.length() < 8) {
+			return "You should use at least eight characters!";
+		}
+		// Checks at least one char is uppercase
+		else if (password.equals(password.toLowerCase())) {
+			return "You should use at least one uppercase character!";
+		}
+		// Checks at least one char is lowercase
+		else if (password.equals(password.toUpperCase())) {
+			return "You should use at least one lowercase character!";
+		}
+		// Checks at least one char is not alpha
+		else if (!password.matches("(?=.*[0-9]).*")) {
+			return "You should use at least one numeric or special character!";
+		}
+		// Check that it doesn't contain AND or NOT
+		else if (password.contains("AND") || password.contains("NOT")) {
+			return "I think SQL syntax is not good for passwords!? I mean AND or NOT.";
+		}
+		// Valid password
+		else {
+			return null;
+		}
+	}
+
 }

@@ -82,6 +82,19 @@ public class UserController {
         }
         return null;
     }
+    
+    public UserAccounts getUser(String email) {
+        try {
+            UserAccounts account = users.getUser(email);
+
+            if (account != null) {
+            	return account;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
     public void fakeData() {
         try {
