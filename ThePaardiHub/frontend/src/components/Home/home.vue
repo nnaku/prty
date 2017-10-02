@@ -11,8 +11,8 @@
   <b-collapse is-nav id="nav_collapse">
     <b-nav is-nav-bar>
       <b-nav-item active href="#">Let's Play!</b-nav-item>
-      <b-nav-item href="#">Login</b-nav-item>
-      <b-nav-item href="#">Register</b-nav-item>
+      <b-nav-item :to="{ name: 'Login'}" href="#">Login</b-nav-item>
+      <b-nav-item :to="{ name: 'Register'}" href="#">Register</b-nav-item>
     </b-nav>
   </b-collapse>
 </b-navbar>
