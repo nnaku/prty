@@ -1,5 +1,11 @@
+html {
+  position: relative;
+  height: 100%;
+}
+
 body {
   display: block;
+  margin-bottom: 100px;
 }
 
 h1, h2 {
@@ -31,15 +37,6 @@ a {
   margin-right:0px;
 }
 
-#Home {
-  position: relative;
-  width: 80%;
-  height: 500px;
-  margin-left:auto;
-  margin-right:auto;
-  border: 3px solid #73AD21;
-}
-
 .header {
   padding-left: inherit;
   padding-right: inherit;
@@ -60,7 +57,17 @@ a {
   left: 0;
   right: 0;
   height: 40px;
-  bottom: 0%;
+  bottom: 0;
   width: 100%;
-  background-color: #00cc66;
+  background-color: rgb(239, 239, 239);
+}
+
+
+.el-menu-vertical-demo {
+  width: 200px;
+  min-height: 400px;
+}
+
+.el-menu-vertical-demo li{
+  text-align: left;
 }

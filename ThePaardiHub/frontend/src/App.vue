@@ -1,14 +1,14 @@
 <style src="./components/Styles/styles.css"></style>
 <template>
   <div id="app">
-    <div class="header">
+    <!--<div class="header">
       <p>App.vue: Joten navit headerit yms yms. tänne!</p>
     </div>
-    <p>App.vue: Tää näkyy näkyy joka sivulle!</p>
+    <p>App.vue: Tää näkyy näkyy joka sivulle!</p>-->
     <router-view></router-view>
-    <div class="footer">
+    <!--<div class="footer">
       <p>App.vue: Esim footer route-view:n alle</p>
-    </div>
+    </div>-->
   </div>
 </template>
 
