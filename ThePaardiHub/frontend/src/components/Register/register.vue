@@ -1,10 +1,10 @@
-<script src="./login.js"></script>
+<script src="./register.js"></script>
 <style src="./styles.css"></style>
 
 <template>
-    <div id="Login">
-        <div class="loginheader">
-            <h2 class="title">Please, login</h2>
+    <div id="Register">
+        <div class="registerheader">
+            <h2 class="title">Register</h2>
         </div>
         <div class="container">
             <div class="row">
@@ -23,14 +23,10 @@
                                     <label for="password" class="control-label sr-only">Add your password.</label>
                                     <input ref="txtPassword" type="password" class="form-control" @input="checkPasswordValidation" id="password" placeholder="Password" required :pattern="passwordPattern" aria-describedby="passwordHelpSpan">
                                     <span v-bind:class="[passwordIconClass]"></span>
+                                    <small id="passwordHelpSpan">{{ passwordMessage }}</small>
                                 </div>
                                 <div v-if="errorMessage" class="text-center text-danger">{{ errorMessage }}</div>
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" id="chkRemember" v-model="rememberMe"> Remember Me
-                                    </label>
-                                    <button :disabled="submitBtnDisabled" class="btn btn-primary pull-right">Login</button>
-                                </div>
+                                <button :disabled="submitBtnDisabled" class="btn btn-primary pull-right">Sign In</button>
                             </form>
                         </div>
                     </div>

@@ -1,5 +1,5 @@
 export default {
-    name: 'Login',
+    name: 'Register',
     props: {
       errorMessage: {
         type: String,
@@ -24,7 +24,6 @@ export default {
         emailIconClass: '',
         passwordIconClass: '',
         submitBtnDisabled: true,
-        rememberMe: false
       }
     },
     mounted: function () {
@@ -63,18 +62,10 @@ export default {
         let password = this.$refs.txtPassword.value.trim()
         // COOKIE FUNCTIONS!
         // 'key=value; expires=current dateTime in UTC; path=/'
-        if(this.rememberMe) {
-          let d = new Date()
-          d.setTime(d.getTime() + (180*24*60*60*1000)) //
-          document.cookie = 'email=' + email + ';expires=' + d.toUTCString() + ';path=/'
-          document.cookie = 'password=' + password + ';expires=' + d.toUTCString() + ';path=/'
-          console.log('We just set the cookies: ' + document.cookie)
-        } else {
           document.cookie = 'email=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;'
           document.cookie = 'password=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;'
           console.log('We just deleted the cookies: ' + document.cookie)
-        }
-        this.$emit('loginCredentials',
+          this.$emit('loginCredentials',
           {
             'email': email,
             'password': password
