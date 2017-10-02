@@ -13,8 +13,9 @@ public class Password {
 	private final int KEYLEN = 256;
 
 	private String hash(String password, byte[] salt) throws Exception {
-		if (password == null || password.length() == 0)
+		if (password == null || password.length() == 0) {
 			throw new IllegalArgumentException("Empty passwords are not supported.");
+		}
 		SecretKeyFactory f = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
 		SecretKey key = f.generateSecret(new PBEKeySpec(password.toCharArray(), salt, ITERATIONS, KEYLEN));
 		return Base64.encodeBase64URLSafeString(key.getEncoded());
