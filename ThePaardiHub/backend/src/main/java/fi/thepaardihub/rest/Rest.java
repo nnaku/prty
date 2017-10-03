@@ -1,23 +1,16 @@
 package fi.thepaardihub.rest;
 
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import org.json.JSONException;
-import org.json.JSONObject;
+import java.util.HashMap;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+
+import org.springframework.web.bind.annotation.*;
+import com.google.gson.*;
 
 import fi.thepaardihub.controllers.UserController;
-import fi.thepaardihub.dao.users.UsersDao;
 import fi.thepaardihub.dao.users.tables.*;
 import fi.thepaardihub.password.*;
+
 
 @RestController
 public class Rest {
@@ -55,13 +48,13 @@ public class Rest {
 	 * @return data is converted to String in JSON object format
 	 * @throws JSONException
 	 */
-	private String returnDataAsJson(boolean status, int error, String message, String json) throws JSONException {
-		JSONObject returnData = new JSONObject();
+	private String returnDataAsJson(boolean status, int error, String message, Object data)  {
+		HashMap<String,Object> returnData = new HashMap<String,Object>();
 		returnData.put("status", status);
 		returnData.put("error", error);
 		returnData.put("message", message);
-		returnData.put("data", json);
-		return returnData.toString();
+		returnData.put("data", data);
+		return new Gson().toJson(returnData);
 	}
 
 	// Returns URL safe salted hash.
@@ -120,33 +113,15 @@ public class Rest {
 	 *            email of account that will be created
 	 * @throws Exception
 	 */
-	@PostMapping("/createaccount")
-	public String createAccount(@RequestParam("username") String userName, @RequestParam("psw") String psw,
-			@RequestParam("pswVerify") String pswVerify, @RequestParam("firstname") String firstName,
-			@RequestParam("lastname") String lastName, @RequestParam("email") String email) throws Exception {
-		
-		Pattern pattern = Pattern.compile("[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}");
-        Matcher mat = pattern.matcher(email);
-
-        if(!mat.matches()){
-        	return returnDataAsJson(false, 2, "Invalid email address.", null);
-        }
-		
-		if(users.getUser(email) != null) {
-			return returnDataAsJson(false, 3, "This email address is already registered.", null);
-		}
-		
-		String passwordError = password.passwordValidator(psw, pswVerify);
-		if (passwordError != null) {
-			return returnDataAsJson(false, 1, passwordError, null);
-		}
-		UserAccounts newUser = users.createAccount(userName, psw, firstName, lastName, email);
-		if(newUser == null) {
-			return returnDataAsJson(false, 0, "Something went wrong :(", null);
-		}
-		newUser.setPasswordHash(":)");
-		return returnDataAsJson(true, 0, "Account successfully created!", newUser.toJson());
-	}
+	
+	
+	
+//	public String createAccount(@RequestHeader("Accept: application/json") @RequestParam("username") String userName, @RequestParam("psw") String psw,
+//			@RequestParam("pswVerify") String pswVerify, @RequestParam("firstname") String firstName,
+//			@RequestParam("lastname") String lastName, @RequestParam("email") String email){
+//		
+//		
+//	}
 	
 
 
