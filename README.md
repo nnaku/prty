@@ -7,7 +7,7 @@
 ### Frameworks 
 * Spring-Boot
 * Vue.js
-* Element UI
+* Bootstrap
 
 ### Java Libraries (libraries of libraries)
 
