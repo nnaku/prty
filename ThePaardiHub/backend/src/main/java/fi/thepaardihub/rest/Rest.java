@@ -24,38 +24,6 @@ public class Rest {
 		this.users = users;
 	}
 
-	/**
-	 * returnDataAsJson return data as JSON if any is needed
-	 * 
-	 * @param status
-	 *            basic boolean indicates successful/failed requests
-	 * @param error
-	 *            number indicator if any errors consist
-	 *            0 no error
-	 *            1 password condition
-	 *            2 email condition 
-	 *            3 email registered
-	 *            4 wrong password
-	 *            5
-	 *            6
-	 *            7
-	 *            8
-	 *            9
-	 * @param message
-	 *            Short message for logging.
-	 * @param json
-	 *            Any additional data can be added here as JSONObject
-	 * @return data is converted to String in JSON object format
-	 * @throws JSONException
-	 */
-	private String returnDataAsJson(boolean status, int error, String message, Object data)  {
-		HashMap<String,Object> returnData = new HashMap<String,Object>();
-		returnData.put("status", status);
-		returnData.put("error", error);
-		returnData.put("message", message);
-		returnData.put("data", data);
-		return new Gson().toJson(returnData);
-	}
 
 	// Returns URL safe salted hash.
 	@RequestMapping(value = "/hash")
@@ -125,21 +93,21 @@ public class Rest {
 	
 
 
-	/**
-	 * Rest for login
-	 *
-	 * @param email
-	 *            email of account user is trying to login
-	 * @param psw
-	 *            password of account user is trying to login
-	 * @return UserAccount if login is successfully else null
-	 */
-	@PostMapping("/login")
-	public UserAccounts login(@RequestParam("email") String email, @RequestParam("psw") String psw) {
-		UserAccounts retVal = users.login(email, psw);
-		System.out.println(retVal);
-		return retVal;
-	}
+//	/**
+//	 * Rest for login
+//	 *
+//	 * @param email
+//	 *            email of account user is trying to login
+//	 * @param psw
+//	 *            password of account user is trying to login
+//	 * @return UserAccount if login is successfully else null
+//	 */
+//	@PostMapping("/login")
+//	public UserAccounts login(@RequestParam("email") String email, @RequestParam("psw") String psw) {
+//		UserAccounts retVal = users.login(email, psw);
+//		System.out.println(retVal);
+//		return retVal;
+//	}
 
 	@RequestMapping("/fake")
 	public void fakeData() {
