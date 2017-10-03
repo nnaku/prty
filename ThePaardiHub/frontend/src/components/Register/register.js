@@ -70,7 +70,21 @@ export default {
             'email': email,
             'password': password
           }
-        )
-      }
-    }
+        ),
+
+        
+          register() {
+          axios.post('http://localhost:8080/register', {
+            body: this.emailSuccessClass, this.passwordSuccessClass 
+          })
+          .then(response => {
+              console.log(response.data)
+          })
+          .catch(e => {
+              this.errors.push(e)
+          })
+        }
+    
+      }}
+    
   }

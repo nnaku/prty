@@ -26,7 +26,7 @@
                                     <small id="passwordHelpSpan">{{ passwordMessage }}</small>
                                 </div>
                                 <div v-if="errorMessage" class="text-center text-danger">{{ errorMessage }}</div>
-                                <button :disabled="submitBtnDisabled" class="btn btn-primary pull-right">Sign In</button>
+                                <button :disabled="submitBtnDisabled" class="btn btn-primary pull-right" onclick="register()">Sign In</button>
                             </form>
                         </div>
                     </div>

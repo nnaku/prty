@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 export default {
     name: 'Login',
     props: {
@@ -79,7 +81,17 @@ export default {
             'email': email,
             'password': password
           }
+          
         )
+        created()
+          axios.get("http://localhost:8080/login")
+          .then(response => {
+              console.log(response.data)
+          })
+          .catch(e => {
+              this.errors.push(e)
+          })
+
       }
     }
   }
