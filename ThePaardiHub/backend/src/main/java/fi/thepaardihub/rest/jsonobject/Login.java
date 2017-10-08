@@ -1,14 +1,14 @@
 package fi.thepaardihub.rest.jsonobject;
 
 public class Login {
-	String username;
-	String psw;
+	String email;
+	String password;
 	
-	public String getUsername() {
-		return username;
+	public String getEmail() {
+		return email;
 	}
-	public String getPsw() {
-		return psw;
+	public String getPassword() {
+		return password;
 	}
 
 }

@@ -19,9 +19,29 @@
                                     <input ref="txtEmail" type="email" class="form-control" @input="checkEmailValidation" id="email" placeholder="Email" autofocus required>
                                     <span v-bind:class="[emailIconClass]"></span>
                                 </div>
+                                <div class="form-group has-feedback" >
+                                    <label for="username" class="control-label sr-only">Add your username.</label>
+                                    <input ref="txtUsername" type="username" class="form-control" @input="checkEmailValidation" id="username" placeholder="Username" autofocus required>
+                                    
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <label for="firstname" class="control-label sr-only">Add your first name.</label>
+                                    <input ref="txtFirstname" type="firstname" class="form-control" @input="checkEmailValidation" id="firstname" placeholder="First name" autofocus required>
+                                    
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <label for="lastname" class="control-label sr-only">Add your last name.</label>
+                                    <input ref="txtLastname" type="lastname" class="form-control" @input="checkEmailValidation" id="lastname" placeholder="Last name" autofocus required>
+                                    
+                                </div>
                                 <div class="form-group has-feedback" v-bind:class="[passwordSuccessClass]">
                                     <label for="password" class="control-label sr-only">Add your password.</label>
                                     <input ref="txtPassword" type="password" class="form-control" @input="checkPasswordValidation" id="password" placeholder="Password" required :pattern="passwordPattern" aria-describedby="passwordHelpSpan">
+                                    <span v-bind:class="[passwordIconClass]"></span>
+                                </div>
+                                <div class="form-group has-feedback" v-bind:class="[passwordSuccessClass]">
+                                    <label for="passwordVerify" class="control-label sr-only">Add your password.</label>
+                                    <input ref="txtPasswordVerify" type="password" class="form-control" @input="checkPasswordValidation" id="passwordVerify" placeholder="Password Verify" required :pattern="passwordPattern" aria-describedby="passwordHelpSpan">
                                     <span v-bind:class="[passwordIconClass]"></span>
                                     <small id="passwordHelpSpan">{{ passwordMessage }}</small>
                                 </div>

@@ -46,18 +46,18 @@ public class SignInEndpoint {
 			return new ResponseEntity<Object>("This email is already registered.", new HttpHeaders(), HttpStatus.BAD_REQUEST);
 		}
 		
-		String passwordError = password.passwordValidator(signin.getPsw(), signin.getPswVerify());
+		String passwordError = password.passwordValidator(signin.getPassword(), signin.getPasswordVerify());
 		if (passwordError != null) {
 			return new ResponseEntity<Object>(passwordError, new HttpHeaders(), HttpStatus.BAD_REQUEST);
 			
 		}
-		UserAccounts newUser = users.createAccount(signin.getUsername(), signin.getPsw(), signin.getFirstname(), signin.getLastname(), signin.getEmail());
+		UserAccounts newUser = users.createAccount(signin.getUsername(), signin.getPassword(), signin.getFirstname(), signin.getLastname(), signin.getEmail());
 		if(newUser == null) {
 			return new ResponseEntity<Object>("Something went wrong :(", new HttpHeaders(), HttpStatus.BAD_REQUEST);
 			
 		}
 
-		return new ResponseEntity<Object>("Successfully sign-in", new HttpHeaders(), HttpStatus.OK);
+		return new ResponseEntity<Object>("Successfully Sign-in", new HttpHeaders(), HttpStatus.OK);
 		
 	}
 }

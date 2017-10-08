@@ -1,5 +1,3 @@
-import axios from 'axios';
-
 export default {
     name: 'Login',
     props: {
@@ -80,18 +78,28 @@ export default {
           {
             'email': email,
             'password': password
-          }
+          })
+        
+          var data = JSON.stringify({
+            "email": email,
+            "password": password
+          });
           
-        )
-        created()
-          axios.get("http://localhost:8080/login")
-          .then(response => {
-              console.log(response.data)
-          })
-          .catch(e => {
-              this.errors.push(e)
-          })
-
-      }
+          var xhr = new XMLHttpRequest();
+          xhr.withCredentials = true;
+          
+          xhr.addEventListener("readystatechange", function () {
+            if (this.readyState === 4) {
+              console.log(this.responseText);
+            }
+          });
+          
+          xhr.open("POST", "http://localhost:8080/login");
+          xhr.setRequestHeader("content-type", "application/json");
+          
+          
+          xhr.send(data);
+          
+        }
     }
   }

@@ -24,7 +24,7 @@ public class LoginEndpoint {
 	@PostMapping("/login")
 	public ResponseEntity<?> createAccount(@RequestBody Login login) {
 		
-		UserAccounts user = users.login(login.getUsername(), login.getPsw());
+		UserAccounts user = users.login(login.getEmail(), login.getPassword());
 		if(user == null) {
 			return new ResponseEntity<Object>("Bad login, check your email or password", new HttpHeaders(), HttpStatus.UNAUTHORIZED);
 		}

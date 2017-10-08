@@ -2,8 +2,8 @@ package fi.thepaardihub.rest.jsonobject;
 
 public class SignIn {
 	String username;
-	String psw;
-	String pswVerify;
+	String password;
+	String passwordVerify;
 	String firstname;
 	String lastname;
 	String email;
@@ -11,11 +11,11 @@ public class SignIn {
 	public String getUsername() {
 		return username;
 	}
-	public String getPsw() {
-		return psw;
+	public String getPassword() {
+		return password;
 	}
-	public String getPswVerify() {
-		return pswVerify;
+	public String getPasswordVerify() {
+		return passwordVerify;
 	}
 	public String getFirstname() {
 		return firstname;
@@ -27,6 +27,7 @@ public class SignIn {
 		return email;
 	}
 	
-
+	
+	
 }
  

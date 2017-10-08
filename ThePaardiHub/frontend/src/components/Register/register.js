@@ -9,12 +9,12 @@ export default {
       passwordMessage: {
         type: String,
         required: false,
-        default: "Password length must be greater than 4 but not longer than 10"
+        default: "Password must be at least 8 char"
       },
       passwordPattern: {
         type: String,
         required: false,
-        default: '.{5,10}'
+        default: '.{8,255}'
       }
     },
     data() {
@@ -25,14 +25,6 @@ export default {
         passwordIconClass: '',
         submitBtnDisabled: true,
       }
-    },
-    mounted: function () {
-      let email = document.cookie.match('(^|;)\\s*' + 'email' + '\\s*=\\s*([^;]+)')
-      let password = document.cookie.match('(^|;)\\s*' + 'password' + '\\s*=\\s*([^;]+)')
-      this.$refs.txtEmail.value = email ? email.pop() : ''
-      this.$refs.txtPassword.value = password ? password.pop() : ''
-      if (email) this.submitBtnDisabled = false
-      console.log('We just check to see if there were cookies: ' + document.cookie)
     },
     methods: {
       checkEmailValidation: function () {
@@ -60,31 +52,35 @@ export default {
       submitLogin: function () {
         let email = this.$refs.txtEmail.value.trim()
         let password = this.$refs.txtPassword.value.trim()
+        let passwordVerify = this.$refs.txtPasswordVerify.value.trim()
+        let username = this.$refs.txtUsername.value.trim()
+        let firstname = this.$refs.txtFirstname.value.trim()
+        let lastname = this.$refs.txtLastname.value.trim()
         // COOKIE FUNCTIONS!
         // 'key=value; expires=current dateTime in UTC; path=/'
           document.cookie = 'email=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;'
           document.cookie = 'password=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;'
           console.log('We just deleted the cookies: ' + document.cookie)
-          this.$emit('loginCredentials',
-          {
-            'email': email,
-            'password': password
-          }
-        ),
 
-        
-          register() {
-          axios.post('http://localhost:8080/register', {
-            body: this.emailSuccessClass, this.passwordSuccessClass 
-          })
-          .then(response => {
-              console.log(response.data)
-          })
-          .catch(e => {
-              this.errors.push(e)
-          })
-        }
-    
-      }}
-    
-  }
+          var data = JSON.stringify({
+            "username": username,
+            "password": password,
+            "passwordVerify": passwordVerify,
+            "firstname": firstname,
+            "lastname": lastname,
+            "email": email
+          });
+          
+          var xhr = new XMLHttpRequest();
+          xhr.withCredentials = true;
+          xhr.addEventListener("readystatechange", function () {
+            if (this.readyState === 4) {
+              console.log(this.responseText);
+            }
+          });
+          xhr.open("POST", "http://localhost:8080/createaccount");
+          xhr.setRequestHeader("content-type", "application/json");
+          xhr.send(data);
+      }
+    },
+  };
