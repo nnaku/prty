@@ -6,7 +6,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class PageController {
-	
+
+
 	
 	@RequestMapping("/hello")
 	public ModelAndView index() {

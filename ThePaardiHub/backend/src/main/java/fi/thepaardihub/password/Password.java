@@ -6,12 +6,25 @@ import javax.crypto.spec.PBEKeySpec;
 import java.security.SecureRandom;
 import org.apache.commons.codec.binary.Base64;
 
+/**
+ * @author nAku
+ *
+ */
+
 public class Password {
 
 	private final int ITERATIONS = 20000;
 	private final int SALTLEN = 32;
 	private final int KEYLEN = 256;
 
+	/**
+	 * Hashing the password and checks is the password valid
+	 *
+	 * @param password
+	 * @param salt
+	 * @return
+	 * @throws Exception
+	 */
 	private String hash(String password, byte[] salt) throws Exception {
 		if (password == null || password.length() == 0) {
 			throw new IllegalArgumentException("Empty passwords are not supported.");

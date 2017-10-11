@@ -66,7 +66,7 @@ public class Rest {
 
 	}
 
-	/**
+	/*
 	 * Rest for userAccount creation
 	 *
 	 * @param userName
