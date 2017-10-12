@@ -28,7 +28,7 @@ public class LoginEndpoint {
 		if(user == null) {
 			return new ResponseEntity<Object>("Bad login, check your email or password", new HttpHeaders(), HttpStatus.UNAUTHORIZED);
 		}
-		// CREATE SESSION HERE!!!!!!!!!!!!!!!!!!!
+		// TODO TOKEN HANDLING
 		return new ResponseEntity<Object>("Successfull login", new HttpHeaders(), HttpStatus.OK);
 	}
 

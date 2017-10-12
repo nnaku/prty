@@ -20,10 +20,10 @@ public class Password {
 	/**
 	 * Hashing the password and checks is the password valid
 	 *
-	 * @param password
-	 * @param salt
-	 * @return
-	 * @throws Exception
+	 * @param password Given password String
+	 * @param salt random byte data
+	 * @return returns salted password hash in url safe base64 format
+	 * @throws Exception IllegalArgumentException given password is null.
 	 */
 	private String hash(String password, byte[] salt) throws Exception {
 		if (password == null || password.length() == 0) {
@@ -34,12 +34,26 @@ public class Password {
 		return Base64.encodeBase64URLSafeString(key.getEncoded());
 	}
 
+	/**
+	 *
+	 * @param password  Given password String
+	 * @return returns salt in url safe base64 and salted password hash in url safe base64 format.
+	 * These two data strings is separated by char '$' eg. salt$saltedHash.
+	 * @throws Exception IllegalArgumentException given password is null.
+	 */
 	public String getSaltedHash(String password) throws Exception {
 		byte[] salt = SecureRandom.getInstance("SHA1PRNG").generateSeed(SALTLEN);
 		// store the salt with the password
 		return Base64.encodeBase64URLSafeString(salt) + "$" + hash(password, salt);
 	}
 
+	/**
+	 *
+	 * @param password Given password String
+	 * @param stored Stored salted and hashed password.
+	 * @return Boolean value of given and stored password
+	 * @throws Exception  IllegalStateException If stored string does not contain salt and salted hash.
+	 */
 	public boolean validPassword(String password, String stored) throws Exception {
 		String[] saltAndPass = stored.split("\\$");
 		if (saltAndPass.length != 2) {
@@ -48,6 +62,13 @@ public class Password {
 		String hashOfInput = hash(password, Base64.decodeBase64(saltAndPass[0]));
 		return hashOfInput.equals(saltAndPass[1]);
 	}
+
+	/**
+	 *
+	 * @param password Given password String
+	 * @param passwordVerify Given password verify String
+	 * @return Boolean value if password form is valid.
+	 */
 
 	public String passwordValidator(String password, String passwordVerify) {
 		// Checks for password misspelling

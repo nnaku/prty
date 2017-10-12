@@ -20,14 +20,28 @@ import fi.thepaardihub.rest.jsonobject.SignIn;
 
 @Controller
 public class SignInEndpoint {
+
+
 	
 	private UserController users;
 	private Password password = new Password();
+
+	/**
+	 *
+	 * @param users Set Users
+	 */
 	
 	@Autowired
 	public void setUsers(UserController users) {
 		this.users = users;
 	}
+
+	/**
+	 *
+	 * @param signin
+	 * @return
+	 * @throws Exception
+	 */
 	
 	@PostMapping("/createaccount")
 	public ResponseEntity<?> createAccount(@RequestBody SignIn signin) throws Exception {
