@@ -26,19 +26,18 @@ public class Questions {
 	private String false7;
 	
 	public Questions() {}
-	public Questions(String author, boolean isPrivate, String correct, String false1, String false2, String false3,
-			String false4, String false5, String false6, String false7) {
+	public Questions(String author, boolean isPrivate, String correct,String[] false1) {
 		super();
 		this.author = author;
 		this.isPrivate = isPrivate;
 		this.correct = correct;
-		this.false1 = false1;
-		this.false2 = false2;
-		this.false3 = false3;
-		this.false4 = false4;
-		this.false5 = false5;
-		this.false6 = false6;
-		this.false7 = false7;
+		this.false1 = false1[0];
+		this.false2 = false1[1];
+		this.false3 = false1[2];
+		this.false4 = false1[3];
+		this.false5 = false1[4];
+		this.false6 = false1[5];
+		this.false7 = false1[6];
 	}
 	
 	public int getId() {

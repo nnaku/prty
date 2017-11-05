@@ -15,13 +15,11 @@ import fi.thepaardihub.password.Password;
 public class UserController {
 
     private UsersDao users;
-    private GamesDao games;
     private Password pswHasher;
 
     @Autowired
     public UserController(UsersDao usersDao, GamesDao gamesDao) {
         this.users = usersDao;
-        this.games = gamesDao;
         this.pswHasher = new Password();
     }
 
