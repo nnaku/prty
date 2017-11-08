@@ -4,124 +4,141 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import fi.thepaardihub.dao.games.GamesDao;
 import fi.thepaardihub.dao.users.UsersDao;
 import fi.thepaardihub.dao.users.tables.UserAccounts;
 import fi.thepaardihub.dao.users.tables.UserRoles;
-import fi.thepaardihub.password.Password;
+import fi.thepaardihub.security.Password;
 
 @Service
+@RestController
 public class UserController {
 
-    private UsersDao users;
-    private Password pswHasher;
+	private UsersDao users;
+	private Password passwordTools;
 
-    @Autowired
-    public UserController(UsersDao usersDao, GamesDao gamesDao) {
-        this.users = usersDao;
-        this.pswHasher = new Password();
-    }
+	@Autowired
+	public UserController(UsersDao usersDao) {
+		this.users = usersDao;
+		this.passwordTools = new Password();
+	}
 
-    /**
-     * Creates an userAccount for UserAccounts table
-     *
-     * @param userName  UserName of account that will be created
-     * @param psw       password of account that will be created
-     * @param firstName first name of account that will be created
-     * @param lastName  last name of account that will be created
-     * @param email     email of account that will be created
-     * @return created userAccount or null if creating failed
-     */
-    public UserAccounts createAccount(String userName, String psw, String firstName, String lastName, String email) {
-        try {
-            UserAccounts add = new UserAccounts();
-            add.setUserName(userName);
-            add.setPasswordHash(pswHasher.getSaltedHash(psw));
-            add.setFirstName(firstName);
-            add.setLastName(lastName);
-            add.setEmail(email);
-            users.saveOrUpdateAccount(add);
-            return add;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
+	/* Maps to all HTTP actions by default (GET,POST,..) */
+	@RequestMapping("/users")
+	public @ResponseBody String getUsers() {
+		return "{\"message\":\"this returns user info\"}";
+	}
 
-    public List<UserAccounts> allAccounts() {
-        return users.allAccounts();
-    }
+	/**
+	 * Creates an userAccount for UserAccounts table
+	 *
+	 * @param userName
+	 *            UserName of account that will be created
+	 * @param psw
+	 *            password of account that will be created
+	 * @param firstName
+	 *            first name of account that will be created
+	 * @param lastName
+	 *            last name of account that will be created
+	 * @param email
+	 *            email of account that will be created
+	 * @return created userAccount or null if creating failed
+	 */
+	public UserAccounts createAccount(String userName, String psw, String firstName, String lastName, String email) {
+		try {
+			UserAccounts add = new UserAccounts();
+			add.setUserName(userName);
+			add.setPasswordHash(passwordTools.getSaltedHash(psw));
+			add.setFirstName(firstName);
+			add.setLastName(lastName);
+			add.setEmail(email);
+			users.saveOrUpdateAccount(add);
+			return add;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 
-    public List<UserRoles> allRoles() {
-        return users.allRoles();
-    }
+	public List<UserAccounts> allAccounts() {
+		return users.allAccounts();
+	}
 
-    /**
-     * Search the database for the email and check if the passwords matches
-     *
-     * @param email email of account user is trying to login
-     * @param psw   password of account user is trying to login
-     * @return UserAccount if login is successfully else null
-     */
-    public UserAccounts login(String email, String psw) {
-        try {
-            UserAccounts account = users.getUser(email);
+	public List<UserRoles> allRoles() {
+		return users.allRoles();
+	}
 
-            if (account != null) {
-                System.out.println("Not Null");
-                String hash = account.getPasswordHash();
-                if (pswHasher.validPassword(psw, hash)) {
-                    return account;
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-    
-    public UserAccounts getUser(String email) {
-        try {
-            UserAccounts account = users.getUser(email);
+	/**
+	 * Search the database for the email and check if the passwords matches
+	 *
+	 * @param email
+	 *            email of account user is trying to login
+	 * @param psw
+	 *            password of account user is trying to login
+	 * @return UserAccount if login is successfully else null
+	 */
+	public UserAccounts login(String email, String psw) {
+		try {
+			UserAccounts account = users.getUser(email);
 
-            if (account != null) {
-            	return account;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
+			if (account != null) {
+				System.out.println("Not Null");
+				String hash = account.getPasswordHash();
+				if (passwordTools.validPassword(psw, hash)) {
+					return account;
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 
-    public void fakeData() {
-        try {
-            UserRoles banned = new UserRoles(0, "Banned");
-            UserRoles member = new UserRoles(1, "Member");
-            UserRoles admin = new UserRoles(9, "Admin");
-            UserRoles god = new UserRoles(99, "God");
+	public UserAccounts getUser(String email) {
+		try {
+			UserAccounts account = users.getUser(email);
 
-            users.saveOrUpdateRoles(banned);
-            users.saveOrUpdateRoles(member);
-            users.saveOrUpdateRoles(admin);
-            users.saveOrUpdateRoles(god);
+			if (account != null) {
+				return account;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 
-            UserAccounts add1 = new UserAccounts("nAku", this.pswHasher.getSaltedHash("aku.kangas"), "Aku", "Kangas",
-                    "Aku.Kangas@metropolia.fi");
-            UserAccounts add2 = new UserAccounts("Matti", this.pswHasher.getSaltedHash("matti.holopainen"), "Matti",
-                    "Holopainen", "Matti.Holopainen2@metropolia.fi");
-            UserAccounts add3 = new UserAccounts("Tiina", this.pswHasher.getSaltedHash("tiina.ojala"), "Tiina", "Ojala",
-                    "Tiina.Ojala3@metropolia.fi");
-            UserAccounts add4 = new UserAccounts("Maarit", this.pswHasher.getSaltedHash("maarit.saariniemi"), "Maarit",
-                    "Saariniemi", "Maarit.Saariniemi@Metropolia.fi");
+	public void fakeData() {
+		try {
+			UserRoles banned = new UserRoles(0, "Banned");
+			UserRoles member = new UserRoles(1, "Member");
+			UserRoles admin = new UserRoles(9, "Admin");
+			UserRoles god = new UserRoles(99, "God");
 
-            users.saveOrUpdateAccount(add1);
-            users.saveOrUpdateAccount(add2);
-            users.saveOrUpdateAccount(add3);
-            users.saveOrUpdateAccount(add4);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+			users.saveOrUpdateRoles(banned);
+			users.saveOrUpdateRoles(member);
+			users.saveOrUpdateRoles(admin);
+			users.saveOrUpdateRoles(god);
 
-    }
+			UserAccounts add1 = new UserAccounts("nAku", this.passwordTools.getSaltedHash("aku.kangas"), "Aku",
+					"Kangas", "Aku.Kangas@metropolia.fi");
+			UserAccounts add2 = new UserAccounts("Matti", this.passwordTools.getSaltedHash("matti.holopainen"), "Matti",
+					"Holopainen", "Matti.Holopainen2@metropolia.fi");
+			UserAccounts add3 = new UserAccounts("Tiina", this.passwordTools.getSaltedHash("tiina.ojala"), "Tiina",
+					"Ojala", "Tiina.Ojala3@metropolia.fi");
+			UserAccounts add4 = new UserAccounts("Maarit", this.passwordTools.getSaltedHash("maarit.saariniemi"),
+					"Maarit", "Saariniemi", "Maarit.Saariniemi@Metropolia.fi");
+
+			users.saveOrUpdateAccount(add1);
+			users.saveOrUpdateAccount(add2);
+			users.saveOrUpdateAccount(add3);
+			users.saveOrUpdateAccount(add4);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
 }

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import fi.thepaardihub.dao.users.repository.*;
 import fi.thepaardihub.dao.users.tables.*;
-import fi.thepaardihub.password.Password;
+import fi.thepaardihub.security.Password;
 
 @Service
 public class UsersDao {

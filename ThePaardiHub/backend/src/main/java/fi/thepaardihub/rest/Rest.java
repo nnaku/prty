@@ -1,15 +1,10 @@
 package fi.thepaardihub.rest;
 
-
-import java.util.HashMap;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.web.bind.annotation.*;
-import com.google.gson.*;
-
 import fi.thepaardihub.controllers.UserController;
 import fi.thepaardihub.dao.users.tables.*;
-import fi.thepaardihub.password.*;
+import fi.thepaardihub.security.*;
 
 
 @RestController
@@ -66,7 +61,7 @@ public class Rest {
 
 	}
 
-	/*
+	/**
 	 * Rest for userAccount creation
 	 *
 	 * @param userName

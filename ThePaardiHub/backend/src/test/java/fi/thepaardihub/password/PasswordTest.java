@@ -3,13 +3,13 @@ package fi.thepaardihub.password;
 import static org.junit.Assert.*;
 
 import org.junit.Rule;
-
-import fi.thepaardihub.password.Password;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import fi.thepaardihub.security.Password;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
