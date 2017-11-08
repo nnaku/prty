@@ -1,20 +1,46 @@
-<style src="./components/Styles/styles.css"></style>
 <template>
-    <div id="app">
-        <!--<div class="header">
-      <p>App.vue: Joten navit headerit yms yms. tänne!</p>
-    </div>
-    <p>App.vue: Tää näkyy näkyy joka sivulle!</p>-->
-        <router-view></router-view>
-        <!--<div class="footer">
-      <p>App.vue: Esim footer route-view:n alle</p>
-    </div>-->
-    </div>
+  <div id="app">
+    <appHeader/>
+    <router-view/>
+    <appFooter/>
+  </div>
 </template>
 
-<!-- ei hajuakaan mitä tää tekee -->
 <script>
-    export default {
-        name: 'app',
-    }
+import appHeader from "./components/Header";
+import appFooter from "./components/Footer";
+
+export default {
+  name: "app",
+  components: {
+    appHeader,
+    appFooter
+  },
+  data() {
+    return {
+      authorized: false
+    };
+  }
+};
 </script>
+
+<style>
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+#app {
+  min-height: 100%;  
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+}
+</style>
+
+
+
+
+
