@@ -2,12 +2,14 @@
   <div class="appheader">
     <div class="topnav" id="myTopnav">
       <a class="brand toLeft" href="/">PRTY.fi</a>
+      
         <!--
         v-if="this.$parent.authorized" for user who as logged in
         and v-else for this.$parent.authorized users
         -->
       <a class="toLeft" v-if="this.$parent.authorized" href="#mygames">My games</a>
       <a class="toLeft" v-else href="/about">About</a>
+      <a class="testRest toLeft" href="/test">test as rest</a>
       <a class="toRight" v-if="this.$parent.authorized" href="#logout">Logout</a>
       <a class="toRight" v-else href="#" @click="showLogin()">Login</a>
       <a class="toRight" v-if="this.$parent.authorized" href="#profile">Profile</a>
