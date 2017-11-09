@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import fi.thepaardihub.controllers.UserController;
 import fi.thepaardihub.dao.users.tables.UserAccounts;
-import fi.thepaardihub.password.Password;
 import fi.thepaardihub.rest.jsonobject.SignIn;
+import fi.thepaardihub.security.Password;
 
 
 @Controller
