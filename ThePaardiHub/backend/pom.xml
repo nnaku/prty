@@ -60,10 +60,7 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-security</artifactId>
-		</dependency>
+
 
 		<dependency>
 			<groupId>io.jsonwebtoken</groupId>
@@ -89,7 +86,7 @@
 							<goal>copy-resources</goal>
 						</goals>
 						<configuration>
-							<outputDirectory>src/main/resources/public</outputDirectory>
+							<outputDirectory>${project.parent.basedir}/backend/src/main/resources/public</outputDirectory>
 							<overwrite>true</overwrite>
 							<resources>
 								<resource>

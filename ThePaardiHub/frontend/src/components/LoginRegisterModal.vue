@@ -10,13 +10,13 @@
         <form class="login" autocomplete="false">
           <input class="login" id="login-email" placeholder="Email" type="text" data="">
           <input class="login" id="login-password1" placeholder="Password" type="password">
-          <a class="login" v-on:click="lostPassword()"href="#">Forgot your password?</a>
+          <a class="login" v-on:click="lostPassword()">Forgot your password?</a>
         </form>
       </div>
       <div class="box-footer login">
         <div class="button-set login">
-          <button class="login" id="login-btn">Login</button>
-          <a class="login" v-on:click="toRegister()"href="#">Create an account</a>
+          <button class="login" id="login-btn" v-on:click="this.parent.parent.$authorized = true" >Login</button>
+          <a class="login" v-on:click="toRegister()">Create an account</a>
         </div>
       </div>
     </div>
@@ -38,7 +38,7 @@
       <div class="box-footer register">
         <div class="button-set register">
           <button class="register" id="register-btn">Submit</button>
-          <a class="forgot" v-on:click="toLogin()" href="#">Already have an account</a>
+          <a class="forgot" v-on:click="toLogin()">Already have an account</a>
         </div>
       </div>
     </div>
@@ -55,7 +55,7 @@
       <div class="box-footer forgot">
         <div class="button-set forgot">
           <button class="forgot" id="forgot-btn">Confirm</button>
-          <a class="forgot" v-on:click="toLogin()" href="#">Back to login</a>
+          <a class="forgot" v-on:click="toLogin()">Back to login</a>
         </div>
       </div>
     </div>
@@ -75,7 +75,6 @@ export default {
   },
   methods: {
     toLogin() {
-      this.text = "";
       this.$parent.showLogin();
     },
     toRegister() {
@@ -87,6 +86,11 @@ export default {
   }
 };
 </script>
-<style scoped>
 
+<style scoped>
+/* There is no href attribute on <a/>, so underscore and pointer added to simulate like a:link behavior */
+a:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
 </style>

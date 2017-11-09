@@ -10,9 +10,9 @@ public class PageController {
 	
 	//tää ei kai tee mitää
 	
-	@RequestMapping("/hello")
+	@RequestMapping("/home")
 	public ModelAndView index() {
-		return new ModelAndView( "public/index.html");
+		return new ModelAndView( "/public/index.html");
 	}
 	
 	

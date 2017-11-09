@@ -1,19 +1,19 @@
 <template>
   <div class="appheader">
     <div class="topnav" id="myTopnav">
-      <a class="brand toLeft" href="/">PRTY.fi</a>
+      <router-link class="brand toLeft item" v-bind:to="'/'">PRTY.fi</router-link></a>
+
       
         <!--
         v-if="this.$parent.authorized" for user who as logged in
         and v-else for this.$parent.authorized users
         -->
-      <a class="toLeft" v-if="this.$parent.authorized" href="#mygames">My games</a>
-      <a class="toLeft" v-else href="/about">About</a>
-      <a class="testRest toLeft" href="/test">test as rest</a>
-      <a class="toRight" v-if="this.$parent.authorized" href="#logout">Logout</a>
-      <a class="toRight" v-else href="#" @click="showLogin()">Login</a>
-      <a class="toRight" v-if="this.$parent.authorized" href="#profile">Profile</a>
-      <a class="toRight" v-else href="#" @click="showRegister()">Register</a>
+      <router-link class="toLeft item" v-bind:to="'/games'" v-if="this.$parent.authorized">My games</router-link>
+      <router-link class="toLeft item" v-bind:to="'/about'" v-else>About</router-link>
+      <a class="toRight item" v-bind:to="'/logout'" v-on:click="logout()"  v-if="this.$parent.authorized">Logout</a>
+      <a class="toRight item" v-on:click="showLogin()" v-else>Login</a>
+      <router-link class="toRight item" v-bind:to="'/profile'" v-if="this.$parent.authorized">Profile</router-link>
+      <a class="toRight item" v-on:click="showRegister()" v-else >Register</a>
     </div>
     <LoginRegisterModal/>
   </div>
@@ -41,6 +41,7 @@ export default {
       this.register = false;
       this.reset = false;
       this.$modal.show("loginRegistesFormModal");
+      this.$parent.login();
     },
     showRegister() {
       this.login = false;
@@ -53,6 +54,9 @@ export default {
       this.register = false;
       this.reset = true;
       this.$modal.show("loginRegistesFormModal");
+    },
+    logout(){
+      this.$parent.authorized = false;
     }
   }
 };
