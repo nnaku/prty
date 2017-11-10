@@ -10,9 +10,9 @@
         -->
       <router-link class="toLeft item" v-bind:to="'/games'" v-if="this.$parent.authorized">My games</router-link>
       <router-link class="toLeft item" v-bind:to="'/about'" v-else>About</router-link>
-      <a class="toRight item" v-bind:to="'/logout'" v-on:click="logout()"  v-if="this.$parent.authorized">Logout</a>
+      <a class="toRight item" v-on:click="logout()" v-if="this.$parent.authorized">Logout</a>
       <a class="toRight item" v-on:click="showLogin()" v-else>Login</a>
-      <router-link class="toRight item" v-bind:to="'/profile'" v-if="this.$parent.authorized">Profile</router-link>
+      <router-link class="toRight item" v-bind:to="'/user'" v-if="this.$parent.authorized">Profile</router-link>
       <a class="toRight item" v-on:click="showRegister()" v-else >Register</a>
     </div>
     <LoginRegisterModal/>
@@ -22,40 +22,30 @@
 
 <script>
 import LoginRegisterModal from "./LoginRegisterModal";
-
 export default {
   name: "appheader",
+  data() {
+    return {
+      form: "login"
+    };
+  },
   components: {
     LoginRegisterModal
   },
-  data() {
-    return {
-      login: false,
-      register: false,
-      reset: false
-    };
-  },
   methods: {
     showLogin() {
-      this.login = true;
-      this.register = false;
-      this.reset = false;
-      this.$modal.show("loginRegistesFormModal");
-      this.$parent.login();
+      this.form = "login";
+      this.$modal.show("loginRegisterFormModal");
     },
     showRegister() {
-      this.login = false;
-      this.register = true;
-      this.reset = false;
-      this.$modal.show("loginRegistesFormModal");
+      this.form = "register";
+      this.$modal.show("loginRegisterFormModal");
     },
     showReset() {
-      this.login = false;
-      this.register = false;
-      this.reset = true;
-      this.$modal.show("loginRegistesFormModal");
+      this.form = "reset";
+      this.$modal.show("loginRegisterFormModal");
     },
-    logout(){
+    logout() {
       this.$parent.authorized = false;
     }
   }
@@ -65,10 +55,9 @@ export default {
 <style scoped>
 /* Add a black background color to the top navigation */
 .topnav {
-  background-color: #00ccff;
+  background-color: #db6e2d;
   overflow: hidden;
 }
-
 /* Style the links inside the navigation bar */
 .topnav a {
   display: block;
@@ -78,17 +67,18 @@ export default {
   text-decoration: none;
   font-size: 1.3em;
 }
-
 /* Change the color of links on hover */
 .topnav a:hover {
   background-color: #ddd;
   color: black;
 }
-
 .toLeft {
   float: left;
 }
 .toRight {
   float: right;
+}
+.router-link-active {
+  background-color: #ed8e57;
 }
 </style>

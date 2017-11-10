@@ -1,9 +1,12 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import vmodal from 'vue-js-modal'
+
 import Home from '@/components/Home'
 import About from '@/components/About'
-import Test from '@/components/Test'
+import User from '@/components/UserProfile'
+import Logout from '@/components/Logout'
+
 
 Vue.use(Router)
 Vue.use(vmodal)
@@ -20,9 +23,13 @@ export default new Router({
       name: 'About',
       component: About
     },{
-      path: "/test",
-      name: 'Test',
-      component: Test
+      path: "/user",
+      name: 'User',
+      component: User
+    },{
+      path: "/logout",
+      name: 'Logout',
+      component: Logout
     }
   ]
 })

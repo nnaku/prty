@@ -7,7 +7,7 @@ import router from './router'
 Vue.config.productionTip = true
 
 
-new Vue({
+var app = new Vue({
   el: '#app',
   router,
   template: '<App/>',

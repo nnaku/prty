@@ -43,7 +43,7 @@ public class SignInEndpoint {
 	 * @throws Exception
 	 */
 	
-	@PostMapping("/createaccount")
+	@PostMapping("/register")
 	public ResponseEntity<?> createAccount(@RequestBody SignIn signin) throws Exception {
 		
 		// Logger logger = LoggerFactory.getLogger(SignInEndpoint.class);
