@@ -1,10 +1,10 @@
 <template>
 
-  <!-- login, register and passeord reser forms in this modal -->
+  <!-- login, register and password reset forms in this modal -->
   <modal class="LRFM" name="loginRegisterFormModal" 
-        :width="444"
+        :width="'85%'"
         :height="'auto'"
-        :pivotY="0.24"
+        :pivotY="0.2"
         @before-open="beforeOpen"
         @before-close="beforeClose">
 
@@ -73,11 +73,12 @@ export default {
 .box > .box-body > button {
   display: block;
   margin: 1em auto;
-  width: 15%;
-  min-width: 107px; /* TIINAA KOODAA NÄÄ KUNNOLLA TÄNNE!!! */
-  height: 3em;
+  min-width: 15%;
+  padding: 1em;
+  height: 100%;
   border: none;
   background-color: #8db9b0;
+  font-size: 1.1em;
 }
 .box > .box-footer > a,
 .box > .box-body > a {
@@ -88,4 +89,25 @@ export default {
   /* text-decoration: underline; */
   cursor: pointer;
 }
+
+@media screen and (min-width: 920px) {
+
+  .box > .box-body > button {
+    width: 15%;
+    padding: 1em;
+    font-size: 1em;
+  }
+
+}
+
+@media screen and (max-width: 790px) {
+
+  .box > .box-body > button {
+    width: 25%;
+    padding: 1em;
+    font-size: 1em;
+  }
+
+}
+
 </style>

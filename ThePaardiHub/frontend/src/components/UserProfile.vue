@@ -99,8 +99,8 @@ export default {
   display: inline-block;
   margin: 1em auto;
   width: 15%;
-  min-width: 107px; /* TIINAA KOODAA NÄÄ KUNNOLLA TÄNNE!!! */
-  height: 3em;
+  height: 100%;
+  padding: 1em;
   border: none;
   background-color: #8db9b0;
 }
@@ -108,7 +108,6 @@ export default {
   display: block;
   margin: 1em auto;
   width: 15%;
-  min-width: 107px; /* TIINAA KOODAA NÄÄ KUNNOLLA TÄNNE!!! */
   height: 3em;
   border: none;
   background-color: #8db9b0;
@@ -117,7 +116,6 @@ export default {
   display: block;
   margin: 1em auto;
   width: 15%;
-  min-width: 107px; /* TIINAA KOODAA NÄÄ KUNNOLLA TÄNNE!!! */
   height: 3em;
   border: none;
   background-color: #8db9b0;
@@ -131,6 +129,49 @@ export default {
   color: grey;
   /* text-decoration: underline; */
   cursor: pointer;
+}
+
+@media screen and (min-width: 920px) {
+
+  .box > .box-body > button {
+    width: 15%;
+    padding: 1em;
+    font-size: 1em;
+    height: 100%;
+  }
+
+}
+
+@media screen and (max-width: 920px) and (min-width: 790px) {
+
+  .box > .box-body > button {
+    width: 20%;
+    padding: 1em;
+    font-size: 1em;
+    height: 100%;
+  }
+
+}
+
+@media screen and (max-width: 790px) {
+
+  .box > .box-body > button {
+    width: 30%;
+    padding: 1em;
+    font-size: 1em;
+    height: 100%;
+  }
+
+}
+@media screen and (max-width: 490px) {
+
+  .box > .box-body > button {
+    width: 50%;
+    padding: 1em;
+    font-size: 1em;
+    height: 100%;
+  }
+
 }
 </style>
 
