@@ -7,6 +7,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 import fi.thepaardihub.controllers.UserController;
 import fi.thepaardihub.dao.users.tables.UserAccounts;
@@ -30,6 +32,11 @@ public class LoginEndpoint {
 		}
 		// TODO TOKEN HANDLING
 		return new ResponseEntity<Object>("Successfull login", new HttpHeaders(), HttpStatus.OK);
+	}
+	
+	@RequestMapping("/login")
+	public ModelAndView index() {
+		return new ModelAndView("/public/index.html");
 	}
 
 }

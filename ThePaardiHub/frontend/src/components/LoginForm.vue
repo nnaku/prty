@@ -2,7 +2,7 @@
   <div class="box login">
     <div class="box-header login">
       <div class="title login">Login here</div>
-      <div class="error">{{responseData}}</div>
+      <div v-bind:class="message">{{responseData}}</div>
     </div>
     <div class="box-body login">
         <input v-model="formData.email" type="email" placeholder="Email">
@@ -25,6 +25,7 @@ export default {
   data() {
     return {
       responseData: "",
+      message: "error",
       formData: {
         email: "",
         password: ""
@@ -41,15 +42,19 @@ export default {
     postForm() {
       axios
         .post("/login", {
-          email: this.$data.email,
-          password: this.$data.password
+          email: this.formData.email,
+          password: this.formData.password
         })
         .then(response => {
-          this.posts = response.data;
-          // console.log(JSON.stringify(response.data));
+          this.message = "valid";
+          this.responseData = response.data
+          console.log("Valid response");
+          console.log(JSON.stringify(response.data));
         })
         .catch(e => {
+          this.message = "error";
           this.responseData = e.response.data;
+          console.log("Invalid response");
           console.log(JSON.stringify(e));
         });
     }

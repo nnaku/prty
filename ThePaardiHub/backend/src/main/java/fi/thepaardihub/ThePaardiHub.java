@@ -12,6 +12,11 @@ public class ThePaardiHub {
 	public ModelAndView index() {
 		return new ModelAndView("/public/index.html");
 	}
+	
+	@RequestMapping("/about/")
+	public ModelAndView about() {
+		return new ModelAndView("/public/index.html");
+	}
 
 	public static void main(String[] args) {
 		SpringApplication.run(ThePaardiHub.class, args);

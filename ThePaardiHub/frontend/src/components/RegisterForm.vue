@@ -11,7 +11,7 @@
         <input v-model="formData.email" type="email" placeholder="Email">
         <input v-model="formData.password" type="password" placeholder="Password">
         <input v-model="formData.passwordVerify" type="password" placeholder="Confirm password">
-        <button type="button" @click="postForm()">Submit</button>
+        <button type="button" v-on:click="postForm()">Submit</button>
     </div>
     <div class="box-footer register">
       <a class="forgot" v-on:click="showLogin()">Already have an account</a>
@@ -26,7 +26,7 @@ export default {
   name: "registeration-form",
   data() {
     return {
-      responseData:"",
+      responseData: "",
       formData: {
         firstname: "",
         lastname: "",
@@ -44,19 +44,21 @@ export default {
     postForm() {
       axios
         .post("/register", {
-          firstname: this.$data.firstname,
-          lastname: this.$data.lastname,
-          username: this.$data.username,
-          email: this.$data.email,
-          password: this.$data.password,
-          passwordVerify: this.$data.passwordVerify
+          firstname: this.formData.firstname,
+          lastname: this.formData.lastname,
+          username: this.formData.username,
+          email: this.formData.email,
+          password: this.formData.password,
+          passwordVerify: this.formData.passwordVerify
         })
         .then(response => {
           this.posts = response.data;
-          // console.log(JSON.stringify(response.data));
+          console.log("Valid response");
+          console.log(JSON.stringify(response.data));
         })
         .catch(e => {
           this.responseData = e.response.data;
+          console.log("Invalid response");
           console.log(JSON.stringify(e));
         });
     }

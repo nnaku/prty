@@ -62,6 +62,13 @@ export default {
   color: #8db9b0;
   background-color: Tomato;
 }
+.box > .box-header > .valid {
+  text-align: center;
+  margin: 3% auto 4% auto;
+  font-size: 1.5em;
+  color: #8db9b0;
+  background-color: MediumSeaGreen;
+}
 .box > .box-body > input {
   width: 50%;
   height: 2.7em;

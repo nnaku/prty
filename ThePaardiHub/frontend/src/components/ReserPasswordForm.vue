@@ -43,10 +43,12 @@ export default {
         })
         .then(response => {
           this.posts = response.data;
-          // console.log(JSON.stringify(response.data));
+          console.log("Valid response");
+          console.log(JSON.stringify(response.data));
         })
         .catch(e => {
           this.responseData = e.response.data;
+          console.log("Invalid response");
           console.log(JSON.stringify(e));
         });
     }
