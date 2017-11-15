@@ -1,23 +1,33 @@
 package fi.thepaardihub.controllers;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.PostMapping;
+
+import org.springframework.web.bind.annotation.RequestHeader;
+
 import org.springframework.web.bind.annotation.RestController;
 
-import fi.thepaardihub.dao.games.GamesDao;
+import com.google.gson.Gson;
+
 import fi.thepaardihub.dao.users.UsersDao;
 import fi.thepaardihub.dao.users.tables.UserAccounts;
 import fi.thepaardihub.dao.users.tables.UserRoles;
+import fi.thepaardihub.security.JWT;
 import fi.thepaardihub.security.Password;
 
 @Service
 @RestController
 public class UserController {
 
+	private JWT jwt;
 	private UsersDao users;
 	private Password passwordTools;
 
@@ -28,9 +38,34 @@ public class UserController {
 	}
 
 	/* Maps to all HTTP actions by default (GET,POST,..) */
-	@RequestMapping("/users")
-	public @ResponseBody String getUsers() {
-		return "{\"message\":\"this returns user info\"}";
+
+	@PostMapping("/user")
+	public ResponseEntity<?> renewToken(@RequestHeader HttpHeaders headers) {
+		
+		jwt = new JWT();
+		String body;
+		
+		// Get token from header and remove Bearer prefix.
+		String token = headers.getFirst("Authorization");
+
+		if (jwt.validate(token).get("status") == "SUCCESS") {
+			String email = (String) jwt.validate(token).get("email");
+			try {
+				UserAccounts account = users.getUser(email);
+				if (account != null) {
+					body = new Gson().toJson(account.toMap());
+					return new ResponseEntity<Object>(body, HttpStatus.OK);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				body = new Gson().toJson(e.getMessage());
+				return new ResponseEntity<Object>(body, HttpStatus.NOT_FOUND);
+			}
+		} else {
+			body = new Gson().toJson(jwt.validate(token));
+			return new ResponseEntity<Object>(body, HttpStatus.UNAUTHORIZED);
+		}
+		return null;
 	}
 
 	/**

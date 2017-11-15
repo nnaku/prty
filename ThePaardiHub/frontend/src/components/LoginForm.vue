@@ -2,11 +2,11 @@
   <div class="box login">
     <div class="box-header login">
       <div class="title login">Login here</div>
-      <div v-bind:class="message">{{responseData}}</div>
+      <div v-bind:class="status">{{responseMessage}}</div>
     </div>
     <div class="box-body login">
-        <input v-model="formData.email" type="email" placeholder="Email">
-        <input v-model="formData.password" type="password" placeholder="Password">
+        <input v-model="data.formData.email" type="email" placeholder="Email">
+        <input v-model="data.formData.password" type="password" placeholder="Password">
         <a class="forgot" v-on:click="showReset()">Forgot your password?</a>
         <button type="button" @click="postForm()">Login</button>
     </div>
@@ -18,19 +18,24 @@
 </template>
 
 <script>
-import axios from "axios";
-
 export default {
   name: "login-form",
   data() {
     return {
-      responseData: "",
-      message: "error",
-      formData: {
-        email: "",
-        password: ""
-      }
+      responseMessage: "",
+      status: "ERROR",
+      data: {
+        formData: {
+          email: "test@test.com",
+          password: "Passu123",
+          remember: "false"
+        }
+      },
+      rememberMe: true
     };
+  },
+  mounted() {
+    console.log(this.$auth.redirect());
   },
   methods: {
     showReset() {
@@ -40,23 +45,37 @@ export default {
       this.$parent.$parent.showRegister();
     },
     postForm() {
-      axios
-        .post("/login", {
-          email: this.formData.email,
-          password: this.formData.password
+      var redirect = this.$auth.redirect();
+      this.$auth
+        .login({
+          data: this.data.formData,
+          rememberMe: this.data.remember,
+          fetchUser: false,
+          redirect: { name: redirect ? redirect.from.name : "Games" }
         })
+        .then(
+          () => {
+            this.$modal.hide("loginRegisterFormModal");
+          },
+          res => {
+            console.log(JSON.stringify(res.response.data.message));
+            this.status = res.response.data.status;
+            this.responseMessage = res.response.data.message;
+          }
+        );
+      /**
         .then(response => {
-          this.message = "valid";
-          this.responseData = response.data
-          console.log("Valid response");
-          console.log(JSON.stringify(response.data));
+          this.status = response.data.status;
+          this.responseMessage = response.data.message;
+          // console.log(JSON.stringify(response.data));
+          
         })
         .catch(e => {
-          this.message = "error";
-          this.responseData = e.response.data;
-          console.log("Invalid response");
-          console.log(JSON.stringify(e));
+          // this.message = "error";
+          // this.responseMessage = e.response.message;
+          // console.log(JSON.stringify(e.response.data));
         });
+        */
     }
   }
 };

@@ -15,11 +15,6 @@ export default {
   components: {
     appHeader,
     appFooter
-  },
-  data() {
-    return {
-      authorized: true
-    };
   }
 };
 </script>

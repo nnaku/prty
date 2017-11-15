@@ -59,11 +59,11 @@ export default {
   },
   created() {
     axios
-      .get("https://jsonplaceholder.typicode.com/users/1")
+      .post("/user")
       .then(response => {
         this.userinfo = response.data;
         this.userinfobackup = response.data;
-        console.log(response.data);
+        console.log(JSON.stringify(response));
       })
       .catch(e => {
         this.errors.push(e);
@@ -112,7 +112,7 @@ export default {
   border: none;
   background-color: #8db9b0;
 }
-.box > .box-body > button{
+.box > .box-body > button {
   display: block;
   margin: 1em auto;
   width: 15%;
@@ -132,46 +132,38 @@ export default {
 }
 
 @media screen and (min-width: 920px) {
-
   .box > .box-body > button {
     width: 15%;
     padding: 1em;
     font-size: 1em;
     height: 100%;
   }
-
 }
 
 @media screen and (max-width: 920px) and (min-width: 790px) {
-
   .box > .box-body > button {
     width: 20%;
     padding: 1em;
     font-size: 1em;
     height: 100%;
   }
-
 }
 
 @media screen and (max-width: 790px) {
-
   .box > .box-body > button {
     width: 30%;
     padding: 1em;
     font-size: 1em;
     height: 100%;
   }
-
 }
 @media screen and (max-width: 490px) {
-
   .box > .box-body > button {
     width: 50%;
     padding: 1em;
     font-size: 1em;
     height: 100%;
   }
-
 }
 </style>
 

@@ -5,8 +5,8 @@ import vmodal from 'vue-js-modal'
 import Home from '@/components/Home'
 import About from '@/components/About'
 import User from '@/components/UserProfile'
-import Logout from '@/components/Logout'
 import Login from '@/components/LoginForm'
+import Games from '@/components/Games'
 
 
 Vue.use(Router)
@@ -26,11 +26,13 @@ export default new Router({
     },{
       path: "/user",
       name: 'User',
+      meta: {auth: true},
       component: User
     },{
-      path: "/logout",
-      name: 'Logout',
-      component: Logout
+      path: "/games",
+      name: 'Games',
+      meta: {auth: true},
+      component: Games
     },{
       path: "/login",
       name: 'Login',

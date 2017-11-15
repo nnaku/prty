@@ -55,14 +55,14 @@ export default {
   font-size: 1.5em;
   color: #db6e2d;
 }
-.box > .box-header > .error {
+.box > .box-header > .ERROR {
   text-align: center;
   margin: 3% auto 4% auto;
   font-size: 1.5em;
   color: #8db9b0;
   background-color: Tomato;
 }
-.box > .box-header > .valid {
+.box > .box-header > .SUCCESS {
   text-align: center;
   margin: 3% auto 4% auto;
   font-size: 1.5em;

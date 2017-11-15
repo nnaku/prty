@@ -1,12 +1,12 @@
 package fi.thepaardihub.rest.jsonobject;
 
 public class SignIn {
-	String username;
-	String password;
-	String passwordVerify;
-	String firstname;
-	String lastname;
-	String email;
+	String username = "";
+	String password = "";
+	String passwordVerify = "";
+	String firstname = "";
+	String lastname = "";
+	String email = "";
 	
 	public String getUsername() {
 		return username;

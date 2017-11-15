@@ -1,5 +1,7 @@
 package fi.thepaardihub.rest.endpoint;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -12,25 +14,28 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.google.gson.Gson;
+
 import fi.thepaardihub.controllers.UserController;
 import fi.thepaardihub.dao.users.tables.UserAccounts;
 import fi.thepaardihub.rest.jsonobject.SignIn;
 import fi.thepaardihub.security.Password;
 
-
 @Controller
 public class SignInEndpoint {
 
-
-	
 	private UserController users;
 	private Password password = new Password();
+	private Map<String, String> jsonMap;
+	private String passwordError;
+	private UserAccounts newUser;
 
 	/**
 	 *
-	 * @param users Set Users
+	 * @param users
+	 *            Set Users
 	 */
-	
+
 	@Autowired
 	public void setUsers(UserController users) {
 		this.users = users;
@@ -42,36 +47,62 @@ public class SignInEndpoint {
 	 * @return
 	 * @throws Exception
 	 */
-	
+
 	@PostMapping("/register")
 	public ResponseEntity<?> createAccount(@RequestBody SignIn signin) throws Exception {
-		
 		// Logger logger = LoggerFactory.getLogger(SignInEndpoint.class);
 		// logger.debug("singin : {}", signin);
 
+		// Return body
+		jsonMap = new HashMap<String, String>();
+
+		// Valid email pattern
 		Pattern pattern = Pattern.compile("[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}");
-        Matcher mat = pattern.matcher(signin.getEmail());
 
-        if(!mat.matches()){
-        	return new ResponseEntity<Object>("Invalid email.", new HttpHeaders(), HttpStatus.BAD_REQUEST);
-        }
+		// Validating email.
+		Matcher mat = pattern.matcher(signin.getEmail());
 		
-		if(users.getUser(signin.getEmail()) != null) {
-			return new ResponseEntity<Object>("This email is already registered.", new HttpHeaders(), HttpStatus.BAD_REQUEST);
+		// Validating password layout
+		passwordError = password.passwordValidator(signin.getPassword(), signin.getPasswordVerify());
+
+		// If invalid email pattern.
+		if (!mat.matches()) {
+			jsonMap.put("emailPattern", "Invalid email.");
+			jsonMap.put("status", "ERROR");
+
 		}
-		
-		String passwordError = password.passwordValidator(signin.getPassword(), signin.getPasswordVerify());
+
+		// If email already registered.
+		if (users.getUser(signin.getEmail()) != null) {
+			jsonMap.put("emailUnused", "This email is already registered.");
+			jsonMap.put("status", "ERROR");
+		}
+
+		// If invalid password layout.
 		if (passwordError != null) {
-			return new ResponseEntity<Object>(passwordError, new HttpHeaders(), HttpStatus.BAD_REQUEST);
-			
-		}
-		UserAccounts newUser = users.createAccount(signin.getUsername(), signin.getPassword(), signin.getFirstname(), signin.getLastname(), signin.getEmail());
-		if(newUser == null) {
-			return new ResponseEntity<Object>("Something went wrong :(", new HttpHeaders(), HttpStatus.BAD_REQUEST);
-			
+			jsonMap.put("validPassword", passwordError);
+			jsonMap.put("status", "ERROR");
 		}
 
-		return new ResponseEntity<Object>("Successfully Sign-in", new HttpHeaders(), HttpStatus.OK);
-		
+		// Check if errors
+		if (jsonMap.get("status") == "ERROR") {
+			// return all error messages to client
+			return new ResponseEntity<Object>(new Gson().toJson(jsonMap), HttpStatus.BAD_REQUEST);
+		} else {
+			// Generate new user
+			newUser = users.createAccount(signin.getUsername(), signin.getPassword(), signin.getFirstname(),
+					signin.getLastname(), signin.getEmail());
+			// Validate that new user is actually added.
+			if (newUser == null) {
+				// For some random issue. At the moment I don't have no idea what can case this, but "just in case"!
+				jsonMap.put("status", "ERROR");
+				jsonMap.put("message", "Something went wrong! :(");
+				return new ResponseEntity<Object>(new Gson().toJson(jsonMap), HttpStatus.BAD_REQUEST);
+			} else {
+				jsonMap.put("status", "SUCCESS");
+				jsonMap.put("message", "Successfully Sign-in");
+				return new ResponseEntity<Object>(new Gson().toJson(jsonMap), HttpStatus.OK);
+			}
+		}
 	}
 }

@@ -3,16 +3,11 @@
     <div class="topnav" id="myTopnav">
       <router-link class="brand toLeft item" v-bind:to="'/'">PRTY.fi</router-link></a>
 
-      
-        <!--
-        v-if="this.$parent.authorized" for user who as logged in
-        and v-else for this.$parent.authorized users
-        -->
-      <router-link class="toLeft item" v-bind:to="'/games'" v-if="this.$parent.authorized">My games</router-link>
+      <router-link class="toLeft item" v-bind:to="'/games'" v-if="this.$auth.check()">My games</router-link>
       <router-link class="toLeft item" v-bind:to="'/about'" v-else>About</router-link>
-      <a class="toRight item" v-on:click="logout()" v-if="this.$parent.authorized">Logout</a>
+      <a class="toRight item" v-on:click="logout()" v-if="this.$auth.check()">Logout</a>
       <a class="toRight item" v-on:click="showLogin()" v-else>Login</a>
-      <router-link class="toRight item" v-bind:to="'/user'" v-if="this.$parent.authorized">Profile</router-link>
+      <router-link class="toRight item" v-bind:to="'/user'" v-if="this.$auth.check()">Profile</router-link>
       <a class="toRight item" v-on:click="showRegister()" v-else >Register</a>
     </div>
     <LoginRegisterModal/>
@@ -46,7 +41,20 @@ export default {
       this.$modal.show("loginRegisterFormModal");
     },
     logout() {
-      this.$parent.authorized = false;
+      // Data object is passed directly to http method.
+      // Accepts redirect parameter which is passed directly to router.
+      // Accepts makeRequest parameter which must be set to true to send request to api. Otherwise the logout just happens locally by deleting tokens.
+      this.$auth.logout({
+        makeRequest: false,
+        params: {}, // data: {} in axios
+        success: function() {
+          this.$forceUpdate()
+        },
+        error: function() {},
+        redirect: "/"
+
+        // etc...
+      });
     }
   }
 };
