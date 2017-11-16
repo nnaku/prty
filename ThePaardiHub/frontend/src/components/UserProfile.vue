@@ -48,7 +48,9 @@ export default {
   },
   methods: {
     cancel() {
-      this.$router.go(this.$router.currentRoute);
+      // this.isDisabled = true;
+      // this.changePassword = false;
+      Object.assign(this.$data, this.$options.data())
     },
     changePW() {
       this.changePassword = true;
@@ -57,17 +59,20 @@ export default {
       this.isDisabled = false;
     }
   },
-  created() {
-    axios
-      .post("/user")
-      .then(response => {
-        this.userinfo = response.data;
-        this.userinfobackup = response.data;
-        console.log(JSON.stringify(response));
-      })
-      .catch(e => {
-        this.errors.push(e);
+  mounted: function() {
+    this.$nextTick(function() {
+      axios
+        .post("/user")
+        .then(response => {
+          this.userinfo = response.data;
+        })
+        .catch(e => {
+          this.errors.push(e);
+        });
+      this.$nextTick(function() {
+        this.userinfobackup = this.userinfo;
       });
+    });
   }
 };
 </script>
