@@ -5,6 +5,8 @@
  */
 package fi.thepaardihub.rest.jsonobject;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author maaritemilia
@@ -12,7 +14,7 @@ package fi.thepaardihub.rest.jsonobject;
 public class GameSet {
     String ID;
     String author;
-    String Questions;
+    ArrayList<Question> Questions;
     boolean isprivate;  
     
     public String getID() {
@@ -23,7 +25,7 @@ public class GameSet {
         return author;
     }
 
-    public String getQuestions() {
+    public ArrayList<Question> getQuestions() {
         return Questions;
     }
 

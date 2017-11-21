@@ -9,7 +9,9 @@ import fi.thepaardihub.dao.games.GamesDao;
 import fi.thepaardihub.dao.users.UsersDao;
 import fi.thepaardihub.dao.games.tables.Questions;
 import fi.thepaardihub.dao.games.tables.Games;
+import fi.thepaardihub.rest.jsonobject.Question;
 import fi.thepaardihub.security.Password;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -29,13 +31,13 @@ public class GameController {
     String getGames() {
         return "{\"message\":\"this returns user info\"}";}
 
-    public Games createGame(String author, String gameName, boolean isPrivate, String questions) {
+    public Games createGame(String author, String gameName, boolean isPrivate, ArrayList<Question> questions ) {
         try {
             Games add = new Games();
             add.setAuthor(author);
             add.setGameName(gameName);
-          //  add.isPrivate(isPrivate); //En tiedä miten tää pitäs olla täälä
-            add.setQuestions(questions);
+            add.setPrivate(isPrivate);
+            add.setQuestions(createQuestions(questions));
             return add;
         } catch (Exception e) {
             e.printStackTrace();
@@ -43,6 +45,7 @@ public class GameController {
         return null;
     }
 
+    
     public List<Games> getallGames() {
         return games.getAllGames();
     }
@@ -61,5 +64,26 @@ public class GameController {
 			e.printStackTrace();
 		}
 		return null;
+    }
+
+    public String createQuestions(ArrayList<Question> questions) {
+        //foreachin sisällä 
+        String retVal = "";
+        for(Question e: questions) {
+            Questions add = new Questions();
+            add.setAuthor(e.getAuthor());
+            add.setCorrect(e.getAnwser());
+            add.setFalse1(e.getFalse1());
+            add.setFalse2(e.getFalse2());
+            add.setFalse3(e.getFalse3());
+            add.setFalse4(e.getFalse4());
+            add.setFalse5(e.getFalse5());
+            add.setFalse6(e.getFalse6());
+            add.setFalse7(e.getFalse7());
+            games.saveOrUpdateAccount(add);
+            retVal += add.getId() + ";";
+        }
+     return retVal;
+            
     }
 }
