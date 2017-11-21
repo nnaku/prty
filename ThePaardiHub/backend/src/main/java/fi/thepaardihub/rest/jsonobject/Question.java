@@ -11,10 +11,19 @@ package fi.thepaardihub.rest.jsonobject;
  */
 public class Question {
     
+        public String author;
     	public String question;
 	public String anwser;
 	public String false1;
 	public String false2;
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
 	public String false3;
         public String false4;
          public String false5;

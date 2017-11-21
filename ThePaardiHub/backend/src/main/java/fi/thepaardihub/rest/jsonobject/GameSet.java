@@ -30,6 +30,8 @@ public class GameSet {
     }
 
     public boolean getPriv() {
+        
+      
         return true; // kysy matilta
     }
 }

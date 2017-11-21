@@ -46,4 +46,12 @@ public class GamesDao {
             quizRepo.save(add);
             return add;
            }
+           
+           public Games getGame(int id) {
+               return gamesRepo.findOne(id);
+           }
+           public Questions getQuestion(int id) {
+               return quizRepo.findOne(id);
+           }
+
 }
