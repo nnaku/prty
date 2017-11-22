@@ -21,10 +21,13 @@ import fi.thepaardihub.rest.jsonobject.GameSet;
  *
  * @author maaritemilia
  */
+
+ @Controller
 public class GamesControllerRest {
-    
+     
     private GameController games;
-    
+            
+            @Autowired
             public void setGames(GameController games){
                 this.games = games;
                 
@@ -32,7 +35,7 @@ public class GamesControllerRest {
             	@PostMapping("/GameSet")
                 public ResponseEntity<?> createGame(@RequestBody GameSet gameset) {
 		
-		Games game = games.createGame(gameset.getID(), gameset.getAuthor(), gameset.getPriv(),gameset.getQuestions());
+		Games game = games.createGame(gameset.getAuthor(),gameset.getGameName(), gameset.getPriv(),gameset.getQuestions());
 		if(game == null) {
 			return new ResponseEntity<Object>("No games created", new HttpHeaders(), HttpStatus.UNAUTHORIZED);
 		}

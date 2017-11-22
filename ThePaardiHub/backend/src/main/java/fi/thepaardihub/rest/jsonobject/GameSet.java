@@ -12,15 +12,15 @@ import java.util.ArrayList;
  * @author maaritemilia
  */
 public class GameSet {
-    String ID;
     String author;
+    String gameName;
     ArrayList<Question> Questions;
     boolean isprivate;  
-    
-    public String getID() {
-        return ID;
-    }
 
+    
+     public String getGameName() {
+         return gameName;
+     }
     public String getAuthor() {
         return author;
     }

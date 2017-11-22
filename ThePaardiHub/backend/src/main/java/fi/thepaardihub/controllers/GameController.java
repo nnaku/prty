@@ -31,7 +31,7 @@ public class GameController {
     String getGames() {
         return "{\"message\":\"this returns user info\"}";}
 
-    public Games createGame(String author, String gameName, boolean isPrivate, ArrayList<Question> questions ) {
+    public Games createGame(String author, String gameName, boolean isPrivate, List<Question> questions ) {
         try {
             Games add = new Games();
             add.setAuthor(author);
@@ -66,7 +66,7 @@ public class GameController {
 		return null;
     }
 
-    public String createQuestions(ArrayList<Question> questions) {
+    public String createQuestions(List<Question> questions) {
         //foreachin sisällä 
         String retVal = "";
         for(Question e: questions) {
