@@ -21,29 +21,26 @@ import fi.thepaardihub.rest.jsonobject.GameSet;
  *
  * @author maaritemilia
  */
-
- @Controller
+@Controller
 public class GamesControllerRest {
-     
-    private GameController games;
-            
-            @Autowired
-            public void setGames(GameController games){
-                this.games = games;
-                
-            }
-            	@PostMapping("/GameSet")
-                public ResponseEntity<?> createGame(@RequestBody GameSet gameset) {
-		
-		Games game = games.createGame(gameset.getAuthor(),gameset.getGameName(), gameset.getPriv(),gameset.getQuestions());
-		if(game == null) {
-			return new ResponseEntity<Object>("No games created", new HttpHeaders(), HttpStatus.UNAUTHORIZED);
-		}
-		// TODO TOKEN HANDLING
-		return new ResponseEntity<Object>("Games created", new HttpHeaders(), HttpStatus.OK);
-	}
 
-    
-    
-    
+    private GameController games;
+
+    @Autowired
+    public void setGames(GameController games) {
+        this.games = games;
+
+    }
+
+    @PostMapping("/GameSet")
+    public ResponseEntity<?> createGame(@RequestBody GameSet gameset) {
+
+        Games game = games.createGame(gameset.getAuthor(), gameset.getGameName(), gameset.getPriv(), gameset.getQuestions());
+        if (game == null) {
+            return new ResponseEntity<Object>("No games created", new HttpHeaders(), HttpStatus.UNAUTHORIZED);
+        }
+        // TODO TOKEN HANDLING
+        return new ResponseEntity<Object>("Games created", new HttpHeaders(), HttpStatus.OK);
+    }
+
 }

@@ -12,26 +12,42 @@ import java.util.ArrayList;
  * @author maaritemilia
  */
 public class GameSet {
+
     String author;
     String gameName;
-    ArrayList<Question> Questions;
-    boolean isprivate;  
+    ArrayList<Question> questions;
+    boolean isprivate;
 
-    
-     public String getGameName() {
-         return gameName;
-     }
+    public String getGameName() {
+        return gameName;
+    }
+
     public String getAuthor() {
         return author;
     }
 
     public ArrayList<Question> getQuestions() {
-        return Questions;
+        return questions;
     }
 
     public boolean getPriv() {
-        
-      
-        return true; // kysy matilta
+        return true;
     }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public void setGameName(String gameName) {
+        this.gameName = gameName;
+    }
+
+    public void setQuestions(ArrayList<Question> questions) {
+        this.questions = questions;
+    }
+
+    public void setIsprivate(boolean isprivate) {
+        this.isprivate = isprivate;
+    }
+
 }

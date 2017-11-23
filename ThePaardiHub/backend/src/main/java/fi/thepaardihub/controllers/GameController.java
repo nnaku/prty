@@ -19,11 +19,11 @@ import java.util.List;
 @RestController
 public class GameController {
 
-    private GamesDao games;
+    private GamesDao gamesdao;
   
 
-    public GameController(GamesDao games) {
-        this.games = games;
+    public GameController(GamesDao gamesdao) {
+        this.gamesdao = gamesdao;
     }
 
     @RequestMapping("/games")
@@ -38,6 +38,7 @@ public class GameController {
             add.setGameName(gameName);
             add.setPrivate(isPrivate);
             add.setQuestions(createQuestions(questions));
+            gamesdao.saveOrUpdateAccount(add);
             return add;
         } catch (Exception e) {
             e.printStackTrace();
@@ -47,15 +48,15 @@ public class GameController {
 
     
     public List<Games> getallGames() {
-        return games.getAllGames();
+        return gamesdao.getAllGames();
     }
 
     public List<Questions> getallQuestions() {
-        return games.getAllQuestions();
+        return gamesdao.getAllQuestions();
     }
     public Games getGame() {
         try {
-			Games game = (Games) games.getAllGames();
+			Games game = (Games) gamesdao.getAllGames();
 
 			if (game != null) {
 				return game;
@@ -80,7 +81,7 @@ public class GameController {
             add.setFalse5(e.getFalse5());
             add.setFalse6(e.getFalse6());
             add.setFalse7(e.getFalse7());
-            games.saveOrUpdateAccount(add);
+            gamesdao.saveOrUpdateAccount(add);
             retVal += add.getId() + ";";
         }
      return retVal;

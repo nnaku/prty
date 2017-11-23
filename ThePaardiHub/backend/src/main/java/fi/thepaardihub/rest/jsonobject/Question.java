@@ -10,12 +10,18 @@ package fi.thepaardihub.rest.jsonobject;
  * @author maaritemilia
  */
 public class Question {
+
+    public String author;
+    public String question;
+    public String anwser;
+    public String false1;
+    public String false2;
+    public String false3;
+    public String false4;
+    public String false5;
+    public String false6;
+    public String false7;
     
-        public String author;
-    	public String question;
-	public String anwser;
-	public String false1;
-	public String false2;
 
     public String getAuthor() {
         return author;
@@ -24,16 +30,12 @@ public class Question {
     public void setAuthor(String author) {
         this.author = author;
     }
-	public String false3;
-        public String false4;
-         public String false5;
-        public String false6;	
-	 public String false7;
-	
-	public void setQuestion(String question) {
-		this.question = question;
-	}
-	public void setAnwser(String anwser) {
+  
+    public void setQuestion(String question) {
+        this.question = question;
+    }
+
+    public void setAnwser(String anwser) {
         this.anwser = anwser;
     }
 
@@ -49,6 +51,22 @@ public class Question {
         this.false3 = false3;
     }
 
+    public void setFalse4(String false4) {
+        this.false4 = false4;
+    }
+
+    public void setFalse5(String false5) {
+        this.false5 = false5;
+    }
+
+    public void setFalse6(String false6) {
+        this.false6 = false6;
+    }
+
+    public void setFalse7(String false7) {
+        this.false7 = false7;
+    }
+    
     public String getQuestion() {
         return question;
     }
@@ -70,20 +88,20 @@ public class Question {
     }
 
     public String getFalse4() {
-                
+
         return false4;
     }
 
+    public String getFalse5() {
+        return false5;
+    }
 
-        public String getFalse5() {
-		return false5;
-	}
-        public String getFalse6() {
-		return false6;
-	}
-        public String getFalse7() {
-		return false7;
-	}
-	
-	
+    public String getFalse6() {
+        return false6;
+    }
+
+    public String getFalse7() {
+        return false7;
+    }
+
 }
