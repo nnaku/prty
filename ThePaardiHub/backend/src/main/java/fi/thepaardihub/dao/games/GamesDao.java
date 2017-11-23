@@ -37,5 +37,21 @@ public class GamesDao {
 	public void deleteQuiz(int id) {
 		quizRepo.delete(id);
 	}
+           public Games saveOrUpdateAccount(Games add) {
+            gamesRepo.save(add);
+            return add;
+           }
+           
+           public Questions saveOrUpdateAccount(Questions add) {
+            quizRepo.save(add);
+            return add;
+           }
+           
+           public Games getGame(int id) {
+               return gamesRepo.findOne(id);
+           }
+           public Questions getQuestion(int id) {
+               return quizRepo.findOne(id);
+           }
 
 }
