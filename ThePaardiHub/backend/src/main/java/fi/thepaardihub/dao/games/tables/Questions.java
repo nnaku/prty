@@ -14,9 +14,9 @@ public class Questions {
 	private String author;
 	@Column(name="Private")
 	private boolean isPrivate = true;
-	
+	private String question;
 	private String correct;
-	
+
 	private String false1;
 	private String false2;
 	private String false3;
@@ -26,11 +26,12 @@ public class Questions {
 	private String false7;
 	
 	public Questions() {}
-	public Questions(String author, boolean isPrivate, String correct, String false1, String false2, String false3,
+	public Questions(String author, boolean isPrivate,String question, String correct, String false1, String false2, String false3,
 			String false4, String false5, String false6, String false7) {
 		super();
 		this.author = author;
 		this.isPrivate = isPrivate;
+		this.question = question;
 		this.correct = correct;
 		this.false1 = false1;
 		this.false2 = false2;
@@ -55,6 +56,13 @@ public class Questions {
 	}
 	public void setPrivate(boolean isPrivate) {
 		this.isPrivate = isPrivate;
+	}
+	
+	public void setQuestion(String question) {
+		this.question = question;
+	}
+	public String getQuestion() {
+		return this.question;
 	}
 	public String getCorrect() {
 		return correct;

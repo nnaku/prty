@@ -3,11 +3,11 @@ package fi.thepaardihub.socket;
 import org.springframework.stereotype.Controller;
 
 @Controller
-public class Sockets {
+public class LobbySocket {
 	
 	
 	
-	public GameQuestionJSON getAnwser(PlayerInfo player) {
+	public String[] getAnwser(PlayerInfo player) {
 		
 		return null;
 	}
