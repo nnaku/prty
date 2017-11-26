@@ -2,7 +2,9 @@
   <div class="registeration box">
     <div class="box-header register">
       <div class="title register">Register an account</div>
-      <div class="error">{{responseData}}</div>
+      <div v-bind:class="status" v-for="message in responseMessage">
+        {{message}}
+      </div>
     </div>
     <div class="box-body register">
         <input v-model="formData.firstname" type="text" placeholder="First name">
@@ -26,7 +28,8 @@ export default {
   name: "registeration-form",
   data() {
     return {
-      responseData: "",
+      responseMessage: {},
+      status: "ERROR",
       formData: {
         firstname: "",
         lastname: "",
@@ -34,7 +37,9 @@ export default {
         email: "",
         password: "",
         passwordVerify: ""
-      }
+      },
+      response: {},
+      errors: []
     };
   },
   methods: {
@@ -52,14 +57,18 @@ export default {
           passwordVerify: this.formData.passwordVerify
         })
         .then(response => {
-          this.posts = response.data;
-          console.log("Valid response");
-          console.log(JSON.stringify(response.data));
+          this.responseMessage = response.data;
+          this.status = response.data.status;
+          this.$delete(this.responseMessage, "status");
+          setTimeout(() => {
+            this.$parent.$parent.showLogin().bind(this);
+          }, 2000);
         })
         .catch(e => {
-          this.responseData = e.response.data;
-          console.log("Invalid response");
-          console.log(JSON.stringify(e));
+          this.errors.push(e);
+          this.status = e.response.data.status;
+          this.responseMessage = e.response.data;
+          this.$delete(this.responseMessage, "status");
         });
     }
   }

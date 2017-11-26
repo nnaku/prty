@@ -32,6 +32,7 @@ public class User {
 	@Autowired
 	public User(UserController userCont) {
 		this.userCont = userCont;
+		this.passwordTools = new Password();
 	}
 	
 	@PostMapping("/user")
@@ -85,7 +86,7 @@ public class User {
 					if (body.containsKey("newPassword")) {
 						// if old password is valid
 						if (passwordTools.validPassword(body.get("password"), account.getPasswordHash())) {
-							// validate new passowrd layoyt.
+							// validate new password layout.
 							String newPasswordStatus = passwordTools.passwordValidator(body.get("newPassword"),
 									body.get("newPasswordVerify"));
 							if (newPasswordStatus == null) {
@@ -99,8 +100,8 @@ public class User {
 							}
 						} else {
 							responseBody.put("status", "ERROR");
-							responseBody.put("message", "Bad login, check your password");
-							return new ResponseEntity<Object>(new Gson().toJson(responseBody), HttpStatus.UNAUTHORIZED);
+							responseBody.put("message", "Wrong password");
+							return new ResponseEntity<Object>(new Gson().toJson(responseBody), HttpStatus.BAD_REQUEST);
 						}
 					}
 
@@ -140,11 +141,13 @@ public class User {
 					UserAccounts updatedAccount = userCont.editAccount(email, newUserData);
 					if (updatedAccount != null) {
 						HttpHeaders freshToken = new HttpHeaders();
+						responseBody.put("status", "SUCCESS");
+						responseBody.put("message", "Successfully saved.");
 						if(newUserData.containsKey("email")) {
 							freshToken.add("Authorization", jwt.createToken(updatedAccount.getEmail(),30));
-							return new ResponseEntity<Object>(updatedAccount.getEmail(),freshToken, HttpStatus.OK);
+							return new ResponseEntity<Object>(new Gson().toJson(responseBody),freshToken, HttpStatus.OK);
 						}
-						return new ResponseEntity<Object>(updatedAccount.getEmail(),freshToken, HttpStatus.OK);
+						return new ResponseEntity<Object>(new Gson().toJson(responseBody), HttpStatus.OK);
 					}
 				}
 			} catch (Exception e) {

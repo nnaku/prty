@@ -59,14 +59,14 @@ export default {
   text-align: center;
   margin: 3% auto 4% auto;
   font-size: 1.5em;
-  color: #8db9b0;
+  color: #FFFFFF;
   background-color: Tomato;
 }
 .box > .box-header > .SUCCESS {
   text-align: center;
   margin: 3% auto 4% auto;
   font-size: 1.5em;
-  color: #8db9b0;
+  color: #FFFFFF;
   background-color: MediumSeaGreen;
 }
 .box > .box-body > input {

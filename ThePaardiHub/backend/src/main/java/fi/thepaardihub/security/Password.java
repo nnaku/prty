@@ -77,19 +77,19 @@ public class Password {
 		}
 		// Checks for at least 8 characters
 		else if (password.length() < 8) {
-			return "You should use at least eight characters!";
+			return "You should use at least eight characters in password!";
 		}
 		// Checks at least one char is uppercase
 		else if (password.equals(password.toLowerCase())) {
-			return "You should use at least one uppercase character!";
+			return "You should use at least one uppercase character in password!";
 		}
 		// Checks at least one char is lowercase
 		else if (password.equals(password.toUpperCase())) {
-			return "You should use at least one lowercase character!";
+			return "You should use at least one lowercase character in password!";
 		}
 		// Checks at least one char is not alpha
 		else if (!password.matches("(?=.*[0-9]).*")) {
-			return "You should use at least one numeric or special character!";
+			return "You should use at least one numeric or special character in password!";
 		}
 		// Check that it doesn't contain AND or NOT
 		else if (password.contains("AND") || password.contains("NOT")) {
