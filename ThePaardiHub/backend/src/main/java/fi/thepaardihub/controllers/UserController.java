@@ -2,32 +2,21 @@ package fi.thepaardihub.controllers;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PostMapping;
-
-import org.springframework.web.bind.annotation.RequestHeader;
-
 import org.springframework.web.bind.annotation.RestController;
-
-import com.google.gson.Gson;
 
 import fi.thepaardihub.dao.users.UsersDao;
 import fi.thepaardihub.dao.users.tables.UserAccounts;
 import fi.thepaardihub.dao.users.tables.UserRoles;
-import fi.thepaardihub.security.JWT;
 import fi.thepaardihub.security.Password;
 
 @Service
 @RestController
 public class UserController {
 
-	private JWT jwt;
 	private UsersDao users;
 	private Password passwordTools;
 
@@ -35,37 +24,6 @@ public class UserController {
 	public UserController(UsersDao usersDao) {
 		this.users = usersDao;
 		this.passwordTools = new Password();
-	}
-
-	/* Maps to all HTTP actions by default (GET,POST,..) */
-
-	@PostMapping("/user")
-	public ResponseEntity<?> renewToken(@RequestHeader HttpHeaders headers) {
-		
-		jwt = new JWT();
-		String body;
-		
-		// Get token from header and remove Bearer prefix.
-		String token = headers.getFirst("Authorization");
-
-		if (jwt.validate(token).get("status") == "SUCCESS") {
-			String email = (String) jwt.validate(token).get("email");
-			try {
-				UserAccounts account = users.getUser(email);
-				if (account != null) {
-					body = new Gson().toJson(account.toMap());
-					return new ResponseEntity<Object>(body, HttpStatus.OK);
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-				body = new Gson().toJson(e.getMessage());
-				return new ResponseEntity<Object>(body, HttpStatus.NOT_FOUND);
-			}
-		} else {
-			body = new Gson().toJson(jwt.validate(token));
-			return new ResponseEntity<Object>(body, HttpStatus.UNAUTHORIZED);
-		}
-		return null;
 	}
 
 	/**
@@ -93,6 +51,40 @@ public class UserController {
 			add.setEmail(email);
 			users.saveOrUpdateAccount(add);
 			return add;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public UserAccounts editAccount(String email, HashMap<String, String> data) {
+		try {
+			// Get account
+			UserAccounts account = users.getUser(email);
+
+			// If given, set new value.
+			if (data.containsKey("firstname")) {
+				account.setFirstName(data.get("firstname"));
+			}
+			
+			if (data.containsKey("lastname")) {
+				account.setLastName(data.get("lastname"));
+			}
+			
+			if (data.containsKey("username")) {
+				account.setUserName(data.get("username"));
+			}
+			
+			if (data.containsKey("email")) {
+				account.setEmail(data.get("email"));
+			}
+			
+			if (data.containsKey("newPassword")) {
+				account.setPasswordHash(passwordTools.getSaltedHash(data.get("newPassword")));
+			}
+			// Save account
+			users.saveOrUpdateAccount(account);
+			return account;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

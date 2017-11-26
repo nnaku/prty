@@ -10,9 +10,6 @@ import javax.persistence.*;
 @Table(name = "useraccounts")
 public class UserAccounts implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	@Column(name = "UserName", nullable = false)
@@ -100,6 +97,7 @@ public class UserAccounts implements Serializable {
 	public void setUserRolesId(int userRolesId) {
 		this.userRolesId = userRolesId;
 	}
+
 
 	public Map <String,Object> toMap() {
 		Map<String,Object> jsonMap = new HashMap<String,Object>();
