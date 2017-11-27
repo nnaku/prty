@@ -9,9 +9,9 @@
         <input v-model="userinfo.lastname" type="text" placeholder="Last name" :disabled="isDisabled" >
         <input v-model="userinfo.username" type="text" placeholder="User name" :disabled="isDisabled" >
         <input v-model="userinfo.email" type="email" placeholder="Email" :disabled="true" >
-        <input v-model="passwords.newPassword" type="password" placeholder="New password" v-show="changePassword">
-        <input v-model="passwords.newPasswordVerify" type="password" placeholder="Confirm new password" v-show="changePassword">
         <input v-model="passwords.password" type="password" placeholder="Current password" v-show="changePassword">
+        <input id="newPw" v-model="passwords.newPassword" type="password" placeholder="New password" v-show="changePassword">
+        <input id="newPwVer" v-model="passwords.newPasswordVerify" type="password" placeholder="Confirm new password" v-show="changePassword">
         <div class="button-group">
           <button type="button" v-on:click="editUserInfo()" v-show="isDisabled">Edit your profile</button>
           <button class="confirm" type="button" @click="postForm()" v-show="!isDisabled || changePassword">Update</button>
@@ -60,6 +60,16 @@ export default {
     },
     editUserInfo() {
       this.isDisabled = false;
+    },
+    pwMatch(){
+      if(this.passwords.newPassword != passwords.newPasswordVerify){
+        
+      }
+    },
+    pwValid(){
+      if(this.passwords.newPassword != passwords.newPasswordVerify){
+        
+      }
     },
     postForm() {
       this.$set(this.body, "firstname", this.userinfo.firstname);

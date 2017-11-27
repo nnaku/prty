@@ -10,6 +10,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -104,5 +105,22 @@ public class SignInEndpoint {
 				return new ResponseEntity<Object>(new Gson().toJson(jsonMap), HttpStatus.OK);
 			}
 		}
+	}
+	@PostMapping("/register/email")
+	public ResponseEntity<?> createAccount(@RequestBody Map<String,String> email) throws Exception {
+
+		// Return body
+		jsonMap = new HashMap<String, String>();
+
+		// If email already registered.
+		if (users.getUser(email.get("email")) == null) {
+			jsonMap.put("message", "This email is not registered.");
+			jsonMap.put("status", "SUCCESS");
+		}else {
+			jsonMap.put("message", "This email is already registered.");
+			jsonMap.put("status", "ERROR");
+		}
+		
+		return new ResponseEntity<Object>(new Gson().toJson(jsonMap), HttpStatus.OK);
 	}
 }
