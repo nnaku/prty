@@ -34,7 +34,11 @@ public class User {
 		this.userCont = userCont;
 		this.passwordTools = new Password();
 	}
-	
+	/**
+	 * Post endpoint for returning user information.
+	 * @param headers contains jtw token in Authorization header
+	 * @return Http response with json body 
+	 */
 	@PostMapping("/user")
 	public ResponseEntity<?> getUserData(@RequestHeader HttpHeaders headers) {
 
@@ -62,7 +66,17 @@ public class User {
 		}
 		return null;
 	}
-
+	/**
+	 * Put endpoint for user data updates.
+	 * @param headers contains jtw token in Authorization header
+	 * @param body contains new user information
+	 * @return
+	 */
+	
+	
+	
+	// THIS METHOD NEED REFACTORING!!!
+	
 	@PutMapping("/user")
 	public ResponseEntity<?> updateUserData(@RequestHeader HttpHeaders headers,
 			@RequestBody HashMap<String, String> body) {

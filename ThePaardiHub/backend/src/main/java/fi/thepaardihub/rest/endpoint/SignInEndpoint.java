@@ -31,11 +31,6 @@ public class SignInEndpoint {
 	private String passwordError;
 	private UserAccounts newUser;
 
-	/**
-	 *
-	 * @param users
-	 *            Set Users
-	 */
 
 	@Autowired
 	public void setUsers(UserController users) {
@@ -44,8 +39,8 @@ public class SignInEndpoint {
 
 	/**
 	 *
-	 * @param signin
-	 * @return
+	 * @param signin information in json format
+	 * @return Http response with various errors messages, success with http status 200
 	 * @throws Exception
 	 */
 
@@ -106,6 +101,14 @@ public class SignInEndpoint {
 			}
 		}
 	}
+	
+	/**
+	 * 
+	 * @param email in http body at json format
+	 * @return http response with json body than contains info about email is free or taken
+	 * @throws Exception
+	 */
+	
 	@PostMapping("/register/email")
 	public ResponseEntity<?> createAccount(@RequestBody Map<String,String> email) throws Exception {
 
