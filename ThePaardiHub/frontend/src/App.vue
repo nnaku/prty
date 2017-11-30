@@ -12,6 +12,17 @@ import appFooter from "./components/Footer";
 
 export default {
   name: "app",
+    metaInfo: {
+    meta: [
+      {
+        charset: "utf-8" 
+      },
+      { 
+      name: "viewport",
+      content: "width=device-width, initial-scale=1"
+      }
+    ]
+  },
   components: {
     appHeader,
     appFooter
@@ -32,6 +43,12 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
+}
+
+@media only screen and (max-width: 768px) {
+  html,body {
+    font-size: 25px;
+  }
 }
 </style>
 
