@@ -56,7 +56,7 @@ public class UserController {
 			add.setFirstName(firstName);
 			add.setLastName(lastName);
 			add.setEmail(email);
-			users.saveOrUpdateAccount(add);
+			users.saveOrUpdate(add);
 			return add;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -132,10 +132,10 @@ public class UserController {
 			UserAccounts add4 = new UserAccounts("Maarit", this.passwordTools.getSaltedHash("maarit.saariniemi"),
 					"Maarit", "Saariniemi", "Maarit.Saariniemi@Metropolia.fi");
 
-			users.saveOrUpdateAccount(add1);
-			users.saveOrUpdateAccount(add2);
-			users.saveOrUpdateAccount(add3);
-			users.saveOrUpdateAccount(add4);
+			users.saveOrUpdate(add1);
+			users.saveOrUpdate(add2);
+			users.saveOrUpdate(add3);
+			users.saveOrUpdate(add4);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

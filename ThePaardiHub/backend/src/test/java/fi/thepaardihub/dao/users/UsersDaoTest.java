@@ -33,7 +33,7 @@ public class UsersDaoTest {
         UserAccounts account = new UserAccounts("LeeroyJenkins", "ewqtrqerteaaedfae",
                 "Leeroy", "Jenkins", "Leeroy.Jenkins@wow.com");
 
-        usersDao.saveOrUpdateAccount(account);
+        usersDao.saveOrUpdate(account);
 
         UserAccounts test1 = usersDao.getUser("Leeroy.Jenkins@wow.com");
         assertNotNull(test1);

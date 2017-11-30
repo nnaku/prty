@@ -48,7 +48,7 @@ public class UsersDao {
      * @param add that will be added or updated
      * @return added or updated userAccount
      */
-    public UserAccounts saveOrUpdateAccount(UserAccounts add) {
+    public UserAccounts saveOrUpdate(UserAccounts add) {
         userAccRepo.save(add);
         return add;
     }

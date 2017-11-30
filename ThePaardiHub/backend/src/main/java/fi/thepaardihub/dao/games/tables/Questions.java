@@ -1,11 +1,12 @@
 package fi.thepaardihub.dao.games.tables;
 
+import fi.thepaardihub.dao.abstracts.AbstractQuestions;
 import javax.persistence.*;
 
 @Entity
 
 @Table(name="Questions")
-public class Questions {
+public class Questions extends AbstractQuestions {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -104,6 +105,16 @@ public class Questions {
 	public void setFalse7(String false7) {
 		this.false7 = false7;
 	}
+
+    @Override
+    public String getQuestion() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void setQuestion(String question) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 	
 	
 }
