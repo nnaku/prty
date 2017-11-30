@@ -10,15 +10,16 @@ import fi.thepaardihub.dao.games.tables.Games;
 import fi.thepaardihub.dao.games.tables.Questions;
 import fi.thepaardihub.socket.LobbyJSON;
 
-public class Lobby extends Observable {
+public class Lobby extends Observable implements Runnable {
 
 	private Games gameData;
 	private ArrayList<Questions> questions;
 	private HashMap<String, Player> players;
 	private Questions current;
 	private String lobbyKey;
-	
-	public Lobby(Games gameData, ArrayList<Questions> questions, String lobbyKey){
+	private boolean terminate = false;
+
+	public Lobby(Games gameData, ArrayList<Questions> questions, String lobbyKey) {
 		this.gameData = gameData;
 		this.questions = questions;
 		this.lobbyKey = lobbyKey;
@@ -56,7 +57,6 @@ public class Lobby extends Observable {
 			options.remove(ThreadLocalRandom.current().nextInt(0, options.size() + 1));
 		}
 		options.add(current.getCorrect());
-	
 
 		Collections.shuffle(options);
 		return options;
@@ -70,8 +70,8 @@ public class Lobby extends Observable {
 		data.setQuestion(current.getQuestion());
 		data.setOptions(getAwnserOptions());
 		ArrayList<Player> playerData = new ArrayList<>();
-		for (String e : players.keySet()) {
-			playerData.add(players.get(e));
+		for (String s : players.keySet()) {
+			playerData.add(players.get(s));
 		}
 		data.setPlayers(playerData);
 		data.setLobbyKey(lobbyKey);
@@ -87,12 +87,48 @@ public class Lobby extends Observable {
 			this.current = questions.get(questionIndex);
 			setChanged();
 			notifyObservers();
-			
-			
-			
-			
+			long time = System.currentTimeMillis();
+			do {
+				synchronized (this) {
+					try {
+						wait(2000);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			} while ((System.currentTimeMillis() - time < 20000) && !allAnwsersGiven());
+			checkCorrectAndReset();
+			questionIndex++;
 
 		}
 	}
 
+	private boolean allAnwsersGiven() {
+		boolean retVal = true;
+		for (String s : players.keySet()) {
+			if (!players.get(s).getAnwser().equals("")) {
+				retVal = false;
+				break;
+			}
+		}
+		return retVal;
+
+	}
+
+	private void checkCorrectAndReset() {
+		for (String s : players.keySet()) {
+			if (current.getCorrect().equals(players.get(s).getAnwser())) {
+				players.get(s).setScore(players.get(s).getScore() + 10);
+			}
+			players.get(s).setAnwser("");
+		}
+	}
+	
+
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		
+	}
 }
