@@ -11,6 +11,7 @@ public class LobbyJSON {
 	private ArrayList<Player> players;
 	private String lobbyKey;
 	private String author;
+	private boolean playGame;
 	
 	
 	public String getLobbyKey() {
@@ -36,6 +37,12 @@ public class LobbyJSON {
 	}
 	public void setPlayers(ArrayList<Player> players) {
 		this.players = players;
+	}
+	public boolean isPlayGame() {
+		return playGame;
+	}
+	public void setPlayGame(boolean playGame) {
+		this.playGame = playGame;
 	}
 	
 	

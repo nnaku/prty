@@ -11,6 +11,11 @@ public class Player {
 		score = 0;
 		anwser = "";
 	}
+	public Player(String name) {
+		name = "name";
+		score = 0;
+		anwser = "";
+	}
 
 	public String getName() {
 		return name;

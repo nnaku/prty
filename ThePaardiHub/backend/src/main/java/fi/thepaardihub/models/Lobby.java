@@ -8,6 +8,8 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import fi.thepaardihub.dao.games.tables.Games;
 import fi.thepaardihub.dao.games.tables.Questions;
+import fi.thepaardihub.socket.AnwserOptionsJSON;
+import fi.thepaardihub.socket.HostAction;
 import fi.thepaardihub.socket.LobbyJSON;
 
 public class Lobby extends Observable implements Runnable {
@@ -18,6 +20,7 @@ public class Lobby extends Observable implements Runnable {
 	private Questions current;
 	private String lobbyKey;
 	private boolean terminate = false;
+	private boolean playGame = false;
 
 	public Lobby(Games gameData, ArrayList<Questions> questions, String lobbyKey) {
 		this.gameData = gameData;
@@ -26,20 +29,30 @@ public class Lobby extends Observable implements Runnable {
 		players = new HashMap<String, Player>();
 	}
 
-	public void getAnwser(String id, String anwser) {
-		players.get(id).setAnwser(anwser);
+	public void setAnwser(String id, String anwser) {
+		if (players.containsKey(id)) {
+			players.get(id).setAnwser(anwser);
+		}
 
 	}
 
+	public boolean containsPlayerId(String id) {
+		return players.containsKey(id);
+	}
+
 	public void addPlayer(String id, Player player) {
-		players.put(id, player);
+		if (!players.containsKey(id)) {
+			players.put(id, player);
+			setChanged();
+			notifyObservers("SomeData");
+		}
 	}
 
 	public void removePlayer(String id) {
 		players.remove(id);
 	}
 
-	public ArrayList<String> getAwnserOptions() {
+	public AnwserOptionsJSON getAwnserOptions() {
 
 		ArrayList<String> options = new ArrayList<>();
 
@@ -59,16 +72,17 @@ public class Lobby extends Observable implements Runnable {
 		options.add(current.getCorrect());
 
 		Collections.shuffle(options);
-		return options;
+		AnwserOptionsJSON data = new AnwserOptionsJSON(options, playGame);
+		return data;
 
 	}
 
 	public LobbyJSON getLobbyData() {
 
 		LobbyJSON data = new LobbyJSON();
-
+		data.setPlayGame(playGame);
 		data.setQuestion(current.getQuestion());
-		data.setOptions(getAwnserOptions());
+		data.setOptions(getAwnserOptions().getOptions());
 		ArrayList<Player> playerData = new ArrayList<>();
 		for (String s : players.keySet()) {
 			playerData.add(players.get(s));
@@ -124,11 +138,37 @@ public class Lobby extends Observable implements Runnable {
 			players.get(s).setAnwser("");
 		}
 	}
-	
 
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
-		
+		while (!terminate) {
+			while (playGame) {
+				playGame();
+				playGame = false;
+			}
+
+		}
+
+	}
+
+	public void hostAction(HostAction action) {
+		if (action.isStartGame()) {
+			startGame();
+		}
+		if (action.isGetData()) {
+			setChanged();
+			notifyObservers("SomeData");
+		}
+		if (action.isTerminateLobby()) {
+			terminate();
+		}
+	}
+
+	public void startGame() {
+		playGame = true;
+	}
+
+	public void terminate() {
+		terminate = true;
 	}
 }

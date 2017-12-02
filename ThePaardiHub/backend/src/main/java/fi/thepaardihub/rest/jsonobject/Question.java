@@ -11,19 +11,28 @@ package fi.thepaardihub.rest.jsonobject;
  */
 public class Question {
 
-    public String author;
-    public String question;
-    public String anwser;
-    public String false1;
-    public String false2;
-    public String false3;
-    public String false4;
-    public String false5;
-    public String false6;
-    public String false7;
+	private String author;
+    private String question;
+    private boolean isPrivate;
+    private String anwser;
+    private String false1;
+    private String false2;
+    private String false3;
+    private String false4;
+    private String false5;
+    private String false6;
+    private String false7;
     
 
-    public String getAuthor() {
+    public boolean isPrivate() {
+		return isPrivate;
+	}
+
+	public void setPrivate(boolean isPrivate) {
+		this.isPrivate = isPrivate;
+	}
+
+	public String getAuthor() {
         return author;
     }
 
@@ -103,5 +112,5 @@ public class Question {
     public String getFalse7() {
         return false7;
     }
-
+    
 }

@@ -71,6 +71,7 @@ public class GameController {
             add.setFalse5(e.getFalse5());
             add.setFalse6(e.getFalse6());
             add.setFalse7(e.getFalse7());
+            add.setPrivate(e.isPrivate());
             gamesdao.saveOrUpdateAccount(add);
             retVal += add.getId() + ";";
         }
