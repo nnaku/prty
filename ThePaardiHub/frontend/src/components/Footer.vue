@@ -1,6 +1,8 @@
 <template>
   <div class="appfooter">
-    <p>Footer</p>
+    <div class="footer">
+      <p><a v-on:click="showRegister()">Contact</a></p> <!-- Aku, tähän contact-modali! -->
+    </div> 
   </div>
   
 </template>
@@ -16,10 +18,13 @@ export default {
   position: fixed;
   bottom: 0;
   width: 100%;
-  height:60px;
   background-color: #8DB9B0;
   overflow: hidden;
   color: white;
+  text-align: center;
+}
+
+.footer {
   text-align: center;
 }
 </style>

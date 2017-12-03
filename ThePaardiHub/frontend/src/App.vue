@@ -12,15 +12,10 @@ import appFooter from "./components/Footer";
 
 export default {
   name: "app",
-    metaInfo: {
+  metaInfo : {
     meta: [
-      {
-        charset: "utf-8" 
-      },
-      { 
-      name: "viewport",
-      content: "width=device-width, initial-scale=1"
-      }
+      { charset: 'utf-8' },
+      { name: 'viewport', content: 'width=device-width, initial-scale=1'}
     ]
   },
   components: {
@@ -47,7 +42,7 @@ body {
 
 @media only screen and (max-width: 768px) {
   html,body {
-    font-size: 25px;
+    font-size: 0.8em;
   }
 }
 </style>

@@ -61,7 +61,19 @@ export default {
 </script>
 
 <style scoped>
-/* Add a black background color to the top navigation */
+
+/* Add rules for brand: background color does not be changed while hover or active */
+.topnav a:first-child {
+  background-color: #8DB9B0; 
+}
+.topnav a:first-child:active {
+  background-color: #8DB9B0; 
+}
+.topnav a:first-child:hover {
+  background-color: #8DB9B0;
+  color: #ffffff;
+}
+/* Add a background color to the top navigation */
 .topnav {
   background-color: #db6e2d;
   overflow: hidden;
@@ -75,10 +87,10 @@ export default {
   text-decoration: none;
   font-size: 1.3em;
 }
-/* Change the color of links on hover */
+/* Change the color of links on hover and active */
 .topnav a:hover {
-  background-color: #ddd;
-  color: black;
+  background-color: #ed8e57;
+  color: #ffffff;
 }
 .toLeft {
   float: left;

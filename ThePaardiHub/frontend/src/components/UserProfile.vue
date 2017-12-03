@@ -3,22 +3,27 @@
     <div class="profile box-header ">
       <div class="profile title">User Profile</div>
       <div v-bind:class="status">{{responseMessage}}</div>
+      <div class="info">
+        <p class="infotext">
+          Here you can manage your user details. 
+          Add e.g. new email address or username and then update details. 
+          If you would like to change your password, please click 
+          <i>Change Your Password</i> button first.
+        </p>
+      </div>
     </div>
     <div class="profile box-body">
-        <input v-model="userinfo.firstname" type="text" placeholder="First name" :disabled="isDisabled" >
-        <input v-model="userinfo.lastname" type="text" placeholder="Last name" :disabled="isDisabled" >
-        <input v-model="userinfo.username" type="text" placeholder="User name" :disabled="isDisabled" >
-        <input v-model="userinfo.email" type="email" placeholder="Email" :disabled="true" >
+        <input v-model="userinfo.firstname" type="text" placeholder="First name" :disabled="!isDisabled" >
+        <input v-model="userinfo.lastname" type="text" placeholder="Last name" :disabled="!isDisabled" >
+        <input v-model="userinfo.username" type="text" placeholder="User name" :disabled="!isDisabled" >
+        <input v-model="userinfo.email" type="email" placeholder="Email" :disabled="false" >
         <input v-model="passwords.password" type="password" placeholder="Current password" v-show="changePassword">
         <input id="newPw" v-model="passwords.newPassword" type="password" placeholder="New password" v-show="changePassword">
         <input id="newPwVer" v-model="passwords.newPasswordVerify" type="password" placeholder="Confirm new password" v-show="changePassword">
         <div class="button-group">
-          <button type="button" v-on:click="editUserInfo()" v-show="isDisabled">Edit your profile</button>
-          <button class="confirm" type="button" @click="postForm()" v-show="!isDisabled || changePassword">Update</button>
+          <button class="confirm" type="button" @click="postForm()">Update</button>
         </div>
-
         <button v-on:click="changePW()" v-show="!changePassword">Change your password</button>
-        
         <a class="cancel" type="button" @click="cancel" v-show="!isDisabled || changePassword">Cancel</a>
         
     </div>
@@ -184,38 +189,27 @@ export default {
   cursor: pointer;
 }
 
-@media screen and (min-width: 920px) {
-  .box > .box-body > button {
-    width: 15%;
-    padding: 1em;
-    font-size: 1em;
-    height: 100%;
-  }
+.info {
+  width: 40%;
+  margin: 0 auto;
 }
 
-@media screen and (max-width: 920px) and (min-width: 790px) {
-  .box > .box-body > button {
-    width: 20%;
-    padding: 1em;
-    font-size: 1em;
-    height: 100%;
-  }
+.infotext {
+  color:#8db9b0;
+  font-weight: 540;
 }
 
-@media screen and (max-width: 790px) {
+@media only screen and (max-width: 768px) {
   .box > .box-body > button {
     width: 30%;
     padding: 1em;
     font-size: 1em;
     height: 100%;
   }
-}
-@media screen and (max-width: 490px) {
-  .box > .box-body > button {
-    width: 50%;
-    padding: 1em;
-    font-size: 1em;
-    height: 100%;
+
+  .info {
+    width: 75%;
+    margin: 0 auto;
   }
 }
 </style>
