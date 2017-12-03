@@ -5,10 +5,10 @@
 
       <router-link class="toLeft item" v-bind:to="'/games'" v-if="this.$auth.check()">My games</router-link>
       <router-link class="toLeft item" v-bind:to="'/about'" v-else>About</router-link>
-      <a class="toRight item" v-on:click="logout()" v-if="this.$auth.check()">Logout</a>
-      <a class="toRight item" v-on:click="showLogin()" v-else>Login</a>
+      <router-link class="toRight item" v-bind:to="'/logout'" v-if="this.$auth.check()">Logout</router-link>
+      <router-link class="toRight item" v-bind:to="'/login'" v-else>Login</router-link>
       <router-link class="toRight item" v-bind:to="'/user'" v-if="this.$auth.check()">Profile</router-link>
-      <a class="toRight item" v-on:click="showRegister()" v-else >Register</a>
+      <router-link class="toRight item" v-bind:to="'/register'" v-else >Register</router-link>
     </div>
     <LoginRegisterModal/>
   </div>
@@ -28,18 +28,6 @@ export default {
     LoginRegisterModal
   },
   methods: {
-    showLogin() {
-      this.form = "login";
-      this.$modal.show("loginRegisterFormModal");
-    },
-    showRegister() {
-      this.form = "register";
-      this.$modal.show("loginRegisterFormModal");
-    },
-    showReset() {
-      this.form = "reset";
-      this.$modal.show("loginRegisterFormModal");
-    },
     logout() {
       // Data object is passed directly to http method.
       // Accepts redirect parameter which is passed directly to router.

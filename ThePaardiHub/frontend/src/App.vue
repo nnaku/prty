@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <appHeader/>
-    <router-view/>
+    <router-view class="main-container"/>
     <appFooter/>
   </div>
 </template>
@@ -31,6 +31,9 @@ body {
   margin: 0;
   padding: 0;
   height: 100%;
+}
+.main-container{
+  margin-bottom: 50px;
 }
 #app {
   min-height: 100%;

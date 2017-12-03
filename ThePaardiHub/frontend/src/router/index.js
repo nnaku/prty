@@ -7,6 +7,8 @@ import Home from '@/components/Home'
 import About from '@/components/About'
 import User from '@/components/UserProfile'
 import Login from '@/components/LoginForm'
+import Register from '@/components/RegisterForm'
+import ReserPassword from '@/components/ReserPasswordForm'
 import Games from '@/components/Games'
 
 
@@ -39,6 +41,14 @@ export default new Router({
       path: "/login",
       name: 'Login',
       component: Login
+    },{
+      path: "/register",
+      name: 'Register',
+      component: Register
+    },{
+      path: "/reset",
+      name: 'ReserPassword',
+      component: ReserPassword
     }
   ]
 })

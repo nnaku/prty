@@ -5,11 +5,11 @@
       <div class="error">{{responseData}}</div>
     </div>
     <div class="box-body register">
-        <input v-model="formData.email" type="email" placeholder="Email">
+        <input v-model="formData.email" type="email" placeholder="Email... aaand its not workin atm :(">
         <button type="button" @click="postForm()">Submit</button>
     </div>
     <div class="box-footer register">
-      <a class="forgot" v-on:click="showLogin()">Back to login</a>
+      <router-link class="routerLink" v-bind:to="'/login'">Back to login</router-link>
     </div>
   </div>
 </template>
@@ -55,3 +55,7 @@ export default {
   }
 };
 </script>
+
+<style>
+@import '../css/forms.css';
+</style>

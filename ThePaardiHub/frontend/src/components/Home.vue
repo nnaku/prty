@@ -18,14 +18,14 @@ export default {
 <style scoped>
 input.gameToken {
   width: 60%;
-  height: 6em;
+  height: 3em;
   margin: 0 auto;
   margin-top: 25px;
   display:block;
-  font-size: 100%;
+  font-size: 230%;
   text-align: center;
   border: 1px solid #8DB9B0;
-  border-radius: 1.7em;
+  border-radius: 1em;
 }
 button.gameToken {
   width: 15%;
@@ -35,6 +35,10 @@ button.gameToken {
   font-size: 100%;
   background-color: #8DB9B0;
   border: none;
+}
+
+input.gameToken:focus {
+  outline: none;
 }
 
 img {
@@ -54,11 +58,11 @@ img {
 
   input.gameToken {
   width: 90%;
-  height: 6em;
+  height: 3em;
   margin: 0 auto;
   margin-top: 25px;
   display:block;
-  font-size: 100%;
+  font-size: 230%;
   text-align: center;
   border: none;
   

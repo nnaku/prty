@@ -7,12 +7,11 @@
     <div class="box-body login">
         <input v-model="data.formData.email" type="email" placeholder="Email">
         <input v-model="data.formData.password" type="password" placeholder="Password">
-        <a class="forgot" v-on:click="showReset()">Forgot your password?</a>
+        <router-link class="routerLink" v-bind:to="'/reset'">Forgot your password?</router-link>
         <button type="button" @click="postForm()">Login</button>
     </div>
     <div class="box-footer login">
-      
-      <a class="login" v-on:click="showRegister()">Create an account</a>
+      <router-link class="routerLink" v-bind:to="'/register'">Create an account</router-link>
     </div>
   </div>
 </template>
@@ -80,3 +79,7 @@ export default {
   }
 };
 </script>
+
+<style>
+@import '../css/forms.css';
+</style>

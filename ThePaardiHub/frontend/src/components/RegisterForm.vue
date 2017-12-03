@@ -19,7 +19,7 @@
         <button type="button" v-on:click="postForm()">Submit</button>
     </div>
     <div class="box-footer register">
-      <a class="forgot" v-on:click="showLogin()">Already have an account</a>
+      <router-link class="routerLink" v-bind:to="'/login'">Already have an account</router-link>
     </div>
   </div>
 </template>
@@ -169,12 +169,6 @@ export default {
 };
 </script>
 
-<style scoped>
-.box > .box-body > .inputError{
-  display: block;
-  margin-top: 1rem;
-  text-align: center;
-  font-size: 0.8em;
-  color: tomato;
-}
+<style>
+@import '../css/forms.css';
 </style>
