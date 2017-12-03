@@ -18,9 +18,9 @@ public class RoutesController {
 	"/user",
 	"/games",
 	"/login",
-	"/",
-	"/",
-	"/",
+	"/logout",
+	"/reset",
+	"/register",
 	"/",
 	"/",
 	"/"

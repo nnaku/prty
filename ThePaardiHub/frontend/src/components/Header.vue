@@ -5,7 +5,7 @@
 
       <router-link class="toLeft item" v-bind:to="'/games'" v-if="this.$auth.check()">My games</router-link>
       <router-link class="toLeft item" v-bind:to="'/about'" v-else>About</router-link>
-      <router-link class="toRight item" v-bind:to="'/logout'" v-if="this.$auth.check()">Logout</router-link>
+      <a class="toRight item" v-if="this.$auth.check()" v-on:click="logout()">Logout</a>
       <router-link class="toRight item" v-bind:to="'/login'" v-else>Login</router-link>
       <router-link class="toRight item" v-bind:to="'/user'" v-if="this.$auth.check()">Profile</router-link>
       <router-link class="toRight item" v-bind:to="'/register'" v-else >Register</router-link>
@@ -39,7 +39,7 @@ export default {
           this.$forceUpdate()
         },
         error: function() {},
-        redirect: "/"
+        redirect: "/logout"
 
         // etc...
       });

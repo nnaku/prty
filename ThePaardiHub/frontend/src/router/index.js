@@ -10,6 +10,7 @@ import Login from '@/components/LoginForm'
 import Register from '@/components/RegisterForm'
 import ReserPassword from '@/components/ReserPasswordForm'
 import Games from '@/components/Games'
+import Logout from '@/components/Logout'
 
 
 Vue.use(Router)
@@ -41,6 +42,10 @@ export default new Router({
       path: "/login",
       name: 'Login',
       component: Login
+    },{
+      path: "/logout",
+      name: 'Logout',
+      component: Logout
     },{
       path: "/register",
       name: 'Register',
