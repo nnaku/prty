@@ -22,7 +22,7 @@ export default {
   overflow: hidden;
   color: white;
   text-align: center;
-  height: 50xp;
+  height: 50px;
 }
 
 .footer {
