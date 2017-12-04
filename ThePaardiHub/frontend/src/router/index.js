@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import vmodal from 'vue-js-modal'
 import Meta from 'vue-meta'
 
 import Home from '@/components/Home'
@@ -14,7 +13,6 @@ import Logout from '@/components/Logout'
 
 
 Vue.use(Router)
-Vue.use(vmodal)
 Vue.use(Meta)
 
 export default new Router({

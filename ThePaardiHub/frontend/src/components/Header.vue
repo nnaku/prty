@@ -1,8 +1,7 @@
 <template>
   <div class="appheader">
     <div class="topnav" id="myTopnav">
-      <router-link class="brand toLeft item" v-bind:to="'/'">PRTY.fi</router-link></a>
-
+      <router-link class="brand toLeft item" v-bind:to="'/'">PRTY.fi</router-link>
       <router-link class="toLeft item" v-bind:to="'/games'" v-if="this.$auth.check()">My games</router-link>
       <router-link class="toLeft item" v-bind:to="'/about'" v-else>About</router-link>
       <a class="toRight item" v-if="this.$auth.check()" v-on:click="logout()">Logout</a>
@@ -10,22 +9,17 @@
       <router-link class="toRight item" v-bind:to="'/user'" v-if="this.$auth.check()">Profile</router-link>
       <router-link class="toRight item" v-bind:to="'/register'" v-else >Register</router-link>
     </div>
-    <LoginRegisterModal/>
   </div>
   
 </template>
 
 <script>
-import LoginRegisterModal from "./LoginRegisterModal";
 export default {
   name: "appheader",
   data() {
     return {
       form: "login"
     };
-  },
-  components: {
-    LoginRegisterModal
   },
   methods: {
     logout() {

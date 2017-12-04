@@ -6,7 +6,7 @@
     </div>
     <div class="box-body register">
         <input v-model="formData.email" type="email" placeholder="Email... aaand its not workin atm :(">
-        <button type="button" @click="postForm()">Submit</button>
+        <button type="button" @keyup.enter="postForm()" @click="postForm()">Submit</button>
     </div>
     <div class="box-footer register">
       <router-link class="routerLink" v-bind:to="'/login'">Back to login</router-link>
@@ -33,29 +33,26 @@ export default {
     };
   },
   methods: {
-    showLogin() {
-      this.$parent.$parent.showLogin();
-    },
-    postForm() {
-      axios
-        .post("/resetpassword", {
-          email: this.$data.email
-        })
-        .then(response => {
-          this.posts = response.data;
-          console.log("Valid response");
-          console.log(JSON.stringify(response.data));
-        })
-        .catch(e => {
-          this.responseData = e.response.data;
-          console.log("Invalid response");
-          console.log(JSON.stringify(e));
-        });
+  postForm() {
+    axios
+      .post("/resetpassword", {
+        email: this.$data.email
+      })
+      .then(response => {
+        this.posts = response.data;
+        console.log("Valid response");
+        console.log(JSON.stringify(response.data));
+      })
+      .catch(e => {
+        this.responseData = e.response.data;
+        console.log("Invalid response");
+        console.log(JSON.stringify(e));
+      });
     }
   }
 };
 </script>
 
 <style>
-@import '../css/forms.css';
+@import "../css/forms.css";
 </style>

@@ -16,7 +16,7 @@
         <p class="inputError" v-if="pwError">Password minimum leght is 8 characters! And it must contain uppercase, lovercase and alphanumeric characters</p>
         <input v-bind:style="newPwVer" v-model="formData.passwordVerify" type="password" placeholder="Confirm password">
         <p class="inputError" v-if="pwVerError">Passwords does not match.</p>
-        <button type="button" v-on:click="postForm()">Submit</button>
+        <button type="button" @keyup.enter="postForm()" v-on:click="postForm()">Submit</button>
     </div>
     <div class="box-footer register">
       <router-link class="routerLink" v-bind:to="'/login'">Already have an account</router-link>
@@ -135,11 +135,6 @@ export default {
     }
   },
   methods: {
-    showLogin() {
-      this.$parent.$parent.showLogin();
-    },
-    pwMatch() {},
-    pwValid() {},
     postForm() {
       axios
         .post("/register", {
@@ -155,8 +150,8 @@ export default {
           this.status = response.data.status;
           this.$delete(this.responseMessage, "status");
           setTimeout(() => {
-            this.$parent.$parent.showLogin().bind(this);
-          }, 2000);
+            this.$router.push('/login').bind(this);
+          }, 1400);
         })
         .catch(e => {
           this.errors.push(e);
