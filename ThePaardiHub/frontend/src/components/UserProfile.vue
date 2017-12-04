@@ -18,8 +18,11 @@
         <input v-model="userinfo.username" type="text" placeholder="User name" :disabled="!isDisabled" >
         <input v-model="userinfo.email" type="email" placeholder="Email" :disabled="false" >
         <input v-model="passwords.password" type="password" placeholder="Current password" v-show="changePassword">
+        <span>&nbsp;*</span>
         <input id="newPw" v-model="passwords.newPassword" type="password" placeholder="New password" v-show="changePassword">
+        <span>&nbsp;*</span>
         <input id="newPwVer" v-model="passwords.newPasswordVerify" type="password" placeholder="Confirm new password" v-show="changePassword">
+        <span>&nbsp;*</span>
         <button class="confirm" type="button" @click="postForm()">Update</button>
         <div class="button-group">
           <button v-on:click="changePW()" v-show="!changePassword">Change your password</button>

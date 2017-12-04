@@ -8,13 +8,19 @@
     </div>
     <div class="box-body register">
         <input v-model="formData.firstname" type="text" placeholder="First name">
+        <span>&nbsp;&nbsp;</span>
         <input v-model="formData.lastname" type="text" placeholder="Last name">
+        <span>&nbsp;&nbsp;</span>
         <input v-model="formData.username" type="text" placeholder="User name">
+        <span>&nbsp;*</span>
         <input v-bind:style="emailVer" v-model="formData.email" type="email" placeholder="Email">
+        <span>&nbsp;*</span>
         <p class="inputError" v-if="mailError">{{mailErrorMessage}}</p>
         <input v-bind:style="newPw" v-model="formData.password" type="password" placeholder="Password">
-        <p class="inputError" v-if="pwError">Password minimum leght is 8 characters! And it must contain uppercase, lovercase and alphanumeric characters</p>
+        <span>&nbsp;*</span>
+        <p class="inputError" v-if="pwError">Password minimum length is 8 characters! And it must contain uppercase, lovercase and alphanumeric characters</p>
         <input v-bind:style="newPwVer" v-model="formData.passwordVerify" type="password" placeholder="Confirm password">
+        <span>&nbsp;*</span>
         <p class="inputError" v-if="pwVerError">Passwords does not match.</p>
         <button type="button" @keyup.enter="postForm()" v-on:click="postForm()">Submit</button>
     </div>
