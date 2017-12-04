@@ -5,10 +5,8 @@
       <div v-bind:class="status">{{responseMessage}}</div>
     </div>
     <div class="box-body login">
-        <input v-model="data.formData.email" type="email" placeholder="Email">
-        <span>&nbsp;*</span>
-        <input v-model="data.formData.password" type="password" @keyup.enter="postForm()" placeholder="Password">
-        <span>&nbsp;*</span>
+        <input v-model="data.formData.email" type="email" placeholder="Email"> <span>*</span>
+        <input v-model="data.formData.password" type="password" @keyup.enter="postForm()" placeholder="Password"> <span>*</span>
         <router-link class="routerLink" v-bind:to="'/reset'">Forgot your password?</router-link>
         <button type="button" @keyup.enter="postForm()" @click="postForm()">Login</button>
     </div>
