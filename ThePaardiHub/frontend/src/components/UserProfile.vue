@@ -20,10 +20,10 @@
         <input v-model="passwords.password" type="password" placeholder="Current password" v-show="changePassword">
         <input id="newPw" v-model="passwords.newPassword" type="password" placeholder="New password" v-show="changePassword">
         <input id="newPwVer" v-model="passwords.newPasswordVerify" type="password" placeholder="Confirm new password" v-show="changePassword">
+        <button class="confirm" type="button" @click="postForm()">Update</button>
         <div class="button-group">
-          <button class="confirm" type="button" @click="postForm()">Update</button>
+          <button v-on:click="changePW()" v-show="!changePassword">Change your password</button>
         </div>
-        <button v-on:click="changePW()" v-show="!changePassword">Change your password</button>
         <a class="cancel" type="button" @click="cancel" v-show="!isDisabled || changePassword">Cancel</a>
         
     </div>
