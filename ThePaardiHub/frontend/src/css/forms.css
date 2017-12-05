@@ -28,8 +28,8 @@
 .box > .box-body > input {
   width: 50%;
   height: 2.7em;
-  display: block;
-  margin: 2% auto;
+  display: inline-block;
+  margin: 1% auto 0 0.6em;
   text-align: center;
   font-size: 1em;
 }
@@ -54,20 +54,17 @@
   cursor: pointer;
 }
 
-@media screen and (min-width: 920px) {
-
-  .box > .box-body > button {
-    width: 15%;
-    padding: 1em;
-    font-size: 1em;
-  }
-
+span {
+  display: inline-block;
+  color: red;
+  font-weight: bold;
+  text-align: left;
 }
 
-@media screen and (max-width: 790px) {
+@media only screen and (min-width: 768px) {
 
   .box > .box-body > button {
-    width: 25%;
+    width: 20%;
     padding: 1em;
     font-size: 1em;
   }

@@ -5,7 +5,7 @@
       <div class="error">{{responseData}}</div>
     </div>
     <div class="box-body register">
-        <input v-model="formData.email" type="email" placeholder="Email... aaand its not workin atm :(">
+        <input v-model="formData.email" type="email" placeholder="Email... aaand its not workin atm :("> <span>*</span>
         <button type="button" @keyup.enter="postForm()" @click="postForm()">Submit</button>
     </div>
     <div class="box-footer register">
