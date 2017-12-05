@@ -1,6 +1,5 @@
 <template>
   <div class="home">
-    {{status}}
     <figure>
       <img src="../images/prty_image.png" alt="PRTY.fi">
     </figure>

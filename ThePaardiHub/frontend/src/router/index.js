@@ -34,7 +34,7 @@ export default new Router({
     },{
       path: "/games",
       name: 'Games',
-      meta: {auth: true},
+      //meta: {auth: true},
       component: Games
     },{
       path: "/login",

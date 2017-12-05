@@ -33,7 +33,7 @@ body {
   height: 100%;
 }
 .main-container{
-  margin-bottom: 50px;
+  padding-bottom: 50px;
 }
 #app {
   min-height: 100%;
