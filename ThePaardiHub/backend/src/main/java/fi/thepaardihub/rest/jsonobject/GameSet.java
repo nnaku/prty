@@ -12,14 +12,28 @@ import java.util.ArrayList;
  * @author maaritemilia
  */
 public class GameSet {
+	
+	private int id;
+	private String author;
+	private String gameName;
+	private ArrayList<Question> questions;
+	private boolean isprivate;
+	private String description;
 
-    String author;
-    String gameName;
-    ArrayList<Question> questions;
-    boolean isprivate;
-    String description;
+	
+    public int getId() {
+		return id;
+	}
 
-    public String getGameName() {
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public boolean isIsprivate() {
+		return isprivate;
+	}
+
+	public String getGameName() {
         return gameName;
     }
 
@@ -31,9 +45,7 @@ public class GameSet {
         return questions;
     }
 
-    public boolean getPriv() {
-        return true;
-    }
+    
      public String getDescription() {
         return description;
     }
@@ -56,4 +68,5 @@ public class GameSet {
     public void setDescription(String Description) {
         
     }
+    
 }

@@ -1,4 +1,4 @@
-package fi.thepaardihub.controllers;
+package fi.thepaardihub.services;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RestController;
@@ -9,8 +9,17 @@ import java.util.List;
 
 @Service
 @RestController
+<<<<<<< HEAD:ThePaardiHub/backend/src/main/java/fi/thepaardihub/controllers/GameController.java
 public class GameController {
 	private GamesDao gamesdao;
+=======
+public class GameService {
+    private GamesDao gamesdao;
+  
+    public GameService(GamesDao gamesdao) {
+        this.gamesdao = gamesdao;
+    }
+>>>>>>> e7fcd6d0cfe3ade925eda6c9b2b004c57c413cb7:ThePaardiHub/backend/src/main/java/fi/thepaardihub/services/GameService.java
 
 	public GameController(GamesDao gamesdao) {
 		this.gamesdao = gamesdao;

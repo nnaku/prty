@@ -1,4 +1,4 @@
-package fi.thepaardihub.controllers;
+package fi.thepaardihub.services;
 
 import java.util.HashMap;
 import java.util.List;
@@ -15,13 +15,13 @@ import fi.thepaardihub.security.Password;
 
 @Service
 @RestController
-public class UserController {
+public class UserService {
 
 	private UsersDao users;
 	private Password passwordTools;
 
 	@Autowired
-	public UserController(UsersDao usersDao) {
+	public UserService(UsersDao usersDao) {
 		this.users = usersDao;
 		this.passwordTools = new Password();
 	}
