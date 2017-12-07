@@ -16,7 +16,7 @@ public class Questions {
 	private boolean isPrivate = true;
 	private String question;
 	private String correct;
-	
+
 	private String false1;
 	private String false2;
 	private String false3;
@@ -56,6 +56,13 @@ public class Questions {
 	}
 	public void setPrivate(boolean isPrivate) {
 		this.isPrivate = isPrivate;
+	}
+	
+	public void setQuestion(String question) {
+		this.question = question;
+	}
+	public String getQuestion() {
+		return this.question;
 	}
 	public String getCorrect() {
 		return correct;

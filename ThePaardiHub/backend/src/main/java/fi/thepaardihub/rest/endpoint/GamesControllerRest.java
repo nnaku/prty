@@ -17,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+
 import org.springframework.web.bind.annotation.RequestHeader;
 
 import com.google.gson.Gson;
@@ -85,5 +86,4 @@ public class GamesControllerRest {
 		json.put("message", "Something went wrong :(");
 		return new ResponseEntity<Object>(new Gson().toJson(json), HttpStatus.NOT_FOUND);
 	}
-
 }

@@ -18,13 +18,12 @@ import java.util.List;
 @Service
 @RestController
 public class GameController {
-
     private GamesDao gamesdao;
   
-
     public GameController(GamesDao gamesdao) {
         this.gamesdao = gamesdao;
     }
+
 
     @RequestMapping("/games")
     public @ResponseBody
@@ -51,6 +50,7 @@ public class GameController {
         return gamesdao.getAllGames();
     }
 
+
     public List<Questions> getallQuestions() {
         return gamesdao.getAllQuestions();
     }
@@ -70,18 +70,20 @@ public class GameController {
     public String createQuestions(List<Question> questions) {
         //foreachin sisällä 
         String retVal = "";
-        for(Question q: questions) {
+
+        for(Question e: questions) {
             Questions add = new Questions();
-            add.setAuthor(q.getAuthor());
-            add.setCorrect(q.getAnwser());
-            add.setQuestion(q.getQuestion());
-            add.setFalse1(q.getFalse1());
-            add.setFalse2(q.getFalse2());
-            add.setFalse3(q.getFalse3());
-            add.setFalse4(q.getFalse4());
-            add.setFalse5(q.getFalse5());
-            add.setFalse6(q.getFalse6());
-            add.setFalse7(q.getFalse7());
+            add.setAuthor(e.getAuthor());
+            add.setQuestion(e.getQuestion());
+            add.setCorrect(e.getAnwser());
+            add.setFalse1(e.getFalse1());
+            add.setFalse2(e.getFalse2());
+            add.setFalse3(e.getFalse3());
+            add.setFalse4(e.getFalse4());
+            add.setFalse5(e.getFalse5());
+            add.setFalse6(e.getFalse6());
+            add.setFalse7(e.getFalse7());
+            add.setPrivate(e.isPrivate());
             gamesdao.saveOrUpdateAccount(add);
             retVal += add.getId() + ";";
         }
