@@ -6,10 +6,14 @@ import router from './router'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 import VueAuth from '@websanova/vue-auth'
+import VueStomp from "vue-stomp";
 
 Vue.config.productionTip = true
 
 Vue.router = router
+
+Vue.use(VueStomp, "/gs-guide-websocket");
+
 Vue.use(VueAxios, axios)
 Vue.use(VueAuth, {
   auth: require('@websanova/vue-auth/drivers/auth/bearer.js'),

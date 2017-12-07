@@ -15,10 +15,12 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.google.gson.Gson;
 
@@ -58,15 +60,46 @@ public class GamesControllerRest {
 	 * Gson().toJson(json), HttpStatus.OK); } }
 	 * 
 	 */
-	@PostMapping("/game")
+	
+	
+	@GetMapping("/gameset")
+	public ResponseEntity<?> getGameById(@RequestHeader HttpHeaders headers, @RequestParam("gameId") String gameId) {
+		String token = headers.getFirst("Authorization");
+		if (jwt.validate(token).get("status") == "SUCCESS") {
+			try {
+				Games game = games.getGame(Integer.parseInt(gameId));
+				if (game != null) {
+					json.put("status", "SUCCESS");
+					json.put("game", game);
+					return new ResponseEntity<Object>(new Gson().toJson(json), HttpStatus.OK);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				json.put("status", "ERROR");
+				json.put("message", e.getMessage());
+				return new ResponseEntity<Object>(new Gson().toJson(json), HttpStatus.NOT_FOUND);
+			}
+		} else {
+			json.put("status", "ERROR");
+			json.put("message", jwt.validate(token));
+			return new ResponseEntity<Object>(new Gson().toJson(json), HttpStatus.UNAUTHORIZED);
+		}
+
+		json.put("status", "ERROR");
+		json.put("message", "Something went wrong :(");
+		return new ResponseEntity<Object>(new Gson().toJson(json), HttpStatus.NOT_FOUND);
+	}
+	
+	@PostMapping("/gameset")
 	public ResponseEntity<?> createGame(@RequestHeader HttpHeaders headers, @RequestBody Map<String, Object> game) {
 		String token = headers.getFirst("Authorization");
 		if (jwt.validate(token).get("status") == "SUCCESS") {
 			String author = (String) jwt.validate(token).get("email");
 			try {
-				Games newgame = games.createGame(author, (String)game.get("name"), (boolean) game.get("isPrivate"), (List<Question>) game.get("questions"), (String) game.get("description"));
+				Games newgame = games.createGame(author, (String)game.get("name"), (boolean) game.get("isPrivate"), (String) game.get("questions"), (String) game.get("description"));
+
 				if (newgame != null) {
-					json.put("status", "SUCCESS");
+					json.put("stus", "SUCCESS");
 					json.put("message", "Game saved succesfully");
 					return new ResponseEntity<Object>(new Gson().toJson(json), HttpStatus.OK);
 				}
@@ -86,4 +119,5 @@ public class GamesControllerRest {
 		json.put("message", "Something went wrong :(");
 		return new ResponseEntity<Object>(new Gson().toJson(json), HttpStatus.NOT_FOUND);
 	}
+	
 }

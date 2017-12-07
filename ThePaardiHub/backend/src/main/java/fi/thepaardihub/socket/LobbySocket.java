@@ -7,16 +7,29 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
 
+
 import fi.thepaardihub.models.Lobby;
+
 
 @Controller
 public class LobbySocket  implements Observer{
 	
 	private Lobby lobby;
-	
 	public void setLobby(Lobby lobby) {
 		this.lobby = lobby;
+
 	}
+	
+
+	@SendTo("/lobby/testOut")
+	@MessageMapping("/testIn")
+	public String testInOut(String data) {
+		return "You said "+data+"!";
+	}
+	
+	
+	
+	
 	@MessageMapping("/game")
 	public void setAnwser(PlayerInfo player) {
 		if(lobby != null)
