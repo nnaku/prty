@@ -64,7 +64,7 @@ public class GamesControllerRest {
 		if (jwt.validate(token).get("status") == "SUCCESS") {
 			String author = (String) jwt.validate(token).get("email");
 			try {
-				Games newgame = games.createGame(author, (String)game.get("name"), (boolean) game.get("isPrivate"), (List<Question>) game.get("questions"));
+				Games newgame = games.createGame(author, (String)game.get("name"), (boolean) game.get("isPrivate"), (List<Question>) game.get("questions"), (String) game.get("description"));
 				if (newgame != null) {
 					json.put("status", "SUCCESS");
 					json.put("message", "Game saved succesfully");

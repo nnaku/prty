@@ -17,6 +17,7 @@ public class GameSet {
     String gameName;
     ArrayList<Question> questions;
     boolean isprivate;
+    String description;
 
     public String getGameName() {
         return gameName;
@@ -32,6 +33,9 @@ public class GameSet {
 
     public boolean getPriv() {
         return true;
+    }
+     public String getDescription() {
+        return description;
     }
 
     public void setAuthor(String author) {
@@ -49,5 +53,7 @@ public class GameSet {
     public void setIsprivate(boolean isprivate) {
         this.isprivate = isprivate;
     }
-
+    public void setDescription(String Description) {
+        
+    }
 }

@@ -11,7 +11,7 @@ package fi.thepaardihub.rest.jsonobject;
  */
 public class Question {
 
-	private String author;
+    private String author;
     private String question;
     private boolean isPrivate;
     private String anwser;
