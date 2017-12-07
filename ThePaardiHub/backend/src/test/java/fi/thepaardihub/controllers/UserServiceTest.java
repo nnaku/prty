@@ -13,10 +13,10 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class UserControllerTest {
+public class UserServiceTest {
 
     @Autowired
-    private UserController controller;
+    private UserService controller;
     @Autowired
     private UsersDao usersDao;
 
