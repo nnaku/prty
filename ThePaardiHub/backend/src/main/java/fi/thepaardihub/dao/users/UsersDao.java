@@ -73,6 +73,12 @@ public class UsersDao {
     public UserAccounts getUser(String id) {
         return userAccRepo.findOne(id);
     }
+     /**
+     * Search a user with a given id
+     *
+     * @param id of the account
+     * Delete user by id
+     */
 
     public void deleteUser(String id) {
         userAccRepo.delete(id);

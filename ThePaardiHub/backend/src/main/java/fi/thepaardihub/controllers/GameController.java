@@ -24,12 +24,14 @@ public class GameController {
         this.gamesdao = gamesdao;
     }
 
-    public Games createGame(String author, String gameName, boolean isPrivate, String questions ) {
+    public Games createGame(String author, String gameName, boolean isPrivate, String questions, String description) {
+
         try {
             Games add = new Games();
             add.setAuthor(author);
             add.setGameName(gameName);
             add.setPrivate(isPrivate);
+            add.setDescription(description);
             add.setQuestions(questions);
             gamesdao.saveOrUpdateAccount(add);
             return add;

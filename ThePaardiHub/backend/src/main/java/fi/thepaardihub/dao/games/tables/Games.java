@@ -18,14 +18,17 @@ public class Games {
 	private boolean isPrivate = true;
 	
 	private String questions;
+        private String description;
 
-	public Games() {}
-	public Games(String author, String gameName, boolean isPrivate, String questions) {
+	public Games() {
+        }
+	public Games(String author, String gameName, boolean isPrivate, String questions, String description) {
 		super();
 		this.author = author;
 		this.gameName = gameName;
 		this.isPrivate = isPrivate;
 		this.questions = questions;
+                this.description = description;
 	}
 	public int getId() {
 		return id;
@@ -41,20 +44,32 @@ public class Games {
 		return gameName;
 	}
 	public void setGameName(String gameName) {
-		this.gameName = gameName;
-	}
-	public boolean isPrivate() {
-		return isPrivate;
-	}
-	public void setPrivate(boolean isPrivate) {
-		this.isPrivate = isPrivate;
-	}
-	public String getQuestions() {
-		return questions;
-	}
-	public void setQuestions(String questions) {
-		this.questions = questions;
-	}
-	
-	
+        this.gameName = gameName;
+    }
+
+    public boolean isPrivate() {
+        return isPrivate;
+    }
+
+    public void setPrivate(boolean isPrivate) {
+        this.isPrivate = isPrivate;
+    }
+
+    public String getQuestions() {
+        return questions;
+    }
+
+    public void setQuestions(String questions) {
+        this.questions = questions;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+ 
+    public void setDescription(String Description) {
+        this.description = description;
+    }
+
 }
