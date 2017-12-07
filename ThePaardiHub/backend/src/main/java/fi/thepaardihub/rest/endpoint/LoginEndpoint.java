@@ -28,7 +28,11 @@ public class LoginEndpoint {
 	public void setUsers(UserController users) {
 		this.users = users;
 	}
-
+	/**
+	 * 
+	 * @param login information in http body in json format
+	 * @return token in http header if valid login. if login is invalid return json body with error message
+	 */
 	@PostMapping("/login")
 	public ResponseEntity<?> createAccount(@RequestBody Login login) {
 

@@ -58,7 +58,12 @@ public class JWT {
 		// Builds the JWT and serializes it to a compact, URL-safe string
 		return "Bearer "+builder.compact();
 	}
-
+	/**
+	 * Validates jwt token, if expired or modified.
+	 * 
+	 * @param jwt token
+	 * @return Map<String,Object> for json body, Map contains status and email or message.
+	 */
 	// Validate and return the jti. (jti = user email)
 	public Map<String,Object> validate(String token) {
 		

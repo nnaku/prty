@@ -5,14 +5,13 @@
       <div v-bind:class="status">{{responseMessage}}</div>
     </div>
     <div class="box-body login">
-        <input v-model="data.formData.email" type="email" placeholder="Email">
-        <input v-model="data.formData.password" type="password" placeholder="Password">
-        <a class="forgot" v-on:click="showReset()">Forgot your password?</a>
-        <button type="button" @click="postForm()">Login</button>
+        <input v-model="data.formData.email" type="email" placeholder="Email"> <span>*</span>
+        <input v-model="data.formData.password" type="password" @keyup.enter="postForm()" placeholder="Password"> <span>*</span>
+        <router-link class="routerLink" v-bind:to="'/reset'">Forgot your password?</router-link>
+        <button type="button" @keyup.enter="postForm()" @click="postForm()">Login</button>
     </div>
     <div class="box-footer login">
-      
-      <a class="login" v-on:click="showRegister()">Create an account</a>
+      <router-link class="routerLink" v-bind:to="'/register'">Create an account</router-link>
     </div>
   </div>
 </template>
@@ -26,24 +25,15 @@ export default {
       status: "ERROR",
       data: {
         formData: {
-          email: "test@test.com",
-          password: "Passu123",
+          email: "",
+          password: "",
           remember: "false"
         }
       },
       rememberMe: true
     };
   },
-  mounted() {
-    console.log(this.$auth.redirect());
-  },
   methods: {
-    showReset() {
-      this.$parent.$parent.showReset();
-    },
-    showRegister() {
-      this.$parent.$parent.showRegister();
-    },
     postForm() {
       var redirect = this.$auth.redirect();
       this.$auth
@@ -63,20 +53,11 @@ export default {
             this.responseMessage = res.response.data.message;
           }
         );
-      /**
-        .then(response => {
-          this.status = response.data.status;
-          this.responseMessage = response.data.message;
-          // console.log(JSON.stringify(response.data));
-          
-        })
-        .catch(e => {
-          // this.message = "error";
-          // this.responseMessage = e.response.message;
-          // console.log(JSON.stringify(e.response.data));
-        });
-        */
     }
   }
 };
 </script>
+
+<style>
+@import "../css/forms.css";
+</style>

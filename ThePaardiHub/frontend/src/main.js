@@ -11,7 +11,6 @@ Vue.config.productionTip = true
 
 Vue.router = router
 Vue.use(VueAxios, axios)
-Vue.axios.defaults.baseURL = 'http://localhost:8080/';
 Vue.use(VueAuth, {
   auth: require('@websanova/vue-auth/drivers/auth/bearer.js'),
   http: require('@websanova/vue-auth/drivers/http/axios.1.x.js'),

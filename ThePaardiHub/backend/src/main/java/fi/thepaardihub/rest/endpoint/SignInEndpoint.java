@@ -10,6 +10,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -30,11 +31,6 @@ public class SignInEndpoint {
 	private String passwordError;
 	private UserAccounts newUser;
 
-	/**
-	 *
-	 * @param users
-	 *            Set Users
-	 */
 
 	@Autowired
 	public void setUsers(UserController users) {
@@ -43,8 +39,8 @@ public class SignInEndpoint {
 
 	/**
 	 *
-	 * @param signin
-	 * @return
+	 * @param signin information in json format
+	 * @return Http response with various errors messages, success with http status 200
 	 * @throws Exception
 	 */
 
@@ -104,5 +100,30 @@ public class SignInEndpoint {
 				return new ResponseEntity<Object>(new Gson().toJson(jsonMap), HttpStatus.OK);
 			}
 		}
+	}
+	
+	/**
+	 * 
+	 * @param email in http body at json format
+	 * @return http response with json body than contains info about email is free or taken
+	 * @throws Exception
+	 */
+	
+	@PostMapping("/register/email")
+	public ResponseEntity<?> createAccount(@RequestBody Map<String,String> email) throws Exception {
+
+		// Return body
+		jsonMap = new HashMap<String, String>();
+
+		// If email already registered.
+		if (users.getUser(email.get("email")) == null) {
+			jsonMap.put("message", "This email is not registered.");
+			jsonMap.put("status", "SUCCESS");
+		}else {
+			jsonMap.put("message", "This email is already registered.");
+			jsonMap.put("status", "ERROR");
+		}
+		
+		return new ResponseEntity<Object>(new Gson().toJson(jsonMap), HttpStatus.OK);
 	}
 }

@@ -2,23 +2,32 @@
   <div class="profile box">
     <div class="profile box-header ">
       <div class="profile title">User Profile</div>
+      <div v-bind:class="status">{{responseMessage}}</div>
+      <div class="info">
+        <p class="infotext">
+          Here you can manage your user details. 
+          Add e.g. new email address or username and then update details. 
+          If you would like to change your password, please click 
+          <i>Change Your Password</i> button first.
+        </p>
+      </div>
     </div>
     <div class="profile box-body">
-        <input v-model="userinfo.firstname" type="text" placeholder="First name" :disabled="isDisabled" >
-        <input v-model="userinfo.lastname" type="text" placeholder="Last name" :disabled="isDisabled" >
-        <input v-model="userinfo.username" type="text" placeholder="User name" :disabled="isDisabled" >
-        <input v-model="userinfo.email" type="email" placeholder="Email" :disabled="isDisabled" >
-        <input v-model="passwords.password" type="password" placeholder="New password" v-show="changePassword">
-        <input v-model="passwords.passwordVerify" type="password" placeholder="Confirm new password" v-show="changePassword">
-        <input v-model="passwords.oldPassword" type="password" placeholder="Current password" v-show="changePassword">
+        <input v-model="userinfo.firstname" type="text" placeholder="First name" :disabled="!isDisabled" >
+        <input v-model="userinfo.lastname" type="text" placeholder="Last name" :disabled="!isDisabled" >
+        <input v-model="userinfo.username" type="text" placeholder="User name" :disabled="!isDisabled" >
+        <input v-model="userinfo.email" type="email" placeholder="Email" :disabled="false" >
+        <input v-model="passwords.password" type="password" placeholder="Current password" v-show="changePassword">
+        <span>&nbsp;*</span>
+        <input id="newPw" v-model="passwords.newPassword" type="password" placeholder="New password" v-show="changePassword">
+        <span>&nbsp;*</span>
+        <input id="newPwVer" v-model="passwords.newPasswordVerify" type="password" placeholder="Confirm new password" v-show="changePassword">
+        <span>&nbsp;*</span>
+        <button class="confirm" type="button" @click="postForm()">Update</button>
         <div class="button-group">
-          <button type="button" v-on:click="editUserInfo()" v-show="isDisabled">Edit your profile</button>
-          <button class="confirm" type="button" @click="postForm()" v-show="!isDisabled || changePassword">Update</button>
+          <button v-on:click="changePW()" v-show="!changePassword">Change your password</button>
         </div>
-
-        <button v-on:click="changePW()" v-show="!changePassword">Change your password</button>
-        
-        <a class="cancel" type="button" v-on:click="cancel()" v-show="!isDisabled || changePassword">Cancel</a>
+        <a class="cancel" type="button" @click="cancel" v-show="!isDisabled || changePassword">Cancel</a>
         
     </div>
     <div class="profile box-footer">
@@ -34,29 +43,78 @@ export default {
   name: "test",
   data() {
     return {
+      responseMessage: "",
+      status: "ERROR",
       isDisabled: true,
       changePassword: false,
-      userinfo: [],
-      userinfobackup: [],
+      userinfo: {},
+      userinfobackup: {},
+      body: {},
       passwords: {
         password: "",
-        passwordVerify: "",
-        oldPassword: ""
+        newPassword: "",
+        newPasswordVerify: ""
       },
       errors: []
     };
   },
   methods: {
-    cancel() {
-      // this.isDisabled = true;
-      // this.changePassword = false;
-      Object.assign(this.$data, this.$options.data())
+    cancel: function() {
+      // not eleganr way, but it does the trick!
+      this.$router.go(this.$router.currentRoute);
     },
     changePW() {
       this.changePassword = true;
     },
     editUserInfo() {
       this.isDisabled = false;
+    },
+    pwMatch(){
+      if(this.passwords.newPassword != passwords.newPasswordVerify){
+        
+      }
+    },
+    pwValid(){
+      if(this.passwords.newPassword != passwords.newPasswordVerify){
+        
+      }
+    },
+    postForm() {
+      this.$set(this.body, "firstname", this.userinfo.firstname);
+      this.$set(this.body, "lastname", this.userinfo.lastname);
+      this.$set(this.body, "username", this.userinfo.username);
+      if (this.userinfo.email != this.userinfobackup.email) {
+        this.$set(this.body, "email", this.userinfo.email);
+      }
+      if (this.passwords.newPassword != "") {
+        this.$set(this.body, "newPassword", this.passwords.newPassword);
+      }
+      if (this.passwords.newPasswordVerify != "") {
+        this.$set(
+          this.body,
+          "newPasswordVerify",
+          this.passwords.newPasswordVerify
+        );
+      }
+      if (this.passwords.password != "") {
+        this.$set(this.body, "password", this.passwords.password);
+      }
+      this.$nextTick(function() {
+        axios
+          .put("/user", this.body)
+          .then(response => {
+            this.status = response.data.status;
+            this.responseMessage = response.data.message;
+            this.isDisabled = true;
+            this.changePassword = false;
+            passwords = [];
+          })
+          .catch(e => {
+            this.errors.push(e);
+            this.status = e.response.data.status;
+            this.responseMessage = e.response.data.message;
+          });
+      });
     }
   },
   mounted: function() {
@@ -65,13 +123,11 @@ export default {
         .post("/user")
         .then(response => {
           this.userinfo = response.data;
+          this.userinfobackup = response.data;
         })
         .catch(e => {
           this.errors.push(e);
         });
-      this.$nextTick(function() {
-        this.userinfobackup = this.userinfo;
-      });
     });
   }
 };
@@ -88,7 +144,7 @@ export default {
   text-align: center;
   margin: 3% auto 4% auto;
   font-size: 1.5em;
-  color: #8db9b0;
+  color: #ffffff;
   background-color: Tomato;
 }
 .box > .box-body > input {
@@ -136,38 +192,27 @@ export default {
   cursor: pointer;
 }
 
-@media screen and (min-width: 920px) {
-  .box > .box-body > button {
-    width: 15%;
-    padding: 1em;
-    font-size: 1em;
-    height: 100%;
-  }
+.info {
+  width: 40%;
+  margin: 0 auto;
 }
 
-@media screen and (max-width: 920px) and (min-width: 790px) {
-  .box > .box-body > button {
-    width: 20%;
-    padding: 1em;
-    font-size: 1em;
-    height: 100%;
-  }
+.infotext {
+  color:#8db9b0;
+  font-weight: 540;
 }
 
-@media screen and (max-width: 790px) {
+@media only screen and (max-width: 768px) {
   .box > .box-body > button {
     width: 30%;
     padding: 1em;
     font-size: 1em;
     height: 100%;
   }
-}
-@media screen and (max-width: 490px) {
-  .box > .box-body > button {
-    width: 50%;
-    padding: 1em;
-    font-size: 1em;
-    height: 100%;
+
+  .info {
+    width: 75%;
+    margin: 0 auto;
   }
 }
 </style>

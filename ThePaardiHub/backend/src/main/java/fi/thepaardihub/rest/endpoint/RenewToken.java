@@ -17,7 +17,11 @@ import fi.thepaardihub.security.JWT;
 public class RenewToken {
 	
 	JWT jwt = new JWT();
-	
+	/**
+	 * 
+	 * @param headers contains current jwt token in Authorization header
+	 * @return new header if old one was valid.
+	 */
 	@PostMapping("/refresh")
 	public ResponseEntity<?> renewToken(@RequestHeader HttpHeaders headers) {
 		// Get token from header and remove Bearer prefix.

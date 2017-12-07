@@ -1,22 +1,19 @@
 <template>
   <div class="appheader">
     <div class="topnav" id="myTopnav">
-      <router-link class="brand toLeft item" v-bind:to="'/'">PRTY.fi</router-link></a>
-
+      <router-link class="brand toLeft item" v-bind:to="'/'">PRTY.fi</router-link>
       <router-link class="toLeft item" v-bind:to="'/games'" v-if="this.$auth.check()">My games</router-link>
       <router-link class="toLeft item" v-bind:to="'/about'" v-else>About</router-link>
-      <a class="toRight item" v-on:click="logout()" v-if="this.$auth.check()">Logout</a>
-      <a class="toRight item" v-on:click="showLogin()" v-else>Login</a>
+      <a class="toRight item" v-if="this.$auth.check()" v-on:click="logout()">Logout</a>
+      <router-link class="toRight item" v-bind:to="'/login'" v-else>Login</router-link>
       <router-link class="toRight item" v-bind:to="'/user'" v-if="this.$auth.check()">Profile</router-link>
-      <a class="toRight item" v-on:click="showRegister()" v-else >Register</a>
+      <router-link class="toRight item" v-bind:to="'/register'" v-else >Register</router-link>
     </div>
-    <LoginRegisterModal/>
   </div>
   
 </template>
 
 <script>
-import LoginRegisterModal from "./LoginRegisterModal";
 export default {
   name: "appheader",
   data() {
@@ -24,22 +21,7 @@ export default {
       form: "login"
     };
   },
-  components: {
-    LoginRegisterModal
-  },
   methods: {
-    showLogin() {
-      this.form = "login";
-      this.$modal.show("loginRegisterFormModal");
-    },
-    showRegister() {
-      this.form = "register";
-      this.$modal.show("loginRegisterFormModal");
-    },
-    showReset() {
-      this.form = "reset";
-      this.$modal.show("loginRegisterFormModal");
-    },
     logout() {
       // Data object is passed directly to http method.
       // Accepts redirect parameter which is passed directly to router.
@@ -51,7 +33,7 @@ export default {
           this.$forceUpdate()
         },
         error: function() {},
-        redirect: "/"
+        redirect: "/logout"
 
         // etc...
       });
@@ -61,7 +43,19 @@ export default {
 </script>
 
 <style scoped>
-/* Add a black background color to the top navigation */
+
+/* Add rules for brand: background color does not be changed while hover or active */
+.topnav a:first-child {
+  background-color: #8DB9B0; 
+}
+.topnav a:first-child:active {
+  background-color: #8DB9B0; 
+}
+.topnav a:first-child:hover {
+  background-color: #8DB9B0;
+  color: #ffffff;
+}
+/* Add a background color to the top navigation */
 .topnav {
   background-color: #db6e2d;
   overflow: hidden;
@@ -75,10 +69,10 @@ export default {
   text-decoration: none;
   font-size: 1.3em;
 }
-/* Change the color of links on hover */
+/* Change the color of links on hover and active */
 .topnav a:hover {
-  background-color: #ddd;
-  color: black;
+  background-color: #ed8e57;
+  color: #ffffff;
 }
 .toLeft {
   float: left;

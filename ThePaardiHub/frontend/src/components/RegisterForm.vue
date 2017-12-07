@@ -2,19 +2,24 @@
   <div class="registeration box">
     <div class="box-header register">
       <div class="title register">Register an account</div>
-      <div class="error">{{responseData}}</div>
+      <div v-bind:class="status" v-for="message in responseMessage">
+        {{message}}
+      </div>
     </div>
     <div class="box-body register">
-        <input v-model="formData.firstname" type="text" placeholder="First name">
-        <input v-model="formData.lastname" type="text" placeholder="Last name">
-        <input v-model="formData.username" type="text" placeholder="User name">
-        <input v-model="formData.email" type="email" placeholder="Email">
-        <input v-model="formData.password" type="password" placeholder="Password">
-        <input v-model="formData.passwordVerify" type="password" placeholder="Confirm password">
-        <button type="button" v-on:click="postForm()">Submit</button>
+        <input v-model="formData.firstname" type="text" placeholder="First name"> <span>&nbsp;</span>
+        <input v-model="formData.lastname" type="text" placeholder="Last name"> <span>&nbsp;</span>
+        <input v-model="formData.username" type="text" placeholder="Username"> <span>*</span>
+        <input v-bind:style="emailVer" v-model="formData.email" type="email" placeholder="Email"> <span>*</span>
+        <p class="inputError" v-if="mailError">{{mailErrorMessage}}</p>
+        <input v-bind:style="newPw" v-model="formData.password" type="password" placeholder="Password"> <span>*</span>
+        <p class="inputError" v-if="pwError">Password minimum length is 8 characters! And it must contain uppercase, lovercase and alphanumeric characters</p>
+        <input v-bind:style="newPwVer" v-model="formData.passwordVerify" type="password" placeholder="Confirm password"> <span>*</span>
+        <p class="inputError" v-if="pwVerError">Passwords does not match.</p>
+        <button type="button" @keyup.enter="postForm()" v-on:click="postForm()">Submit</button>
     </div>
     <div class="box-footer register">
-      <a class="forgot" v-on:click="showLogin()">Already have an account</a>
+      <router-link class="routerLink" v-bind:to="'/login'">Already have an account</router-link>
     </div>
   </div>
 </template>
@@ -26,7 +31,13 @@ export default {
   name: "registeration-form",
   data() {
     return {
-      responseData: "",
+      responseMessage: {},
+      status: "ERROR",
+      mailErrorMessage: "Check your email",
+      timer: null,
+      pwError: false,
+      pwVerError: false,
+      mailError: false,
       formData: {
         firstname: "",
         lastname: "",
@@ -34,13 +45,96 @@ export default {
         email: "",
         password: "",
         passwordVerify: ""
-      }
+      },
+      emailVer: {
+        borderLeftWidth: "",
+        borderLeftColor: ""
+      },
+      newPw: {
+        borderLeftWidth: "",
+        borderLeftColor: ""
+      },
+      newPwVer: {
+        borderLeftWidth: "",
+        borderLeftColor: ""
+      },
+      response: {},
+      errors: []
     };
   },
-  methods: {
-    showLogin() {
-      this.$parent.$parent.showLogin();
+  watch: {
+    "formData.email": function(query) {
+      clearTimeout(this.timer);
+      this.emailVer.borderLeftWidth = "10px";
+      this.emailVer.borderLeftColor = "Orange";
+      this.timer = setTimeout(() => {
+        var re = /\S+@\S+\.\S+/;
+        if (re.test(query)) {
+          axios
+            .post("/register/email", {
+              email: query
+            })
+            .then(response => {
+              if (response.data.status == "SUCCESS") {
+                this.emailVer.borderLeftWidth = "10px";
+                this.emailVer.borderLeftColor = "MediumSeaGreen";
+                this.mailError = false;
+              } else {
+                this.emailVer.borderLeftWidth = "10px";
+                this.emailVer.borderLeftColor = "Tomato";
+                this.mailErrorMessage = response.data.message;
+                this.mailError = true;
+              }
+            })
+            .catch(e => {
+              this.errors.push(e);
+            });
+        } else {
+          this.emailVer.borderLeftWidth = "10px";
+          this.emailVer.borderLeftColor = "Tomato";
+          this.mailErrorMessage = "Check your email";
+          this.mailError = true;
+        }
+      }, 500);
     },
+    "formData.password": function(query) {
+      this.newPw.borderLeftWidth = "10px";
+      this.newPw.borderLeftColor = "Orange";
+      clearTimeout(this.timer);
+      this.timer = setTimeout(() => {
+        var re = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/;
+        if (re.test(this.formData.password)) {
+          this.newPw.borderLeftWidth = "10px";
+          this.newPw.borderLeftColor = "MediumSeaGreen";
+          this.pwError = false;
+        } else {
+          this.newPw.borderLeftWidth = "10px";
+          this.newPw.borderLeftColor = "Tomato";
+          this.pwError = true;
+        }
+      }, 1000);
+    },
+    "formData.passwordVerify": function(query) {
+      this.newPwVer.borderLeftWidth = "10px";
+      this.newPwVer.borderLeftColor = "Orange";
+      clearTimeout(this.timer);
+      this.timer = setTimeout(() => {
+        if (
+          this.formData.password != this.formData.passwordVerify ||
+          this.formData.passwordVerify == ""
+        ) {
+          this.newPwVer.borderLeftWidth = "10px";
+          this.newPwVer.borderLeftColor = "Tomato";
+          this.pwVerError = true;
+        } else {
+          this.newPwVer.borderLeftWidth = "10px";
+          this.newPwVer.borderLeftColor = "MediumSeaGreen";
+          this.pwVerError = false;
+        }
+      }, 500);
+    }
+  },
+  methods: {
     postForm() {
       axios
         .post("/register", {
@@ -52,16 +146,24 @@ export default {
           passwordVerify: this.formData.passwordVerify
         })
         .then(response => {
-          this.posts = response.data;
-          console.log("Valid response");
-          console.log(JSON.stringify(response.data));
+          this.responseMessage = response.data;
+          this.status = response.data.status;
+          this.$delete(this.responseMessage, "status");
+          setTimeout(() => {
+            this.$router.push('/login').bind(this);
+          }, 1400);
         })
         .catch(e => {
-          this.responseData = e.response.data;
-          console.log("Invalid response");
-          console.log(JSON.stringify(e));
+          this.errors.push(e);
+          this.status = e.response.data.status;
+          this.responseMessage = e.response.data;
+          this.$delete(this.responseMessage, "status");
         });
     }
   }
 };
 </script>
+
+<style>
+@import '../css/forms.css';
+</style>

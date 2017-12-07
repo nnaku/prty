@@ -1,7 +1,9 @@
 <template>
   <div class="home">
-    {{status}}
-    <input class="gameToken" id="token" placeholder="Game token">
+    <figure>
+      <img src="../images/prty_image.png" alt="PRTY.fi">
+    </figure>
+    <input class="gameToken" id="token" placeholder="Please, enter Game Token here!">
     <button class="gameToken" id="token-btn">Go!</button>
   </div>
 </template>
@@ -15,14 +17,14 @@ export default {
 <style scoped>
 input.gameToken {
   width: 60%;
-  height: 6em;
+  height: 3em;
   margin: 0 auto;
-  margin-top: 20%;
+  margin-top: 25px;
   display:block;
-  font-size: 100%;
+  font-size: 230%;
   text-align: center;
-  border: none;
-  box-shadow: 0 0 0.1em 0 grey;
+  border: 1px solid #8DB9B0;
+  border-radius: 1em;
 }
 button.gameToken {
   width: 15%;
@@ -34,52 +36,17 @@ button.gameToken {
   border: none;
 }
 
-
-@media screen and (min-width: 790px) and (max-width: 1020px) {
-
-  button.gameToken {
-    width: 20%;
-    padding: 1em;
-    font-size: 1em;
-    height: 100%;
-  } 
-  
-  input.gameToken {
-  width: 75%;
-  height: 6em;
-  margin: 0 auto;
-  margin-top: 20%;
-  display:block;
-  font-size: 100%;
-  text-align: center;
-  border: none;
-  
-  }
-
+input.gameToken:focus {
+  outline: none;
 }
 
-@media screen and (max-width: 790px) {
-
-  button.gameToken {
-    width: 20%;
-    padding: 1em;
-    font-size: 1em;
-    height: 100%;
-  }
-  input.gameToken {
-  width: 75%;
-  height: 6em;
-  margin: 0 auto;
-  margin-top: 20%;
-  display:block;
-  font-size: 100%;
-  text-align: center;
-  border: none;
-  
-  }
-
+img {
+  width: 30%;
+  height: 100%;
+  margin-top: 25px;
 }
-@media screen and (max-width: 490px) {
+
+@media only screen and (max-width: 768px) {
 
   button.gameToken {
     width: 30%;
@@ -90,14 +57,20 @@ button.gameToken {
 
   input.gameToken {
   width: 90%;
-  height: 6em;
+  height: 3em;
   margin: 0 auto;
-  margin-top: 20%;
+  margin-top: 25px;
   display:block;
-  font-size: 100%;
+  font-size: 230%;
   text-align: center;
   border: none;
   
+  }
+
+  img {
+    width: 60%;
+    height: 100%;
+    margin-top: 25;
   }
 }
 /*button.gameToken:hover {

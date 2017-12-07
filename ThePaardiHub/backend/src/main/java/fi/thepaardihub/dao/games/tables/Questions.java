@@ -112,6 +112,12 @@ public class Questions {
 	public void setFalse7(String false7) {
 		this.false7 = false7;
 	}
+	public String getQuestion() {
+		return question;
+	}
+	public void setQuestion(String question) {
+		this.question = question;
+	}
 	
 	
 }
