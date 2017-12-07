@@ -12,11 +12,11 @@ public class Questions {
 	private int id;
 	
 	private String author;
+	
 	@Column(name="Private")
 	private boolean isPrivate = true;
 	private String question;
 	private String correct;
-
 	private String false1;
 	private String false2;
 	private String false3;
@@ -111,13 +111,6 @@ public class Questions {
 	}
 	public void setFalse7(String false7) {
 		this.false7 = false7;
-	}
-	public String getQuestion() {
-		return question;
-	}
-	public void setQuestion(String question) {
-		this.question = question;
-	}
-	
+	}	
 	
 }

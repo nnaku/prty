@@ -24,12 +24,6 @@ public class GameController {
         this.gamesdao = gamesdao;
     }
 
-
-    @RequestMapping("/games")
-    public @ResponseBody
-    String getGames() {
-        return "{\"message\":\"this returns user info\"}";}
-
     public Games createGame(String author, String gameName, boolean isPrivate, List<Question> questions ) {
         try {
             Games add = new Games();
@@ -54,17 +48,13 @@ public class GameController {
     public List<Questions> getallQuestions() {
         return gamesdao.getAllQuestions();
     }
-    public Games getGame() {
-        try {
-			Games game = (Games) gamesdao.getAllGames();
-
-			if (game != null) {
-				return game;
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return null;
+    
+    public Games getGame(int id) {
+		return gamesdao.getGame(id);
+    }
+    
+    public Questions getQuestions(int id) {
+    	return gamesdao.getQuestion(id);
     }
 
     public String createQuestions(List<Question> questions) {
