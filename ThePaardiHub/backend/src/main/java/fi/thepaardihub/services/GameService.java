@@ -1,4 +1,4 @@
-package fi.thepaardihub.controllers;
+package fi.thepaardihub.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,10 +17,10 @@ import java.util.List;
 
 @Service
 @RestController
-public class GameController {
+public class GameService {
     private GamesDao gamesdao;
   
-    public GameController(GamesDao gamesdao) {
+    public GameService(GamesDao gamesdao) {
         this.gamesdao = gamesdao;
     }
 

@@ -4,6 +4,8 @@ import static org.junit.Assert.*;
 
 import fi.thepaardihub.dao.users.UsersDao;
 import fi.thepaardihub.dao.users.tables.UserAccounts;
+import fi.thepaardihub.services.UserService;
+
 import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
