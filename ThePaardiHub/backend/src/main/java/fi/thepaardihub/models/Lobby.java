@@ -21,6 +21,8 @@ public class Lobby extends Observable implements Runnable {
 	private String lobbyKey;
 	private boolean terminate = false;
 	private boolean playGame = false;
+	private boolean takeAnwsers = false;
+	private int timer = 0;
 
 	public Lobby(Games gameData, ArrayList<Questions> questions, String lobbyKey) {
 		this.gameData = gameData;
@@ -30,8 +32,10 @@ public class Lobby extends Observable implements Runnable {
 	}
 
 	public void setAnwser(String id, String anwser) {
-		if (players.containsKey(id)) {
-			players.get(id).setAnwser(anwser);
+		if (takeAnwsers) {
+			if (players.containsKey(id)) {
+				players.get(id).setAnwser(anwser);
+			}
 		}
 
 	}
@@ -72,7 +76,7 @@ public class Lobby extends Observable implements Runnable {
 		options.add(current.getCorrect());
 
 		Collections.shuffle(options);
-		AnwserOptionsJSON data = new AnwserOptionsJSON(options, playGame);
+		AnwserOptionsJSON data = new AnwserOptionsJSON(options, playGame, takeAnwsers, timer);
 		return data;
 
 	}
@@ -89,6 +93,8 @@ public class Lobby extends Observable implements Runnable {
 		}
 		data.setPlayers(playerData);
 		data.setLobbyKey(lobbyKey);
+		data.setTakeAnwsers(takeAnwsers);
+		data.setTimer(timer);
 		return data;
 
 	}
@@ -99,19 +105,26 @@ public class Lobby extends Observable implements Runnable {
 
 		while (questionIndex < questions.size()) {
 			this.current = questions.get(questionIndex);
+
+			timer = 20;
 			setChanged();
 			notifyObservers();
-			long time = System.currentTimeMillis();
 			do {
+				takeAnwsers = true;
 				synchronized (this) {
 					try {
-						wait(2000);
+						wait(1000);
 					} catch (InterruptedException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}
-			} while ((System.currentTimeMillis() - time < 20000) && !allAnwsersGiven());
+				timer--;
+				setChanged();
+				notifyObservers();
+
+			} while ((timer < 0) && !allAnwsersGiven());
+			takeAnwsers = false;
 			checkCorrectAndReset();
 			questionIndex++;
 
