@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import fi.thepaardihub.dao.games.tables.Games;
 import fi.thepaardihub.dao.games.tables.Questions;
 import fi.thepaardihub.models.Lobby;
+import fi.thepaardihub.models.Player;
 import fi.thepaardihub.socket.LobbySocket;
 
 @Service
@@ -54,7 +55,7 @@ public class LobbyService {
 		do {
 			playerID = UUID.randomUUID().toString();
 		}while(lobbies.get(lobbyKey).containsPlayerId(playerID));
-		
+		lobbies.get(lobbyKey).addPlayer(playerID, new Player(name));
  		String[] retVal = {playerID, "/lobby/play", "/game"};
 		return retVal;
 		
