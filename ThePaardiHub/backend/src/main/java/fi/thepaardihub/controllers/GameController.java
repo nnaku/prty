@@ -1,85 +1,92 @@
 package fi.thepaardihub.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import fi.thepaardihub.dao.games.GamesDao;
-import fi.thepaardihub.dao.users.UsersDao;
 import fi.thepaardihub.dao.games.tables.Questions;
 import fi.thepaardihub.dao.games.tables.Games;
-import fi.thepaardihub.rest.jsonobject.Question;
-import fi.thepaardihub.security.Password;
-import java.util.ArrayList;
 import java.util.List;
-
 
 @Service
 @RestController
 public class GameController {
-    private GamesDao gamesdao;
-  
-    public GameController(GamesDao gamesdao) {
-        this.gamesdao = gamesdao;
-    }
+	private GamesDao gamesdao;
 
-    public Games createGame(String author, String gameName, boolean isPrivate, String questions, String description) {
+	public GameController(GamesDao gamesdao) {
+		this.gamesdao = gamesdao;
+	}
+	
+	// Games
+	
+	public Games createGame(String author, String gameName, boolean isPrivate, String questions, String description) {
+		try {
+			Games add = new Games();
+			add.setAuthor(author);
+			add.setGameName(gameName);
+			add.setPrivate(isPrivate);
+			add.setDescription(description);
+			add.setQuestions(questions);
+			return gamesdao.saveOrUpdateAccount(add);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 
-        try {
-            Games add = new Games();
-            add.setAuthor(author);
-            add.setGameName(gameName);
-            add.setPrivate(isPrivate);
-            add.setDescription(description);
-            add.setQuestions(questions);
-            gamesdao.saveOrUpdateAccount(add);
-            return add;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    
-    public List<Games> getallGames() {
-        return gamesdao.getAllGames();
-    }
-
-
-    public List<Questions> getallQuestions() {
-        return gamesdao.getAllQuestions();
-    }
-    
-    public Games getGame(int id) {
+	public Games getGame(int id) {
 		return gamesdao.getGame(id);
-    }
-    
-    public Questions getQuestions(int id) {
-    	return gamesdao.getQuestion(id);
-    }
+	}
 
-    public String createQuestions(List<Question> questions) {
-        //foreachin sisällä 
-        String retVal = "";
+	public Games getGame(int id, String author) {
+		return gamesdao.getGame(id, author);
+	}
 
-        for(Question e: questions) {
-            Questions add = new Questions();
-            add.setAuthor(e.getAuthor());
-            add.setQuestion(e.getQuestion());
-            add.setCorrect(e.getAnwser());
-            add.setFalse1(e.getFalse1());
-            add.setFalse2(e.getFalse2());
-            add.setFalse3(e.getFalse3());
-            add.setFalse4(e.getFalse4());
-            add.setFalse5(e.getFalse5());
-            add.setFalse6(e.getFalse6());
-            add.setFalse7(e.getFalse7());
-            add.setPrivate(e.isPrivate());
-            gamesdao.saveOrUpdateAccount(add);
-            retVal += add.getId() + ";";
-        }
-     return retVal;
-            
-    }
+	public List<Games> getAllGames() {
+		return gamesdao.getAllGames();
+	}
+
+	public List<Games> getGameByAuthor(String author) {
+		return gamesdao.getAllGamesByAuthor(author);
+	}
+
+	// Questions
+
+	public Questions getQuestions(int id) {
+		return gamesdao.getQuestion(id);
+	}
+
+	public Questions getQuestions(int id, String author) {
+		return gamesdao.getQuestion(id, author);
+	}
+
+	public List<Questions> getAllQuestions() {
+		return gamesdao.getAllQuestions();
+	}
+
+	public List<Questions> getAllQuestions(String author) {
+		return gamesdao.getAllQuestionsByAuthor(author);
+	}
+
+	public Questions createQuestion(String author, String question, String correct,String wrong[],boolean privat) {
+		try {
+			Questions add = new Questions();
+			add.setAuthor(author);
+			add.setQuestion(question);
+			add.setCorrect(correct);
+			add.setFalse1(wrong[0]);
+			add.setFalse2(wrong[1]);
+			add.setFalse3(wrong[2]);
+			add.setFalse4(wrong[3]);
+			add.setFalse5(wrong[4]);
+			add.setFalse6(wrong[5]);
+			add.setFalse7(wrong[6]);
+			add.setPrivate(privat);
+			return gamesdao.saveOrUpdateAccount(add);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+
+	}
+
 }
