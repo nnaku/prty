@@ -8,9 +8,10 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import fi.thepaardihub.dao.games.tables.Games;
 import fi.thepaardihub.dao.games.tables.Questions;
-import fi.thepaardihub.socket.AnwserOptionsJSON;
-import fi.thepaardihub.socket.HostAction;
-import fi.thepaardihub.socket.LobbyJSON;
+import fi.thepaardihub.socket.jsonobject.AnwserOptionsJSON;
+import fi.thepaardihub.socket.jsonobject.HostAction;
+import fi.thepaardihub.socket.jsonobject.LobbyJSON;
+import fi.thepaardihub.socket.jsonobject.PlayerInfo;
 
 public class Lobby extends Observable implements Runnable {
 
@@ -23,6 +24,7 @@ public class Lobby extends Observable implements Runnable {
 	private boolean playGame = false;
 	private boolean takeAnwsers = false;
 	private int timer = 0;
+	private LobbyState state;
 
 	public Lobby(Games gameData, ArrayList<Questions> questions, String lobbyKey) {
 		this.gameData = gameData;
@@ -31,11 +33,14 @@ public class Lobby extends Observable implements Runnable {
 		players = new HashMap<String, Player>();
 	}
 
-	public void setAnwser(String id, String anwser) {
-		if (takeAnwsers) {
-			if (players.containsKey(id)) {
-				players.get(id).setAnwser(anwser);
+	public void setAnwser(PlayerInfo player) {
+		if (!player.isLeave()) {
+
+			if (players.containsKey(player.getId()) && takeAnwsers) {
+				players.get(player.getId()).setAnwser(player.getAnwser());
 			}
+		} else {
+			removePlayer(player.getId());
 		}
 
 	}
@@ -76,7 +81,7 @@ public class Lobby extends Observable implements Runnable {
 		options.add(current.getCorrect());
 
 		Collections.shuffle(options);
-		AnwserOptionsJSON data = new AnwserOptionsJSON(options, playGame, takeAnwsers, timer);
+		AnwserOptionsJSON data = new AnwserOptionsJSON(options, playGame, takeAnwsers, timer, state);
 		return data;
 
 	}
@@ -95,6 +100,7 @@ public class Lobby extends Observable implements Runnable {
 		data.setLobbyKey(lobbyKey);
 		data.setTakeAnwsers(takeAnwsers);
 		data.setTimer(timer);
+		data.setState(state);
 		return data;
 
 	}
@@ -104,6 +110,7 @@ public class Lobby extends Observable implements Runnable {
 		Collections.shuffle(this.questions);
 
 		while (questionIndex < questions.size()) {
+			state = LobbyState.ASKING_QUESTION;
 			this.current = questions.get(questionIndex);
 
 			timer = 20;
@@ -124,8 +131,28 @@ public class Lobby extends Observable implements Runnable {
 				notifyObservers();
 
 			} while ((timer < 0) && !allAnwsersGiven());
+
 			takeAnwsers = false;
 			checkCorrectAndReset();
+			state = LobbyState.CHANING_QUESTION;
+			timer = 5;
+			
+			do {
+
+				synchronized (this) {
+					try {
+						wait(1000);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				timer--;
+				setChanged();
+				notifyObservers();
+
+			} while ((timer < 0));
+			
 			questionIndex++;
 
 		}
@@ -155,8 +182,10 @@ public class Lobby extends Observable implements Runnable {
 	@Override
 	public void run() {
 		while (!terminate) {
+			state = LobbyState.GAME_READY;
 			while (playGame) {
 				playGame();
+				state = LobbyState.GAME_FINISHED;
 				playGame = false;
 			}
 
@@ -183,5 +212,6 @@ public class Lobby extends Observable implements Runnable {
 
 	public void terminate() {
 		terminate = true;
+		state = LobbyState.TERMINATING_LOBBY;
 	}
 }

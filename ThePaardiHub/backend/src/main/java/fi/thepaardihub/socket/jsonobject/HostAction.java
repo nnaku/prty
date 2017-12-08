@@ -1,4 +1,4 @@
-package fi.thepaardihub.socket;
+package fi.thepaardihub.socket.jsonobject;
 
 public class HostAction {
 

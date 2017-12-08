@@ -1,6 +1,8 @@
-package fi.thepaardihub.socket;
+package fi.thepaardihub.socket.jsonobject;
 
 import java.util.ArrayList;
+
+import fi.thepaardihub.models.LobbyState;
 
 public class AnwserOptionsJSON {
 
@@ -11,8 +13,9 @@ public class AnwserOptionsJSON {
 	private boolean playGame;
 	private boolean takeAnwser;
 	private int timer;
+	private LobbyState state;
 
-	public AnwserOptionsJSON(ArrayList<String> options, boolean playGame, boolean takeAnwser, int timer) {
+	public AnwserOptionsJSON(ArrayList<String> options, boolean playGame, boolean takeAnwser, int timer, LobbyState state) {
 		option1 = options.get(0);
 		option2 = options.get(1);
 		option3 = options.get(2);
@@ -20,6 +23,7 @@ public class AnwserOptionsJSON {
 		this.playGame = playGame;
 		this.takeAnwser = takeAnwser;
 		this.timer = timer;
+		this.state = state;
 	}
 
 	public String getOption1() {
@@ -42,7 +46,6 @@ public class AnwserOptionsJSON {
 		return playGame;
 
 	}
-	
 
 	public boolean isTakeAnwser() {
 		return takeAnwser;
@@ -50,6 +53,11 @@ public class AnwserOptionsJSON {
 
 	public int getTimer() {
 		return timer;
+	}
+
+	
+	public LobbyState getState() {
+		return state;
 	}
 
 	public ArrayList<String> getOptions() {

@@ -9,6 +9,10 @@ import org.springframework.stereotype.Controller;
 
 
 import fi.thepaardihub.models.Lobby;
+import fi.thepaardihub.socket.jsonobject.AnwserOptionsJSON;
+import fi.thepaardihub.socket.jsonobject.HostAction;
+import fi.thepaardihub.socket.jsonobject.LobbyJSON;
+import fi.thepaardihub.socket.jsonobject.PlayerInfo;
 
 
 @Controller
@@ -33,7 +37,7 @@ public class LobbySocket  implements Observer{
 	@MessageMapping("/game")
 	public void setAnwser(PlayerInfo player) {
 		if(lobby != null)
-		lobby.setAnwser(player.getId(), player.getAnwser());
+		lobby.setAnwser(player);
 
 	}
 	@MessageMapping("/game/host")
