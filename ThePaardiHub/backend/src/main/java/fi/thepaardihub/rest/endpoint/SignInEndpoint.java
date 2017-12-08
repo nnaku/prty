@@ -6,18 +6,15 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
 
-import fi.thepaardihub.controllers.UserController;
+import fi.thepaardihub.services.UserService;
 import fi.thepaardihub.dao.users.tables.UserAccounts;
 import fi.thepaardihub.rest.jsonobject.SignIn;
 import fi.thepaardihub.security.Password;
@@ -25,7 +22,7 @@ import fi.thepaardihub.security.Password;
 @Controller
 public class SignInEndpoint {
 
-	private UserController users;
+	private UserService users;
 	private Password password = new Password();
 	private Map<String, String> jsonMap;
 	private String passwordError;
@@ -33,7 +30,7 @@ public class SignInEndpoint {
 
 
 	@Autowired
-	public void setUsers(UserController users) {
+	public void setUsers(UserService users) {
 		this.users = users;
 	}
 

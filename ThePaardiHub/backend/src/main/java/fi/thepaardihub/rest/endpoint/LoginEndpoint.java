@@ -2,30 +2,32 @@ package fi.thepaardihub.rest.endpoint;
 
 import java.util.HashMap;
 import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+
 import com.google.gson.Gson;
-import fi.thepaardihub.controllers.UserController;
+
+import fi.thepaardihub.services.UserService;
 import fi.thepaardihub.dao.users.tables.UserAccounts;
 import fi.thepaardihub.rest.jsonobject.Login;
 import fi.thepaardihub.security.JWT;
 
 @Controller
 public class LoginEndpoint {
-	private UserController users;
+	private UserService users;
 	private UserAccounts user;
 	private JWT jwt = new JWT();
 	private Map<String, String> jsonMap;
 	private HttpHeaders headers;
 
 	@Autowired
-	public void setUsers(UserController users) {
+	public void setUsers(UserService users) {
 		this.users = users;
 	}
 	/**

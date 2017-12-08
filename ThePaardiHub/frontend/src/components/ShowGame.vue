@@ -2,13 +2,13 @@
     <div id="showGame" class="show-game">
         <h3>Show game.</h3>
         <div class="game-form">
-            <h2>{{newGame.name}}</h2>
-            <h5 v-if="newGame.private">This game is private</h5>
+            <h2>{{newGame.gameName}}</h2>
+            <h5 v-if="newGame.isPrivate">This game is private</h5>
             <h5 v-else>This game is public</h5>
-            <p>{{newGame.description}}</p>
+            <p v-html="newGame.description"/>
             <h5>Questions</h5>
             <div v-for=" (question, index) in newGame.questions" :key="index" >
-                {{question}}
+                <p v-html="question.question"/>
             </div>
             <button @click="editGame()">Edit game</button>
         </div>
@@ -23,7 +23,15 @@ export default {
   },
   data() {
     return {
-      newGame: this.game
+      newGame: {
+        id: null,
+        author: "",
+        gameName: "",
+        isPrivate: true,
+        questions: [],
+        description: ""
+      },
+      errors: []
     };
   },
   methods: {
@@ -33,9 +41,22 @@ export default {
   },
   watch: {
     game: function(val) {
-      this.newGame = val;
+      this.newGame.id = val.id;
+      this.newGame.author = val.author;
+      this.newGame.gameName = val.gameName;
+      this.newGame.isPrivate = val.isPrivate;
+      this.newGame.description = val.description;
+      this.axios
+        .get("/question?id=" + val.questions)
+        .then(response => {
+           this.newGame.questions = JSON.parse(JSON.stringify(response.data.questions));
+        })
+        .catch(e => {
+          this.errors.push(e);
+        });
     }
-  }
+  },
+  mounted: function() {}
 };
 </script>
 

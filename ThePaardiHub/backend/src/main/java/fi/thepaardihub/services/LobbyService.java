@@ -1,4 +1,4 @@
-package fi.thepaardihub.controllers;
+package fi.thepaardihub.services;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,13 +16,13 @@ import fi.thepaardihub.socket.LobbySocket;
 @Service
 public class LobbyService {
 	
-	private GameController games;
+	private GameService games;
 	private HashMap<String,Lobby> lobbies;
 	
 	private LobbySocket socket;
 	
 	@Autowired
-	public LobbyService(GameController games,LobbySocket socket) {
+	public LobbyService(GameService games,LobbySocket socket) {
 		this.games = games;
 		this.socket = socket;
 		lobbies = new HashMap<String, Lobby>();

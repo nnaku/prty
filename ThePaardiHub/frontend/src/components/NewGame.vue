@@ -2,10 +2,20 @@
     <div id="newGame" class="new-game">
         <h3>Create new game.</h3>
         <div class="game-form">
-            <input v-model="newGame.name" type="text" placeholder="Game name">
-            <input v-model="newGame.description" type="text" placeholder="Game description">
-            <label for="private">Private game</label><input v-model="newGame.private" id="private" type="checkbox">
-            <button @click="saveGame()">Save game</button>
+          <input v-model="newGame.gameName" type="text" placeholder="Game name">
+          <input v-model="newGame.description" type="text" placeholder="Game description">
+          <label for="private">Private game</label><input v-model="newGame.isPrivate" id="private" type="checkbox">
+          <h2>Select Questions</h2>
+          <a class="selected-questions-row" :id="'selected-'+question.id" v-for="(question,index) of selectedQuestios" :key="question.id" @click="removeQuestion(index)">
+            <p v-html="question.question"/>
+          </a>
+          <button @click="saveGame()">Save game</button>
+        </div>
+        <div class="my-questions">
+          <h2>My Questions</h2>
+          <a class="questions-row" :id="'not-selected-'+question.id" :ref="question.id" v-for="(question,index) of myQuestions" :key="question.id" @click="selectQuestion(index)">
+            <p v-html="question.question"/>
+          </a>
         </div>
     </div>
 </template>
@@ -18,18 +28,78 @@ export default {
   },
   data() {
     return {
-      newGame: this.game
+      newGame: {
+        id: null,
+        author: "",
+        gameName: "",
+        isPrivate: true,
+        questions: "",
+        description: ""
+      },
+      myQuestions: [],
+      selectedQuestios: [],
+      errors: []
     };
   },
   methods: {
+    selectQuestion(index) {
+      this.selectedQuestios.push(this.myQuestions[index]);
+      this.$delete(this.myQuestions, index);
+    },
+    removeQuestion(index) {
+      this.myQuestions.push(this.selectedQuestios[index]);
+      this.$delete(this.selectedQuestios, index);
+    },
+    loadMyQuestions() {
+      this.axios
+        .get("/questions")
+        .then(response => {
+          this.myQuestions = JSON.parse(
+            JSON.stringify(response.data.questions)
+          );
+        })
+        .catch(e => {
+          this.errors.push(e);
+        });
+    },
     saveGame() {
-      console.log(JSON.stringify(this.newGame));
+      var array = Array();
+      this.selectedQuestios.forEach(question => {
+        array.push(question.id);
+        this.newGame.questions = array.join(";");
+      });
+      this.axios
+        .post("/gameset", {
+          gameName: this.newGame.gameName,
+          isPrivate: this.newGame.isPrivate,
+          questions: this.newGame.questions,
+          description: this.newGame.description
+        })
+        .then(response => {
+          this.$parent.loadGames();
+          this.loadMyQuestions();
+          this.selectedQuestios = [];
+          this.newGame = {
+            id: null,
+            author: "",
+            gameName: "",
+            isPrivate: true,
+            questions: "",
+            description: ""
+          };
+        })
+        .catch(e => {
+          this.errors.push(e);
+        });
     }
   },
   watch: {
     game: function(val) {
       this.newGame = val;
     }
+  },
+  beforeMount() {
+    this.loadMyQuestions();
   }
 };
 </script>

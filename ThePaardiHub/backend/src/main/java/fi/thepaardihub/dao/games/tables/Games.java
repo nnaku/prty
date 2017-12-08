@@ -18,7 +18,8 @@ public class Games {
 	private boolean isPrivate = true;
 	
 	private String questions;
-        private String description;
+    
+	private String description;
 
 	public Games() {
         }

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import fi.thepaardihub.controllers.LobbyService;
+import fi.thepaardihub.services.LobbyService;
 import fi.thepaardihub.rest.jsonobject.JoinInfo;
 import fi.thepaardihub.rest.jsonobject.LobbyCreationInfo;
 

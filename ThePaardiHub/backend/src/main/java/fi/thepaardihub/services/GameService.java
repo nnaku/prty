@@ -9,25 +9,17 @@ import java.util.List;
 
 @Service
 @RestController
-<<<<<<< HEAD:ThePaardiHub/backend/src/main/java/fi/thepaardihub/controllers/GameController.java
-public class GameController {
-	private GamesDao gamesdao;
-=======
+
 public class GameService {
     private GamesDao gamesdao;
   
     public GameService(GamesDao gamesdao) {
         this.gamesdao = gamesdao;
     }
->>>>>>> e7fcd6d0cfe3ade925eda6c9b2b004c57c413cb7:ThePaardiHub/backend/src/main/java/fi/thepaardihub/services/GameService.java
 
-	public GameController(GamesDao gamesdao) {
-		this.gamesdao = gamesdao;
-	}
-	
 	// Games
 	
-	public Games createGame(String author, String gameName, boolean isPrivate, String questions, String description) {
+	public Games createGame(String author, String gameName, boolean isPrivate, String questions, String description) throws Exception{
 		try {
 			Games add = new Games();
 			add.setAuthor(author);
