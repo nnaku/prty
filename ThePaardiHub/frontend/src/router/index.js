@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import VueI18n from 'vue-i18n'
 import Router from 'vue-router'
 import Meta from 'vue-meta'
 
@@ -11,9 +12,19 @@ import ReserPassword from '@/components/ReserPasswordForm'
 import Games from '@/components/Games'
 import Logout from '@/components/Logout'
 
+import messages from '../locale/message'
 
 Vue.use(Router)
 Vue.use(Meta)
+// localize plugin
+Vue.use(VueI18n)
+
+const i18n = new VueI18n({
+  locale: 'fr',
+  messages: messages
+});
+
+// Pitäiskö tänne saada exportattua i18n?
 
 export default new Router({
   mode: 'history',
@@ -54,4 +65,4 @@ export default new Router({
       component: ReserPassword
     }
   ]
-})
+}) 

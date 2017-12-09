@@ -4,13 +4,13 @@
       <img src="../images/prty_image.png" alt="PRTY.fi">
     </figure>
     <input class="gameToken" id="token" placeholder="Please, enter Game Token here!">
-    <button class="gameToken" id="token-btn">Go!</button>
+    <button class="gameToken" id="token-btn"> {{ this.$t('message.go') }}</button>
   </div>
 </template>
 
 <script>
 export default {
-  name: "Home"
+  name: "Home",
 };
 </script>
 
