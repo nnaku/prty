@@ -1,46 +1,41 @@
 <template>
   <div class="profile box">
     <div class="profile box-header ">
-      <div class="profile title">User Profile</div>
+      <div class="profile title">{{$t('message.profileheader')}}</div>
       <div v-bind:class="status">{{responseMessage}}</div>
       <div class="info">
         <p class="infotext">
-          Here you can manage your user details. 
-          Add e.g. new email address or username and then update details. 
-          If you would like to change your password, please click 
-          <b>Change Your Password</b> button first.
+          {{$t('message.changeprofiledetails')}}
         </p>
       </div>
     </div>
     <div class="profile box-body">
-        <input v-model="userinfo.firstname" type="text" placeholder="First name" :disabled="!isDisabled" >
-        <input v-model="userinfo.lastname" type="text" placeholder="Last name" :disabled="!isDisabled" >
-        <input v-model="userinfo.username" type="text" placeholder="User name" :disabled="!isDisabled" >
-        <input v-model="userinfo.email" type="email" placeholder="Email" :disabled="false" >
-        <input v-model="passwords.password" type="password" placeholder="Current password" v-show="changePassword">
+        <input v-model="userinfo.firstname" type="text" :placeholder="$t('message.firstname')" :disabled="!isDisabled" >
+        <input v-model="userinfo.lastname" type="text" :placeholder="$t('message.lastname')" :disabled="!isDisabled" >
+        <input v-model="userinfo.username" type="text" :placeholder="$t('message.username')" :disabled="!isDisabled" >
+        <input v-model="userinfo.email" type="email" :placeholder="Email" :disabled="false" >
+        <input v-model="passwords.password" type="password" :placeholder="$t('message.currentpw')" v-show="changePassword">
         <span>&nbsp;*</span>
-        <input id="newPw" v-model="passwords.newPassword" type="password" placeholder="New password" v-show="changePassword">
+        <input id="newPw" v-model="passwords.newPassword" type="password" :placeholder="$t('message.newpw')" v-show="changePassword">
         <span>&nbsp;*</span>
-        <input id="newPwVer" v-model="passwords.newPasswordVerify" type="password" placeholder="Confirm new password" v-show="changePassword">
+        <input id="newPwVer" v-model="passwords.newPasswordVerify" type="password" :placeholder="$t('message.confirmnewpw')" v-show="changePassword">
         <span>&nbsp;*</span>
-        <button class="confirm" type="button" @click="postForm()">Update</button>
+        <button class="confirm" type="button" @click="postForm()">{{$t('message.update')}}</button>
         <div class="button-group">
-          <button v-on:click="changePW()" v-show="!changePassword">Change your password</button>
+          <button v-on:click="changePW()" v-show="!changePassword">{{$t('message.changepw')}}</button>
         </div>
-        <a class="cancel" type="button" @click="cancel" v-show="!isDisabled || changePassword">Cancel</a>
-        
+        <a class="cancel" type="button" @click="cancel" v-show="!isDisabled || changePassword">{{$t('message.cancel')}}</a>   
     </div>
-    <div class="profile box-footer">
-      
+      <div class="profile box-footer">
     </div>
   </div>
 </template>
 
 <script>
 import axios from "axios";
-const messages ={
-  msg:"moi"
-}
+const messages = {
+  msg: "moi"
+};
 export default {
   name: "test",
   data() {
@@ -71,14 +66,12 @@ export default {
     editUserInfo() {
       this.isDisabled = false;
     },
-    pwMatch(){
-      if(this.passwords.newPassword != passwords.newPasswordVerify){
-        
+    pwMatch() {
+      if (this.passwords.newPassword != passwords.newPasswordVerify) {
       }
     },
-    pwValid(){
-      if(this.passwords.newPassword != passwords.newPasswordVerify){
-        
+    pwValid() {
+      if (this.passwords.newPassword != passwords.newPasswordVerify) {
       }
     },
     postForm() {
@@ -200,7 +193,7 @@ export default {
 }
 
 .infotext {
-  color:#8db9b0;
+  color: #8db9b0;
   font-weight: 540;
 }
 

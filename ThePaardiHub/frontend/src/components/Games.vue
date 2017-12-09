@@ -1,6 +1,7 @@
 <template>
   <div id="games">
     <div class="games">
+      <!-- Messages are from locale/locales.json -->
         <h2>My Games</h2>
         <a class="gameRow" v-for="(game,index) of games" :key="game.id" @click="selectGame(game.id)">
           <div class="game-name" v-if="game.gameName.length <= 20">{{game.gameName}}</div>

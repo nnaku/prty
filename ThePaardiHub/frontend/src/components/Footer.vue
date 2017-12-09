@@ -1,8 +1,8 @@
 <template>
   <div class="appfooter">
     <div class="footer">
-      <p><a v-on:click="changeLanguage()">{{$t('message.language')}}</a></p> <!-- Aku, tähän contact-modali! -->
-      
+      <!-- Message is from locale/locales.json -->
+      <p><a v-on:click="changeLanguage()">{{$t('message.language')}}</a></p>
     </div> 
   </div>
   

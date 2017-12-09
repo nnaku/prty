@@ -1,47 +1,34 @@
 <template>
   <div id="about">
      <div class="generalinfo">
-       <p class="title">PRTY.fi</p>
-       <p class="info">Spelled party without an A. With this everyone is able to invent the funniest,
-         most situation fitting questions - teachers for a students in a classroom, organizer for a housewarming party,
-         best man and briedsmaid for a wedding, parents for their childrens birthday party etc. Hosts can bring all
-         participants together and have a great time.<br><br>
-         Everyone is also able to join the game where they have been invited. They can compete and enjoy
-         of the time with others!<br><br>
+       <!-- Messages are from locale/locales.json -->
+       <p class="title"> {{ $t('message.generalTitle') }} </p>
+       <p class="info">{{ $t('message.generalInfoLine1') }}<br><br>
+       {{ $t('message.generalInfoLine2') }}<br><br>
         <ul>
-          <li>For different events</li>
-          <li>Everyone could be a host of the game</li>
-          <li>Brings people together</li>
+          <li>{{ $t('message.generalLi1') }}</li>
+          <li>{{ $t('message.generalLi2') }}</li>
+          <li>{{ $t('message.generalLi3') }}</li>
         </ul>
       </p>
      </div>
      <div class="about">
-      <p class="title">As a Host</p>
-      <p class="info">You are able to create a question game and hosts that - 
-        just register to the PRTY.fi and invite others to compete!
-        When you are, for example, with your buddies or in a party with guests, 
-        invite them to a special game where the questions are made by yourself! 
-        Nothing is stopping you to create questions of animals, movies or for example 
-        of yourself or your buddies. If you don't have a time to create questions, no worries. PRTY.fi has premade questions
-        you are free to use. Yeah right, sounds cool!<br><br>This is a fun way to mix up the typical party where everyone 
-        just hangs out or plays bingo. PRTY.fi gives you also a low pressure to organize 
-        parties - an agenda is already planned and you are in charge of the entertainment!<br>
+      <p class="title">{{ $t('message.hostTitle') }}</p>
+      <p class="info">{{ $t('message.hostInfoLine1') }}<br><br>
+      <br>
         <ul>
-          <li>Register to the PRTY.fi and host games anywhere you are</li>
-          <li>Bring all your guests together</li>
-          <li>Create your own questions</li>
-          <li>Use questions published by other users</li>
+          <li>{{ $t('message.hostLi1') }}</li>
+          <li>{{ $t('message.hostLi2') }}</li>
+          <li>{{ $t('message.hostLi3') }}</li>
+          <li>{{ $t('message.hostLi4') }}</li>
         </ul>
       </p>
-      <p class="title">As a User</p>
-      <p class="info">You are able to join a live hosted game. You get a Game Token from the Host. 
-        Just type it on a main page, choose username and join to the game! When everyone else have also
-        joined, the party is ready for begin - the questions will appear on the your device and
-        you are also able to answer by this device. See your scores, see others scores and have fun!<br><br>
+      <p class="title">{{ $t('message.userTitle') }}</p>
+      <p class="info"> {{ $t('message.userInfo')}} <br><br>
         <ul>
-          <li>Join to the PRTY.fi game</li>
-          <li>Compete with others</li>
-          <li>Have fun</li>
+          <li>{{ $t('message.userLi1') }}</li>
+          <li>{{ $t('message.userLi2') }}</li>
+          <li>{{ $t('message.userLi3') }}</li>
         </ul>
       </p>
      </div>

@@ -1,5 +1,6 @@
 <template>
   <div class="home">
+    <!-- Messages are from locale/locales.json -->
     <figure>
       <img src="../images/prty_image.png" alt="PRTY.fi">
     </figure>
@@ -56,14 +57,14 @@ img {
   }
 
   input.gameToken {
-  width: 90%;
-  height: 3em;
-  margin: 0 auto;
-  margin-top: 25px;
-  display:block;
-  font-size: 230%;
-  text-align: center;
-  border: none;
+    width: 90%;
+    height: 3em;
+    margin: 0 auto;
+    margin-top: 25px;
+    display:block;
+    font-size: 230%;
+    text-align: center;
+    border: none;
   
   }
 
@@ -73,7 +74,5 @@ img {
     margin-top: 25;
   }
 }
-/*button.gameToken:hover {
-  background-color: #548E90;
-}*/
+
 </style>  

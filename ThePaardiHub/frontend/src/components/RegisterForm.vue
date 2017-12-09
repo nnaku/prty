@@ -1,26 +1,27 @@
 <template>
   <div class="registeration box">
     <div class="box-header register">
-      <div class="title register">Register an account</div>
-      <router-link class="routerToAbout" v-bind:to="'/about'">Click here and read what you can do after register!</router-link>
+      <!-- Messages are from locale/locales.json -->
+      <div class="title register">{{$t('message.registerheader')}}</div>
+      <router-link class="routerToAbout" v-bind:to="'/about'">{{$t('message.goAbout')}}</router-link>
       <div v-bind:class="status" v-for="message in responseMessage">
         {{message}}
       </div>
     </div>
     <div class="box-body register">
-        <input v-model="formData.firstname" type="text" placeholder="First name"> <span>&nbsp;</span>
-        <input v-model="formData.lastname" type="text" placeholder="Last name"> <span>&nbsp;</span>
-        <input v-model="formData.username" type="text" placeholder="Username"> <span>*</span>
-        <input v-bind:style="emailVer" v-model="formData.email" type="email" placeholder="Email"> <span>*</span>
+        <input v-model="formData.firstname" type="text" :placeholder="$t('message.firstname')"> <span>&nbsp;</span>
+        <input v-model="formData.lastname" type="text" :placeholder="$t('message.lastname')"> <span>&nbsp;</span>
+        <input v-model="formData.username" type="text" :placeholder="$t('message.username')"> <span>*</span>
+        <input v-bind:style="emailVer" v-model="formData.email" type="email" :placeholder="$t('message.email')"> <span>*</span>
         <p class="inputError" v-if="mailError">{{mailErrorMessage}}</p>
-        <input v-bind:style="newPw" v-model="formData.password" type="password" placeholder="Password"> <span>*</span>
-        <p class="inputError" v-if="pwError">Password minimum length is 8 characters! And it must contain uppercase, lovercase and alphanumeric characters</p>
-        <input v-bind:style="newPwVer" v-model="formData.passwordVerify" type="password" placeholder="Confirm password"> <span>*</span>
-        <p class="inputError" v-if="pwVerError">Passwords does not match.</p>
-        <button type="button" @keyup.enter="postForm()" v-on:click="postForm()">Submit</button>
+        <input v-bind:style="newPw" v-model="formData.password" type="password" :placeholder="$t('message.password')"> <span>*</span>
+        <p class="inputError" v-if="pwError">{{$t('message.pwErrorInvalid')}}</p>
+        <input v-bind:style="newPwVer" v-model="formData.passwordVerify" type="password" :placeholder="$t('message.confirmpasswd')"> <span>*</span>
+        <p class="inputError" v-if="pwVerError">{{$t('message.pwErrorDoesNotMatch')}}</p>
+        <button type="button" @keyup.enter="postForm()" v-on:click="postForm()">{{$t('message.submit')}}</button>
     </div>
     <div class="box-footer register">
-      <router-link class="routerLink" v-bind:to="'/login'">Already have an account</router-link>
+      <router-link class="routerLink" v-bind:to="'/login'">{{$t('message.alreadyaccount')}}</router-link>
     </div>
   </div>
 </template>

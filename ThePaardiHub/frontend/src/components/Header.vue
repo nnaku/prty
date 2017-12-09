@@ -1,16 +1,16 @@
 <template>
   <div class="appheader">
     <div class="topnav" id="myTopnav">
-      <router-link class="brand toLeft item" v-bind:to="'/'">PRTY.fi</router-link>
-      <router-link class="toLeft item" v-bind:to="'/games'" v-if="this.$auth.check()">My games</router-link>
-      <router-link class="toLeft item" v-bind:to="'/about'" v-else>About</router-link>
-      <a class="toRight item" v-if="this.$auth.check()" v-on:click="logout()">Logout</a>
-      <router-link class="toRight item" v-bind:to="'/login'" v-else>Login</router-link>
-      <router-link class="toRight item" v-bind:to="'/user'" v-if="this.$auth.check()">Profile</router-link>
-      <router-link class="toRight item" v-bind:to="'/register'" v-else >Register</router-link>
+      <!-- Messages are from locale/locales.json -->
+      <router-link class="brand toLeft item" v-bind:to="'/'"> {{ $t('message.brand') }} </router-link>
+      <router-link class="toLeft item" v-bind:to="'/games'" v-if="this.$auth.check()">{{ $t('message.mygames') }}</router-link>
+      <router-link class="toLeft item" v-bind:to="'/about'" v-else>{{ $t('message.about') }}</router-link>
+      <a class="toRight item" v-if="this.$auth.check()" v-on:click="logout()">{{ $t('message.logout') }}</a>
+      <router-link class="toRight item" v-bind:to="'/login'" v-else>{{ $t('message.login') }}</router-link>
+      <router-link class="toRight item" v-bind:to="'/user'" v-if="this.$auth.check()">{{ $t('message.profile') }}</router-link>
+      <router-link class="toRight item" v-bind:to="'/register'" v-else >{{ $t('message.register') }}</router-link>
     </div>
   </div>
-  
 </template>
 
 <script>

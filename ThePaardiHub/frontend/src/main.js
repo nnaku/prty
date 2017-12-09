@@ -10,7 +10,7 @@ import VueI18n from 'vue-i18n'
 import localesJSON from './locale/locales.json'
 
 Vue.config.productionTip = true
-Vue.config.lang = 'fr';
+Vue.config.lang = 'en';
 
 Vue.router = router
 
@@ -45,11 +45,10 @@ Vue.use(VueAuth, {
 });
 
 // localize plugin
-
 Vue.use(VueI18n)
 
 export const i18n = new VueI18n({
-  locale: 'fr',
+  locale: 'en',
   messages: localesJSON
 });
 

@@ -1,6 +1,10 @@
 <template>
   <div id="logout">
-    <p>logout :)</p>
+    <div class="links">
+      <router-link class="routerToAbout" v-bind:to="'/login'">{{$t('message.loginagain')}}</router-link>
+      <p></p>
+      <router-link class="routerToHome" v-bind:to="'/'">{{$t('message.gomainpage')}}</router-link>
+    </div>
   </div>
 </template>
 
@@ -18,4 +22,13 @@ export default {
 
 <style>
 
+  .links {
+    margin-top: 3em;
+  }
+  .routerToAbout, .routerToHome {
+    font-size: 25px;
+    color:#8db9b0;
+    font-weight: 540;
+    text-decoration: none;
+  }
 </style>

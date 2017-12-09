@@ -1,15 +1,15 @@
 <template>
   <div class="registeration box">
     <div class="box-header register">
-      <div class="title register">Reset your password</div>
+      <div class="title register"></div>
       <div class="error">{{responseData}}</div>
     </div>
     <div class="box-body register">
-        <input v-model="formData.email" type="email" placeholder="Email... aaand its not workin atm :("> <span>*</span>
-        <button type="button" @keyup.enter="postForm()" @click="postForm()">Submit</button>
+        <input v-model="formData.email" type="email" :placeholder="$t('message.email')"> <span>*</span>
+        <button type="button" @keyup.enter="postForm()" @click="postForm()">{{$t('message.submit')}}</button>
     </div>
     <div class="box-footer register">
-      <router-link class="routerLink" v-bind:to="'/login'">Back to login</router-link>
+      <router-link class="routerLink" v-bind:to="'/login'">{{$t('message.backToLogin')}}</router-link>
     </div>
   </div>
 </template>
