@@ -21,7 +21,7 @@ input.gameToken {
   margin: 0 auto;
   margin-top: 25px;
   display:block;
-  font-size: 230%;
+  font-size: 210%;
   text-align: center;
   border: 1px solid #8DB9B0;
   border-radius: 1em;

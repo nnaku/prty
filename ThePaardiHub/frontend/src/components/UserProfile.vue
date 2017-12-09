@@ -8,7 +8,7 @@
           Here you can manage your user details. 
           Add e.g. new email address or username and then update details. 
           If you would like to change your password, please click 
-          <i>Change Your Password</i> button first.
+          <b>Change Your Password</b> button first.
         </p>
       </div>
     </div>
