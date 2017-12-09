@@ -1,7 +1,8 @@
-package fi.thepaardihub.socket;
+package fi.thepaardihub.socket.jsonobject;
 
 import java.util.ArrayList;
 
+import fi.thepaardihub.models.LobbyState;
 import fi.thepaardihub.models.Player;
 
 public class LobbyJSON {
@@ -12,6 +13,9 @@ public class LobbyJSON {
 	private String lobbyKey;
 	private String author;
 	private boolean playGame;
+	private boolean takeAnwsers;
+	private int timer;
+	private LobbyState state;
 	
 	
 	public String getLobbyKey() {
@@ -43,6 +47,24 @@ public class LobbyJSON {
 	}
 	public void setPlayGame(boolean playGame) {
 		this.playGame = playGame;
+	}
+	public boolean isTakeAnwsers() {
+		return takeAnwsers;
+	}
+	public void setTakeAnwsers(boolean takeAnwsers) {
+		this.takeAnwsers = takeAnwsers;
+	}
+	public int getTimer() {
+		return timer;
+	}
+	public void setTimer(int timer) {
+		this.timer = timer;
+	}
+	public LobbyState getState() {
+		return state;
+	}
+	public void setState(LobbyState state) {
+		this.state = state;
 	}
 	
 	

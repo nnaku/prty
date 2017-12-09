@@ -2,7 +2,7 @@ package fi.thepaardihub.rest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import fi.thepaardihub.controllers.UserController;
+import fi.thepaardihub.services.UserService;
 import fi.thepaardihub.dao.users.tables.*;
 import fi.thepaardihub.security.*;
 
@@ -11,11 +11,11 @@ import fi.thepaardihub.security.*;
 public class Rest {
 
 	// Currently this class is only used to test database connection
-	private UserController users;
+	private UserService users;
 	private Password password = new Password();
 
 	@Autowired
-	public void setUsers(UserController users) {
+	public void setUsers(UserService users) {
 		this.users = users;
 	}
 

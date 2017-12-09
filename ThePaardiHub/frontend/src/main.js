@@ -6,6 +6,7 @@ import router from './router'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 import VueAuth from '@websanova/vue-auth'
+
 import VueI18n from 'vue-i18n'
 import localesJSON from './locale/locales.json'
 
@@ -13,6 +14,8 @@ Vue.config.productionTip = true
 Vue.config.lang = 'fr';
 
 Vue.router = router
+
+Vue.use(VueStomp, "/gs-guide-websocket");
 
 Vue.use(VueAxios, axios)
 Vue.use(VueAuth, {
@@ -53,8 +56,6 @@ export const i18n = new VueI18n({
   messages: localesJSON
 });
 
-
-
 var app = new Vue({
   el: '#app',
   router,
@@ -67,6 +68,3 @@ var app = new Vue({
     }
   }
 }).$mount('#app');
-
-// Create a Vue instance with 'i18n' option
-//app({ i18n }).$mount('#app')

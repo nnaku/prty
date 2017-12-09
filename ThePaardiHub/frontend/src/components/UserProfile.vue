@@ -38,7 +38,9 @@
 
 <script>
 import axios from "axios";
-
+const messages ={
+  msg:"moi"
+}
 export default {
   name: "test",
   data() {
@@ -200,6 +202,13 @@ export default {
 .infotext {
   color:#8db9b0;
   font-weight: 540;
+}
+
+span {
+  display: inline-block;
+  color: red;
+  font-weight: bold;
+  text-align: left;
 }
 
 @media only screen and (max-width: 768px) {

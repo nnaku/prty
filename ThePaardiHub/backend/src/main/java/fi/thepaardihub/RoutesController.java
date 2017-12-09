@@ -21,7 +21,7 @@ public class RoutesController {
 	"/logout",
 	"/reset",
 	"/register",
-	"/",
+	"/test",
 	"/",
 	"/"
 	})

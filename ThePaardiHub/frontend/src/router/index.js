@@ -10,6 +10,7 @@ import Register from '@/components/RegisterForm'
 import ReserPassword from '@/components/ReserPasswordForm'
 import Games from '@/components/Games'
 import Logout from '@/components/Logout'
+import Test from '@/components/Test'
 
 
 
@@ -23,7 +24,11 @@ export default new Router({
       path: '/',
       name: 'Home',
       component: Home
-    }, {
+    },{
+      path: '/test',
+      name: 'Test',
+      component: Test
+    },{
       path: "/about",
       name: 'About',
       component: About

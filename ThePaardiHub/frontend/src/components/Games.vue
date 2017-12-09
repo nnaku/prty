@@ -2,22 +2,15 @@
   <div id="games">
     <div class="games">
         <h2>My Games</h2>
-        <a class="gameRow" v-for="(game,index) of games" :key="index" @click="selectGame(index)">
-            <div class="not-played" v-if="!game.completed" >
-                <div class="game-name" v-if="game.title.length <= 20">{{game.title}}</div>
-                <div v-else>{{game.title.substring(1, 20)+"..."}}</div>
-            </div>
-            <div class="played" v-else>
-                <div class="game-name" v-if="game.title.length <= 20">{{game.title}}</div>
-                <div v-else>{{game.title.substring(1, 20)+"..."}}</div>
-            </div>
+        <a class="gameRow" v-for="(game,index) of games" :key="game.id" @click="selectGame(game.id)">
+          <div class="game-name" v-if="game.gameName.length <= 20">{{game.gameName}}</div>
+          <div v-else>{{game.gameName.substring(0, 19)+"..."}}</div>
         </a>
     </div>
     <div class="editor">
         <h2>Editor</h2>
         <button v-if="display !== 'newgame' | display === 'showgame'" @click="newGame()" >New Game</button>
         <button v-if="display !== 'newquestion' | display === 'showgame'" @click="display = 'newquestion'">New Question</button>
-
 
         <newGameForm class="new-game" v-if="display == 'newgame'" v-bind:game="this.game">game</newGameForm>
         <newQuestionForm class="new-question" v-else-if="display == 'newquestion'">question</newQuestionForm>
@@ -43,44 +36,38 @@ export default {
     };
   },
   methods: {
-    newGame(){
-      this.game = []
-      this.display = 'newgame'
+    newGame() {
+      this.game = [];
+      this.display = "newgame";
     },
     selectGame(gameId) {
-      // static test contetnt here!!!
-
-      if ((gameId + 1) % 2 == 0) {
-        this.game = {
-          name: "Parillinen peli",
-          description:
-            "Tämä peli on parillinen ja sisältää vain parillisia kysymysksiä!",
-          questions: [2, 4, 6, 8, 10],
-          private: true
-        };
-      } else {
-        this.game = {
-          name: "Pariton peli",
-          description:
-            "Tämä peli on pariton ja sisältää vain parittomia kysymysksiä!",
-          questions: [1, 3, 5, 7, 9],
-          private: false
-        };
-      }
+      this.$nextTick(function() {
+        this.axios
+          .get("/gameset?id=" + gameId)
+          .then(response => {
+            this.game = JSON.parse(JSON.stringify(response.data.game));
+          })
+          .catch(e => {
+            this.errors.push(e);
+          });
+      });
       this.display = "showgame";
+    },
+    loadGames() {
+      this.$nextTick(function() {
+        this.axios
+          .get("/gamesets")
+          .then(response => {
+            this.games = JSON.parse(JSON.stringify(response.data.game));
+          })
+          .catch(e => {
+            this.errors.push(e);
+          });
+      });
     }
   },
   mounted: function() {
-    this.$nextTick(function() {
-      this.axios
-        .get("https://jsonplaceholder.typicode.com/todos")
-        .then(response => {
-          this.games = response.data;
-        })
-        .catch(e => {
-          this.errors.push(e);
-        });
-    });
+    this.loadGames();
   },
   components: {
     newQuestionForm,

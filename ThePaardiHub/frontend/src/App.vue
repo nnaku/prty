@@ -4,6 +4,7 @@
     <router-view class="main-container"/>
     <appFooter/>
   </div>
+  
 </template>
 
 <script>

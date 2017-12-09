@@ -17,20 +17,19 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
 
-import fi.thepaardihub.controllers.UserController;
-
 import fi.thepaardihub.dao.users.tables.UserAccounts;
 import fi.thepaardihub.security.JWT;
 import fi.thepaardihub.security.Password;
+import fi.thepaardihub.services.UserService;
 
 @RestController
 public class User {
 	private JWT jwt = new JWT();
-	private UserController userCont;
+	private UserService userCont;
 	private Password passwordTools;
 	
 	@Autowired
-	public User(UserController userCont) {
+	public User(UserService userCont) {
 		this.userCont = userCont;
 		this.passwordTools = new Password();
 	}
