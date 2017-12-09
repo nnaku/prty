@@ -2,6 +2,7 @@
   <div class="registeration box">
     <div class="box-header register">
       <div class="title register">Register an account</div>
+      <router-link class="routerToAbout" v-bind:to="'/about'">Click here and read what you can do after register!</router-link>
       <div v-bind:class="status" v-for="message in responseMessage">
         {{message}}
       </div>

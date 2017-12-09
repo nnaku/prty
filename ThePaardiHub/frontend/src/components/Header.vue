@@ -59,6 +59,7 @@ export default {
 .topnav {
   background-color: #db6e2d;
   overflow: hidden;
+  font-size: 19px;
 }
 /* Style the links inside the navigation bar */
 .topnav a {
@@ -83,4 +84,11 @@ export default {
 .router-link-active {
   background-color: #ed8e57;
 }
+
+@media only screen and (max-width: 768px) {
+  .topnav {
+    font-size: 13px;
+  }
+}
+
 </style>
