@@ -6,9 +6,12 @@ import router from './router'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 import VueAuth from '@websanova/vue-auth'
-import VueStomp from "vue-stomp";
+
+import VueI18n from 'vue-i18n'
+import localesJSON from './locale/locales.json'
 
 Vue.config.productionTip = true
+Vue.config.lang = 'fr';
 
 Vue.router = router
 
@@ -44,9 +47,24 @@ Vue.use(VueAuth, {
   }
 });
 
+// localize plugin
+
+Vue.use(VueI18n)
+
+export const i18n = new VueI18n({
+  locale: 'fr',
+  messages: localesJSON
+});
+
 var app = new Vue({
   el: '#app',
   router,
   template: '<App/>',
-  components: { App }
-})
+  components: { App },
+  i18n,
+  watch:{
+    locale(lang){
+      this.i18n.locale = lang;
+    }
+  }
+}).$mount('#app');

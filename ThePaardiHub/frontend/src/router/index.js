@@ -13,6 +13,7 @@ import Logout from '@/components/Logout'
 import Test from '@/components/Test'
 
 
+
 Vue.use(Router)
 Vue.use(Meta)
 
@@ -31,32 +32,32 @@ export default new Router({
       path: "/about",
       name: 'About',
       component: About
-    },{
+    }, {
       path: "/user",
       name: 'User',
-      meta: {auth: true},
+      meta: { auth: true },
       component: User
-    },{
+    }, {
       path: "/games",
       name: 'Games',
       //meta: {auth: true},
       component: Games
-    },{
+    }, {
       path: "/login",
       name: 'Login',
       component: Login
-    },{
+    }, {
       path: "/logout",
       name: 'Logout',
       component: Logout
-    },{
+    }, {
       path: "/register",
       name: 'Register',
       component: Register
-    },{
+    }, {
       path: "/reset",
       name: 'ReserPassword',
       component: ReserPassword
     }
   ]
-})
+}) 
