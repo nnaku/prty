@@ -44,7 +44,7 @@ public class LobbyService {
 		
 		Thread lobbyThread = new Thread(lobby);
 		lobbyThread.start();
-		String[] retVal = {"/game/host", "/lobby/host/show"};
+		String[] retVal = {"/lobby/host/show","prty/game/host" };
 		return retVal;
 	}
 	
@@ -56,7 +56,7 @@ public class LobbyService {
 			playerID = UUID.randomUUID().toString();
 		}while(lobbies.get(lobbyKey).containsPlayerId(playerID));
 		lobbies.get(lobbyKey).addPlayer(playerID, new Player(name));
- 		String[] retVal = {playerID, "/lobby/play", "/game"};
+ 		String[] retVal = {playerID, "/lobby/play", "prty/game"};
 		return retVal;
 		
 	}
