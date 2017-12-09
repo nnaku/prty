@@ -3,8 +3,8 @@
     <figure>
       <img src="../images/prty_image.png" alt="PRTY.fi">
     </figure>
-    <input class="gameToken" id="token" placeholder="Please, enter Game Token here!">
-    <button class="gameToken" id="token-btn"> {{ this.$t('message.go') }}</button>
+    <input class="gameToken" id="token" :placeholder="$t('message.gametoken')">
+    <button class="gameToken" id="token-btn"> {{ $t('message.go') }}</button>
   </div>
 </template>
 
