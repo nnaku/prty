@@ -1,6 +1,7 @@
 <template>
   <div class="profile box">
     <div class="profile box-header ">
+      <!-- Messages are from locale/locales.json -->
       <div class="profile title">{{$t('message.profileheader')}}</div>
       <div v-bind:class="status">{{responseMessage}}</div>
       <div class="info">

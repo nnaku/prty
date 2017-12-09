@@ -1,6 +1,7 @@
 <template>
   <div id="logout">
     <div class="links">
+      <!-- Messages are from locale/locales.json -->
       <router-link class="routerToAbout" v-bind:to="'/login'">{{$t('message.loginagain')}}</router-link>
       <p></p>
       <router-link class="routerToHome" v-bind:to="'/'">{{$t('message.gomainpage')}}</router-link>

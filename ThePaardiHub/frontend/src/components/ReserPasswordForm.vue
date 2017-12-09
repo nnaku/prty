@@ -1,7 +1,8 @@
 <template>
   <div class="registeration box">
     <div class="box-header register">
-      <div class="title register"></div>
+      <!-- Messages are from locale/locales.json -->
+      <div class="title register">{{$t('message.registerheader')}}</div>
       <div class="error">{{responseData}}</div>
     </div>
     <div class="box-body register">
