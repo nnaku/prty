@@ -1,0 +1,41 @@
+{
+    "command": "MESSAGE",
+    "headers": {
+        "content-length": "397",
+        "message-id": "0zzaldcf-6",
+        "subscription": "sub-1512910786616-619",
+        "content-type": "application/json;charset=UTF-8",
+        "destination": "/lobby/host/show"
+    },
+    "body": {
+        "question": "Virgin Trains, Virgin Atlantic and Virgin Racing, are all companies owned by which famous entrepreneur?",
+        "options": [
+            "Richard Branson",
+            "Donald Trump",
+            "Bill Gates",
+            "Alan Sugar"
+        ],
+        "players": [
+            {
+                "name": null,
+                "score": 0,
+                "anwser": ""
+            },
+            {
+                "name": null,
+                "score": 0,
+                "anwser": ""
+            },
+            {
+                "name": null,
+                "score": 0,
+                "anwser": ""
+            }
+        ],
+        "lobbyKey": "qwerty",
+        "playGame": false,
+        "takeAnwsers": false,
+        "timer": 0,
+        "state": "GAME_READY"
+    }
+}
