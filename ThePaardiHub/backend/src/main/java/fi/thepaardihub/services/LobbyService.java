@@ -28,7 +28,7 @@ public class LobbyService {
 		lobbies = new HashMap<String, Lobby>();
 	}
 
-	public String[] createLobby(int GameSetId) {
+	public  HashMap<String,String> createLobby(int GameSetId) {
 		try {
 			Games game = games.getGame(GameSetId);
 			if (game != null) {
@@ -38,19 +38,25 @@ public class LobbyService {
 					questions.add(games.getQuestions(Integer.parseInt(s)));
 
 				}
-				String lobbieKey = "qwerty";
-
-				Lobby lobby = new Lobby(game, questions, lobbieKey);
+				String lobbieKey;
+				do {
+			lobbieKey = "qwerty";
+				}while(lobbies.containsKey(lobbieKey));
+				Lobby lobby = new Lobby(game, questions, lobbieKey, this);
 				socket.setLobby(lobby);
 				lobbies.put(lobbieKey, lobby);
 
 				Thread lobbyThread = new Thread(lobby);
 				lobbyThread.start();
-				String[] retVal = { "/lobby/host/show", "prty/game/host" };
+				HashMap<String, String> retVal = new HashMap<>();
+				retVal.put("sendAddress", "/lobby/host/show");
+				retVal.put("receiveAddress", "prty/game/host");
+				// { "/lobby/host/show", "prty/game/host" };
 				return retVal;
 			} else {
-				String[] retVal = { "invalid gameId"};
-				return retVal;
+				HashMap<String, String> retVal = new HashMap<>();
+				retVal.put("error","error");
+			return retVal;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -58,20 +64,33 @@ public class LobbyService {
 		}
 
 	}
-
-	public String[] addPlayer(String name, String lobbyKey) {
+	public HashMap<String, Boolean> lobbyExist(String key) {
+		HashMap<String, Boolean> retVal = new HashMap<>();
+		retVal.put("lobbieExist", lobbies.containsKey(key));
+		return retVal;
+	}
+	
+	public HashMap<String, String> addPlayer(String name, String lobbyKey) {
 		if (lobbies.containsKey(lobbyKey)) {
 			String playerID;
 			do {
 				playerID = UUID.randomUUID().toString();
 			} while (lobbies.get(lobbyKey).containsPlayerId(playerID));
 			lobbies.get(lobbyKey).addPlayer(playerID, new Player(name));
-			String[] retVal = { playerID, "/lobby/play", "prty/game" };
+			HashMap<String, String> retVal = new HashMap<>();
+			retVal.put("playerID", playerID);
+			retVal.put("sendAddress", "/lobby/play");
+			retVal.put("receiveAddress", "prty/game");
+			// { playerID, "/lobby/play", "prty/game" };
 			return retVal;
 		} else {
 			return null;
 		}
 
+	}
+	public void removeLobby(String key) {
+		lobbies.remove(key);
+		socket.setLobby(null);
 	}
 
 }

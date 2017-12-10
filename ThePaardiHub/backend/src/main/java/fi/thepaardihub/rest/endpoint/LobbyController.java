@@ -37,7 +37,7 @@ public class LobbyController {
 		json = new HashMap<String, Object>();
 		String token = headers.getFirst("Authorization");
 		if (jwt.validate(token).get("status") == "SUCCESS") {
-			return new ResponseEntity<Object>(lobbyService.createLobby(lobby.getId()), new HttpHeaders(),
+			return new ResponseEntity<Object>(new Gson().toJson(lobbyService.createLobby(lobby.getId())), new HttpHeaders(),
 					HttpStatus.OK);
 
 		} else {
@@ -46,10 +46,16 @@ public class LobbyController {
 			return new ResponseEntity<Object>(new Gson().toJson(json), HttpStatus.UNAUTHORIZED);
 		}
 	}
-
+	
 	@PostMapping("/addplayer")
 	public ResponseEntity<?> addPlayer(@RequestBody JoinInfo player) {
-		return new ResponseEntity<Object>(lobbyService.addPlayer(player.getName(), player.getKey()), new HttpHeaders(),
+		return new ResponseEntity<Object>(new Gson().toJson(lobbyService.addPlayer(player.getName(), player.getKey())), new HttpHeaders(),
+				HttpStatus.OK);
+	}
+	
+	@PostMapping("/lobbieexist")
+	public ResponseEntity<?> lobbieExist(@RequestBody JoinInfo player) {
+		return new ResponseEntity<Object>(new Gson().toJson(lobbyService.lobbyExist( player.getKey())), new HttpHeaders(),
 				HttpStatus.OK);
 	}
 

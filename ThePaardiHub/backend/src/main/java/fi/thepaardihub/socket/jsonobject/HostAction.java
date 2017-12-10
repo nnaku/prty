@@ -5,6 +5,7 @@ public class HostAction {
 	private boolean startGame;
 	private boolean getData;
 	private boolean terminateLobby;
+	private boolean internal;
 
 	public boolean isStartGame() {
 		return startGame;
@@ -28,6 +29,14 @@ public class HostAction {
 
 	public void setTerminateLobby(boolean terminateLobby) {
 		this.terminateLobby = terminateLobby;
+	}
+
+	public boolean isInternal() {
+		return internal;
+	}
+
+	public void setInternal(boolean internal) {
+		this.internal = internal;
 	}
 	
 }

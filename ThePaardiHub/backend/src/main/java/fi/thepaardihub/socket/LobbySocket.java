@@ -30,23 +30,35 @@ public class LobbySocket implements Observer {
 	public String testInOut(String data) {
 		return "You said " + data + "!";
 	}
+
 	@SendTo("/lobby/play")
 	@MessageMapping("/game")
 	public AnwserOptionsJSON setAnwser(PlayerInfo player) {
+
 		if (lobby != null) {
-			lobby.setAnwser(player);
-			return lobby.getAwnserOptions();
+			if (player.getId().equals("internal")) {
+				return lobby.getAwnserOptions();
+			} else {
+				lobby.setAnwser(player);
+				return lobby.getAwnserOptions();
+			}
 		} else {
 			return new AnwserOptionsJSON(LobbyState.LOBBY_NULL);
 		}
-
 	}
+
+	
+
 	@SendTo("/lobby/host/show")
 	@MessageMapping("/game/host")
 	public LobbyJSON hostAction(HostAction action) {
 		if (lobby != null) {
-			lobby.hostAction(action);
-			return lobby.getLobbyData();
+			if (action.isInternal()) {
+				return lobby.getLobbyData();
+			} else {
+				lobby.hostAction(action);
+				return lobby.getLobbyData();
+			}
 		} else {
 			return new LobbyJSON(LobbyState.LOBBY_NULL);
 		}
@@ -55,19 +67,31 @@ public class LobbySocket implements Observer {
 
 	@Override
 	public void update(Observable o, Object arg) {
+
 		if (lobby != null) {
+			HostAction internalAction = new HostAction();
+			internalAction.setGetData(false);
+			internalAction.setInternal(true);
+			internalAction.setStartGame(false);
+			internalAction.setTerminateLobby(false);
 			if (o == lobby && arg == null) {
-//				hostAction();
-//				setAnwser();
+				PlayerInfo internalPlayer = new PlayerInfo();
+				internalPlayer.setAnwser("");
+				internalPlayer.setId("");
+				internalPlayer.setLeave(true);
+				internalPlayer.setAnwser("");
+				internalPlayer.setId("internal");
+				internalPlayer.setLeave(true);
+				hostAction(internalAction);
+				setAnwser(internalPlayer);
 
 			}
 			if (o == lobby) {
-//				hostAction();
+				hostAction(internalAction);
 			}
 
 		}
 
 	}
 
-	
 }

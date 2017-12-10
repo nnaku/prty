@@ -8,6 +8,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import fi.thepaardihub.dao.games.tables.Games;
 import fi.thepaardihub.dao.games.tables.Questions;
+import fi.thepaardihub.services.LobbyService;
 import fi.thepaardihub.socket.jsonobject.AnwserOptionsJSON;
 import fi.thepaardihub.socket.jsonobject.HostAction;
 import fi.thepaardihub.socket.jsonobject.LobbyJSON;
@@ -25,16 +26,19 @@ public class Lobby extends Observable implements Runnable {
 	private boolean takeAnwsers = false;
 	private int timer = 0;
 	private LobbyState state;
+	private LobbyService service;
 
-	public Lobby(Games gameData, ArrayList<Questions> questions, String lobbyKey) {
+	public Lobby(Games gameData, ArrayList<Questions> questions, String lobbyKey,  LobbyService service) {
+	
+		this.service = service;
 		this.gameData = gameData;
 		this.questions = questions;
 		this.current = questions.get(0);
 		this.lobbyKey = lobbyKey;
 		players = new HashMap<String, Player>();
 	}
-
-	public void setAnwser(PlayerInfo player) {
+	
+	public synchronized void setAnwser(PlayerInfo player) {
 		if (!player.isLeave()) {
 
 			if (players.containsKey(player.getId()) && takeAnwsers) {
@@ -46,11 +50,11 @@ public class Lobby extends Observable implements Runnable {
 
 	}
 
-	public boolean containsPlayerId(String id) {
+	public synchronized boolean containsPlayerId(String id) {
 		return players.containsKey(id);
 	}
 
-	public void addPlayer(String id, Player player) {
+	public synchronized void addPlayer(String id, Player player) {
 		if (!players.containsKey(id)) {
 			players.put(id, player);
 			setChanged();
@@ -58,11 +62,11 @@ public class Lobby extends Observable implements Runnable {
 		}
 	}
 
-	public void removePlayer(String id) {
+	private void removePlayer(String id) {
 		players.remove(id);
 	}
 
-	public AnwserOptionsJSON getAwnserOptions() {
+	public synchronized AnwserOptionsJSON getAwnserOptions() {
 
 		ArrayList<String> options = new ArrayList<>();
 
@@ -87,7 +91,7 @@ public class Lobby extends Observable implements Runnable {
 
 	}
 
-	public LobbyJSON getLobbyData() {
+	public synchronized  LobbyJSON getLobbyData() {
 
 		LobbyJSON data = new LobbyJSON();
 		data.setPlayGame(playGame);
@@ -191,6 +195,7 @@ public class Lobby extends Observable implements Runnable {
 			}
 
 		}
+		service.removeLobby(lobbyKey);
 
 	}
 
