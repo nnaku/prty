@@ -3,8 +3,10 @@ package fi.thepaardihub.socket;
 import java.util.Observable;
 import java.util.Observer;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 
 import fi.thepaardihub.models.Lobby;
@@ -18,6 +20,9 @@ import fi.thepaardihub.socket.jsonobject.PlayerInfo;
 public class LobbySocket implements Observer {
 
 	private Lobby lobby;
+
+	@Autowired
+	private SimpMessagingTemplate template;
 
 	public void setLobby(Lobby lobby) {
 		this.lobby = lobby;
@@ -47,8 +52,6 @@ public class LobbySocket implements Observer {
 		}
 	}
 
-	
-
 	@SendTo("/lobby/host/show")
 	@MessageMapping("/game/host")
 	public LobbyJSON hostAction(HostAction action) {
@@ -69,25 +72,10 @@ public class LobbySocket implements Observer {
 	public void update(Observable o, Object arg) {
 
 		if (lobby != null) {
-			HostAction internalAction = new HostAction();
-			internalAction.setGetData(false);
-			internalAction.setInternal(true);
-			internalAction.setStartGame(false);
-			internalAction.setTerminateLobby(false);
-			if (o == lobby && arg == null) {
-				PlayerInfo internalPlayer = new PlayerInfo();
-				internalPlayer.setAnwser("");
-				internalPlayer.setId("");
-				internalPlayer.setLeave(true);
-				internalPlayer.setAnwser("");
-				internalPlayer.setId("internal");
-				internalPlayer.setLeave(true);
-				hostAction(internalAction);
-				setAnwser(internalPlayer);
-
-			}
 			if (o == lobby) {
-				hostAction(internalAction);
+				this.template.convertAndSend("/lobby/host/show", lobby.getLobbyData());
+				this.template.convertAndSend("/lobby/play", lobby.getAwnserOptions());
+
 			}
 
 		}

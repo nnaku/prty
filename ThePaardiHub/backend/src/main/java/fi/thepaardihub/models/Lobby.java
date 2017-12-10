@@ -58,7 +58,7 @@ public class Lobby extends Observable implements Runnable {
 		if (!players.containsKey(id)) {
 			players.put(id, player);
 			setChanged();
-			notifyObservers("SomeData");
+			notifyObservers();
 		}
 	}
 
