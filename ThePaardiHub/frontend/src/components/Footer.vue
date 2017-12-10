@@ -1,31 +1,11 @@
 <template>
   <div class="appfooter">
+    <!-- Message is from locale/locales.json -->
     <div class="footer">
-      <!-- Message is from locale/locales.json -->
-      <p><a v-on:click="changeLanguage()">{{$t('message.language')}}</a></p>
+      <p>{{ $t('message.footer') }}</p>
     </div> 
   </div>
-  
 </template>
-
-<script>
-
-import {i18n} from '../main.js'
-
-export default {
-  name: "appfooter",
-  methods:{
-    changeLanguage(){
-      if(i18n.locale === "fr"){
-        i18n.locale = 'en'
-      }else{
-        i18n.locale = 'fr'
-      }
-
-    }
-  }
-};
-</script>
 
 <style>
 .appfooter {
@@ -35,11 +15,15 @@ export default {
   background-color: #8db9b0;
   overflow: hidden;
   color: white;
-  text-align: center;
   height: 40px;
+  display: table;
 }
 
-.footer {
-  text-align: center;
+p {
+  vertical-align: middle;
+  display: table;
+  padding-left: 1em;
+  font-size: 15px;
+  font-weight: bold;
 }
 </style>

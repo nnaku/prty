@@ -1,18 +1,19 @@
 <template>
     <div id="newGame" class="new-game">
-        <h3>Create new game.</h3>
+      <!-- Messages are from locale/locales.json -->
+        <h3>{{ $t('message.createNewGameTitle') }}</h3>
         <div class="game-form">
-          <input v-model="newGame.gameName" type="text" placeholder="Game name">
-          <input v-model="newGame.description" type="text" placeholder="Game description">
-          <label for="private">Private game</label><input v-model="newGame.isPrivate" id="private" type="checkbox">
-          <h2>Select Questions</h2>
+          <input v-model="newGame.gameName" type="text" :placeholder="$t('message.gameName')">
+          <input v-model="newGame.description" type="text" :placeholder="$t('message.gameDesc')">
+          <label for="private">{{ $t('message.privateGame') }}</label><input v-model="newGame.isPrivate" id="private" type="checkbox">
+          <h2>{{ $t('message.selectQuestionsTitle') }}</h2>
           <a class="selected-questions-row" :id="'selected-'+question.id" v-for="(question,index) of selectedQuestios" :key="question.id" @click="removeQuestion(index)">
             <p v-html="question.question"/>
           </a>
-          <button @click="saveGame()">Save game</button>
+          <button @click="saveGame()">{{ $t('message.saveGameButton') }}</button>
         </div>
         <div class="my-questions">
-          <h2>My Questions</h2>
+          <h2>{{ $t('message.myQuestionsTitle') }}</h2>
           <a class="questions-row" :id="'not-selected-'+question.id" :ref="question.id" v-for="(question,index) of myQuestions" :key="question.id" @click="selectQuestion(index)">
             <p v-html="question.question"/>
           </a>

@@ -1,16 +1,17 @@
 <template>
     <div id="showGame" class="show-game">
-        <h3>Show game.</h3>
+      <!-- Messages are from locale/locales.json -->
+        <h3>{{ $t('message.showGameTitle') }}</h3>
         <div class="game-form">
             <h2>{{newGame.gameName}}</h2>
-            <h5 v-if="newGame.isPrivate">This game is private</h5>
-            <h5 v-else>This game is public</h5>
+            <h5 v-if="newGame.isPrivate">{{ $t('message.privateGameTitle') }}</h5>
+            <h5 v-else>{{ $t('message.publicGameTitle') }}</h5>
             <p v-html="newGame.description"/>
-            <h5>Questions</h5>
+            <h5>{{ $t('message.questionsTitle') }}</h5>
             <div v-for=" (question, index) in newGame.questions" :key="index" >
                 <p v-html="question.question"/>
             </div>
-            <button @click="editGame()">Edit game</button>
+            <button @click="editGame()">{{ $t('message.editGame') }}</button>
         </div>
     </div>
 </template>

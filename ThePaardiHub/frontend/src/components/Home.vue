@@ -22,7 +22,7 @@ input.gameToken {
   margin: 0 auto;
   margin-top: 25px;
   display:block;
-  font-size: 210%;
+  font-size: 190%;
   text-align: center;
   border: 1px solid #8DB9B0;
   border-radius: 1em;
@@ -45,6 +45,9 @@ img {
   width: 30%;
   height: 100%;
   margin-top: 25px;
+}
+figure {
+  padding-top: 2.5em;
 }
 
 @media only screen and (max-width: 768px) {

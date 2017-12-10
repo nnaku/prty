@@ -2,23 +2,21 @@
   <div id="games">
     <div class="games">
       <!-- Messages are from locale/locales.json -->
-        <h2>My Games</h2>
+        <h2>{{ $t('message.myGamesTitle') }}</h2>
         <a class="gameRow" v-for="(game,index) of games" :key="game.id" @click="selectGame(game.id)">
           <div class="game-name" v-if="game.gameName.length <= 20">{{game.gameName}}</div>
           <div v-else>{{game.gameName.substring(0, 19)+"..."}}</div>
         </a>
     </div>
     <div class="editor">
-        <h2>Editor</h2>
-        <button v-if="display !== 'newgame' | display === 'showgame'" @click="newGame()" >New Game</button>
-        <button v-if="display !== 'newquestion' | display === 'showgame'" @click="display = 'newquestion'">New Question</button>
+        <h2>{{ $t('message.editor') }}</h2>
+        <button v-if="display !== 'newgame' | display === 'showgame'" @click="newGame()" >{{ $t('message.newGame') }}</button>
+        <button v-if="display !== 'newquestion' | display === 'showgame'" @click="display = 'newquestion'">{{ $t('message.newQuestion') }}</button>
 
-        <newGameForm class="new-game" v-if="display == 'newgame'" v-bind:game="this.game">game</newGameForm>
-        <newQuestionForm class="new-question" v-else-if="display == 'newquestion'">question</newQuestionForm>
+        <newGameForm class="new-game" v-if="display == 'newgame'" v-bind:game="this.game">{{ $t('message.game') }}</newGameForm>
+        <newQuestionForm class="new-question" v-else-if="display == 'newquestion'">{{ $t('message.question') }}</newQuestionForm>
         <showGame class="show-game" v-else-if="display == 'showgame'" v-bind:game="this.game"></showGame>
-        
     </div>
-    
   </div>
 </template>
 
