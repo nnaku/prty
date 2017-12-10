@@ -8,6 +8,7 @@ import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
 
 import fi.thepaardihub.models.Lobby;
+import fi.thepaardihub.models.LobbyState;
 import fi.thepaardihub.socket.jsonobject.AnwserOptionsJSON;
 import fi.thepaardihub.socket.jsonobject.HostAction;
 import fi.thepaardihub.socket.jsonobject.LobbyJSON;
@@ -20,6 +21,7 @@ public class LobbySocket implements Observer {
 
 	public void setLobby(Lobby lobby) {
 		this.lobby = lobby;
+		this.lobby.addObserver(this);
 
 	}
 
@@ -28,18 +30,26 @@ public class LobbySocket implements Observer {
 	public String testInOut(String data) {
 		return "You said " + data + "!";
 	}
-
+	@SendTo("/lobby/play")
 	@MessageMapping("/game")
-	public void setAnwser(PlayerInfo player) {
-		if (lobby != null)
+	public AnwserOptionsJSON setAnwser(PlayerInfo player) {
+		if (lobby != null) {
 			lobby.setAnwser(player);
+			return lobby.getAwnserOptions();
+		} else {
+			return new AnwserOptionsJSON(LobbyState.LOBBY_NULL);
+		}
 
 	}
-
+	@SendTo("/lobby/host/show")
 	@MessageMapping("/game/host")
-	public void hostAction(HostAction action) {
-		if (lobby != null)
+	public LobbyJSON hostAction(HostAction action) {
+		if (lobby != null) {
 			lobby.hostAction(action);
+			return lobby.getLobbyData();
+		} else {
+			return new LobbyJSON(LobbyState.LOBBY_NULL);
+		}
 
 	}
 
@@ -47,24 +57,17 @@ public class LobbySocket implements Observer {
 	public void update(Observable o, Object arg) {
 		if (lobby != null) {
 			if (o == lobby && arg == null) {
-				getLobbyData();
-				getOptions();
+//				hostAction();
+//				setAnwser();
 
 			}
 			if (o == lobby) {
-				getLobbyData();
+//				hostAction();
 			}
 
 		}
+
 	}
 
-	@SendTo("/lobby/play")
-	private AnwserOptionsJSON getOptions() {
-		return lobby.getAwnserOptions();
-	}
-
-	@SendTo("/lobby/host/show")
-	private LobbyJSON getLobbyData() {
-		return lobby.getLobbyData();
-	}
+	
 }

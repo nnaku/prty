@@ -29,6 +29,7 @@ public class Lobby extends Observable implements Runnable {
 	public Lobby(Games gameData, ArrayList<Questions> questions, String lobbyKey) {
 		this.gameData = gameData;
 		this.questions = questions;
+		this.current = questions.get(0);
 		this.lobbyKey = lobbyKey;
 		players = new HashMap<String, Player>();
 	}

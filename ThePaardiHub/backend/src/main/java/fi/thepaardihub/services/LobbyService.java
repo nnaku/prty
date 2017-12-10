@@ -49,7 +49,8 @@ public class LobbyService {
 				String[] retVal = { "/lobby/host/show", "prty/game/host" };
 				return retVal;
 			} else {
-				return null;
+				String[] retVal = { "invalid gameId"};
+				return retVal;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -15,7 +15,19 @@ public class AnwserOptionsJSON {
 	private int timer;
 	private LobbyState state;
 
-	public AnwserOptionsJSON(ArrayList<String> options, boolean playGame, boolean takeAnwser, int timer, LobbyState state) {
+	public AnwserOptionsJSON(LobbyState state) {
+		this.state = state;
+		option1 = null;
+		option2 = null;
+		option3 = null;
+		option4 = null;
+		this.playGame = false;
+		this.takeAnwser = false;
+		this.timer = -404;
+	}
+
+	public AnwserOptionsJSON(ArrayList<String> options, boolean playGame, boolean takeAnwser, int timer,
+			LobbyState state) {
 		option1 = options.get(0);
 		option2 = options.get(1);
 		option3 = options.get(2);
@@ -55,7 +67,6 @@ public class AnwserOptionsJSON {
 		return timer;
 	}
 
-	
 	public LobbyState getState() {
 		return state;
 	}

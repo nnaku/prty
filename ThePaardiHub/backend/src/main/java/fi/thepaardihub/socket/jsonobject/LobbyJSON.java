@@ -6,7 +6,7 @@ import fi.thepaardihub.models.LobbyState;
 import fi.thepaardihub.models.Player;
 
 public class LobbyJSON {
-	
+
 	private String question;
 	private ArrayList<String> options;
 	private ArrayList<Player> players;
@@ -16,60 +16,83 @@ public class LobbyJSON {
 	private boolean takeAnwsers;
 	private int timer;
 	private LobbyState state;
-	
-	
+
+	public LobbyJSON() {
+		
+	}
+	public LobbyJSON(LobbyState state) {
+		this.state = state;
+		options = null;
+		players = null;
+		lobbyKey =null;
+		author = null;
+		playGame = false;
+		takeAnwsers = false;
+		timer = -404;
+	}
+
 	public String getLobbyKey() {
 		return lobbyKey;
 	}
+
 	public void setLobbyKey(String lobbyKey) {
 		this.lobbyKey = lobbyKey;
 	}
+
 	public String getQuestion() {
 		return question;
 	}
+
 	public void setQuestion(String question) {
 		this.question = question;
 	}
+
 	public ArrayList<String> getOptions() {
 		return options;
 	}
+
 	public void setOptions(ArrayList<String> options) {
 		this.options = options;
 	}
+
 	public ArrayList<Player> getPlayers() {
 		return players;
 	}
+
 	public void setPlayers(ArrayList<Player> players) {
 		this.players = players;
 	}
+
 	public boolean isPlayGame() {
 		return playGame;
 	}
+
 	public void setPlayGame(boolean playGame) {
 		this.playGame = playGame;
 	}
+
 	public boolean isTakeAnwsers() {
 		return takeAnwsers;
 	}
+
 	public void setTakeAnwsers(boolean takeAnwsers) {
 		this.takeAnwsers = takeAnwsers;
 	}
+
 	public int getTimer() {
 		return timer;
 	}
+
 	public void setTimer(int timer) {
 		this.timer = timer;
 	}
+
 	public LobbyState getState() {
 		return state;
 	}
+
 	public void setState(LobbyState state) {
 		this.state = state;
 	}
-	
-	
-	
-	
-	
 
 }

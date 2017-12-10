@@ -7,7 +7,8 @@ public enum LobbyState {
 	GAME_READY(20),
 	GAME_FINISHED(25),
 	ASKING_QUESTION(30),
-	CHANING_QUESTION(35);
+	CHANING_QUESTION(35),
+	LOBBY_NULL(44);
 
 	private int state;
 
