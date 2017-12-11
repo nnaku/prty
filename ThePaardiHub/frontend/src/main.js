@@ -8,13 +8,20 @@ import VueAxios from 'vue-axios'
 import VueAuth from '@websanova/vue-auth'
 import VueI18n from 'vue-i18n'
 import localesJSON from './locale/locales.json'
+import VueCookie from 'vue-cookie'
 
 Vue.config.productionTip = true
 Vue.config.lang = 'en';
 
 Vue.router = router
 
+// cookie monster
+Vue.use(VueCookie)
+// localize plugin
+Vue.use(VueI18n)
+// xhr plugin
 Vue.use(VueAxios, axios)
+// jwt plugin
 Vue.use(VueAuth, {
   auth: require('@websanova/vue-auth/drivers/auth/bearer.js'),
   http: require('@websanova/vue-auth/drivers/http/axios.1.x.js'),
@@ -43,9 +50,6 @@ Vue.use(VueAuth, {
     fetchUser: false
   }
 });
-
-// localize plugin
-Vue.use(VueI18n)
 
 export const i18n = new VueI18n({
   locale: 'en',

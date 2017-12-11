@@ -3,7 +3,7 @@ package fi.thepaardihub.socket.jsonobject;
 public class PlayerInfo {
 
 	private String id;
-	private String anwser;
+	private String answer;
 	private boolean leave = false;
 	
 	public boolean isLeave() {
@@ -22,12 +22,12 @@ public class PlayerInfo {
 		this.id = id;
 	}
 
-	public String getAnwser() {
-		return anwser;
+	public String getAnswer() {
+		return answer;
 	}
 
-	public void setAnwser(String anwser) {
-		this.anwser = anwser;
+	public void setAnswer(String answer) {
+		this.answer = answer;
 	}
 
 }

@@ -46,8 +46,7 @@ public class LobbyService {
 				socket.setLobby(lobby);
 				lobbies.put(lobbieKey, lobby);
 
-				Thread lobbyThread = new Thread(lobby);
-				lobbyThread.start();
+				new Thread(lobbies.get(lobbieKey)).start();
 				HashMap<String, String> retVal = new HashMap<>();
 				retVal.put("sendAddress", "/lobby/host/show");
 				retVal.put("receiveAddress", "prty/game/host");
@@ -80,7 +79,7 @@ public class LobbyService {
 			HashMap<String, String> retVal = new HashMap<>();
 			retVal.put("playerID", playerID);
 			retVal.put("sendAddress", "/lobby/play");
-			retVal.put("receiveAddress", "prty/game");
+			retVal.put("receiveAddress", "/prty/game");
 			// { playerID, "/lobby/play", "prty/game" };
 			return retVal;
 		} else {

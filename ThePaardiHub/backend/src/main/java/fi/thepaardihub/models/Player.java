@@ -4,17 +4,17 @@ public class Player {
 
 	private String name;
 	private int score;
-	private String anwser;
+	private String answer;
 
 	public Player() {
 		name = "unknown";
 		score = 0;
-		anwser = "";
+		answer = "";
 	}
 	public Player(String name) {
 		this.name = name;
 		score = 0;
-		anwser = "";
+		answer = "";
 	}
 
 	public String getName() {
@@ -33,12 +33,12 @@ public class Player {
 		this.score = score;
 	}
 
-	public String getAnwser() {
-		return anwser;
+	public String getAnswer() {
+		return answer;
 	}
 
-	public void setAnwser(String anwser) {
-		this.anwser = anwser;
+	public void setAnswer(String answer) {
+		this.answer = answer;
 	}
 
 }

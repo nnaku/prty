@@ -9,7 +9,7 @@ import java.util.concurrent.ThreadLocalRandom;
 import fi.thepaardihub.dao.games.tables.Games;
 import fi.thepaardihub.dao.games.tables.Questions;
 import fi.thepaardihub.services.LobbyService;
-import fi.thepaardihub.socket.jsonobject.AnwserOptionsJSON;
+import fi.thepaardihub.socket.jsonobject.AnswerOptionsJSON;
 import fi.thepaardihub.socket.jsonobject.HostAction;
 import fi.thepaardihub.socket.jsonobject.LobbyJSON;
 import fi.thepaardihub.socket.jsonobject.PlayerInfo;
@@ -23,13 +23,13 @@ public class Lobby extends Observable implements Runnable {
 	private String lobbyKey;
 	private boolean terminate = false;
 	private boolean playGame = false;
-	private boolean takeAnwsers = false;
+	private boolean takeAnswers = false;
 	private int timer = 0;
 	private LobbyState state;
 	private LobbyService service;
 
-	public Lobby(Games gameData, ArrayList<Questions> questions, String lobbyKey,  LobbyService service) {
-	
+	public Lobby(Games gameData, ArrayList<Questions> questions, String lobbyKey, LobbyService service) {
+
 		this.service = service;
 		this.gameData = gameData;
 		this.questions = questions;
@@ -37,12 +37,12 @@ public class Lobby extends Observable implements Runnable {
 		this.lobbyKey = lobbyKey;
 		players = new HashMap<String, Player>();
 	}
-	
-	public synchronized void setAnwser(PlayerInfo player) {
+
+	public synchronized void setAnswer(PlayerInfo player) {
 		if (!player.isLeave()) {
 
-			if (players.containsKey(player.getId()) && takeAnwsers) {
-				players.get(player.getId()).setAnwser(player.getAnwser());
+			if (players.containsKey(player.getId()) && takeAnswers) {
+				players.get(player.getId()).setAnswer(player.getAnswer());
 			}
 		} else {
 			removePlayer(player.getId());
@@ -66,7 +66,7 @@ public class Lobby extends Observable implements Runnable {
 		players.remove(id);
 	}
 
-	public synchronized AnwserOptionsJSON getAwnserOptions() {
+	public synchronized AnswerOptionsJSON getAwnserOptions() {
 
 		ArrayList<String> options = new ArrayList<>();
 
@@ -84,16 +84,20 @@ public class Lobby extends Observable implements Runnable {
 			options.remove(ThreadLocalRandom.current().nextInt(0, options.size() + 1));
 		}
 		options.add(current.getCorrect());
-
 		Collections.shuffle(options);
-		AnwserOptionsJSON data = new AnwserOptionsJSON(options, playGame, takeAnwsers, timer, state);
+		
+		AnswerOptionsJSON data = new AnswerOptionsJSON(options, playGame, takeAnswers, timer, state);
 		return data;
 
 	}
 
-	public synchronized  LobbyJSON getLobbyData() {
+	public synchronized LobbyJSON getLobbyData() {
 
 		LobbyJSON data = new LobbyJSON();
+		data.setAuthor(gameData.getAuthor());
+		data.setnOfQuiz(gameData.getQuestions().length());
+		data.setGameName(gameData.getGameName());
+		data.setGameDescription(gameData.getDescription());
 		data.setPlayGame(playGame);
 		data.setQuestion(current.getQuestion());
 		data.setOptions(getAwnserOptions().getOptions());
@@ -103,7 +107,7 @@ public class Lobby extends Observable implements Runnable {
 		}
 		data.setPlayers(playerData);
 		data.setLobbyKey(lobbyKey);
-		data.setTakeAnwsers(takeAnwsers);
+		data.setTakeAnswers(takeAnswers);
 		data.setTimer(timer);
 		data.setState(state);
 		return data;
@@ -118,11 +122,11 @@ public class Lobby extends Observable implements Runnable {
 			state = LobbyState.ASKING_QUESTION;
 			this.current = questions.get(questionIndex);
 
-			timer = 20;
+			timer = 5;
 			setChanged();
 			notifyObservers();
 			do {
-				takeAnwsers = true;
+				takeAnswers = true;
 				synchronized (this) {
 					try {
 						wait(1000);
@@ -132,16 +136,17 @@ public class Lobby extends Observable implements Runnable {
 					}
 				}
 				timer--;
-				setChanged();
-				notifyObservers();
+				// setChanged();
+				// notifyObservers();
 
-			} while ((timer < 0) && !allAnwsersGiven());
+			} while ((timer > 0) || !allAnswersGiven());
 
-			takeAnwsers = false;
+			takeAnswers = false;
 			checkCorrectAndReset();
 			state = LobbyState.CHANING_QUESTION;
-			timer = 5;
-			
+			timer = 2;
+				setChanged();
+				notifyObservers();
 			do {
 
 				synchronized (this) {
@@ -153,22 +158,21 @@ public class Lobby extends Observable implements Runnable {
 					}
 				}
 				timer--;
-				setChanged();
-				notifyObservers();
+			} while ((timer > 0));
 
-			} while ((timer < 0));
-			
 			questionIndex++;
 
 		}
 	}
 
-	private boolean allAnwsersGiven() {
+	private boolean allAnswersGiven() {
 		boolean retVal = true;
 		for (String s : players.keySet()) {
-			if (!players.get(s).getAnwser().equals("")) {
-				retVal = false;
-				break;
+			if (players.get(s).getAnswer().equals("")) {
+				return false;
+				//  ei mittää jarruja ku returni suoraa
+				// retVal = false;
+				// break;
 			}
 		}
 		return retVal;
@@ -177,23 +181,32 @@ public class Lobby extends Observable implements Runnable {
 
 	private void checkCorrectAndReset() {
 		for (String s : players.keySet()) {
-			if (current.getCorrect().equals(players.get(s).getAnwser())) {
+			if (current.getCorrect().equals(players.get(s).getAnswer())) {
 				players.get(s).setScore(players.get(s).getScore() + 10);
 			}
-			players.get(s).setAnwser("");
+			players.get(s).setAnswer("");
 		}
 	}
 
 	@Override
 	public void run() {
 		while (!terminate) {
-			state = LobbyState.GAME_READY;
-			while (playGame) {
-				playGame();
-				state = LobbyState.GAME_FINISHED;
-				playGame = false;
+			if (state != LobbyState.GAME_FINISHED) {
+				synchronized (this) {
+					state = LobbyState.GAME_READY;
+					notifyObservers();
+				}
+				while (playGame) {
+					playGame();
+					synchronized (this) {
+						state = LobbyState.GAME_FINISHED;
+						playGame = false;
+						setChanged();
+						notifyObservers();
+					}
+				}
 			}
-
+			
 		}
 		service.removeLobby(lobbyKey);
 

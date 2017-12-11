@@ -6,28 +6,35 @@ import fi.thepaardihub.models.LobbyState;
 import fi.thepaardihub.models.Player;
 
 public class LobbyJSON {
-
+	
+	
+	private String gameName;
+	private String gameDescription;
 	private String question;
+	private int nOfQuiz;
 	private ArrayList<String> options;
 	private ArrayList<Player> players;
 	private String lobbyKey;
 	private String author;
 	private boolean playGame;
-	private boolean takeAnwsers;
+	private boolean takeAnswers;
 	private int timer;
 	private LobbyState state;
 
 	public LobbyJSON() {
-		
+
 	}
+
 	public LobbyJSON(LobbyState state) {
 		this.state = state;
 		options = null;
+		gameName = null;
+		gameDescription = null;
 		players = null;
-		lobbyKey =null;
+		lobbyKey = null;
 		author = null;
 		playGame = false;
-		takeAnwsers = false;
+		takeAnswers = false;
 		timer = -404;
 	}
 
@@ -71,12 +78,12 @@ public class LobbyJSON {
 		this.playGame = playGame;
 	}
 
-	public boolean isTakeAnwsers() {
-		return takeAnwsers;
+	public boolean isTakeAnswers() {
+		return takeAnswers;
 	}
 
-	public void setTakeAnwsers(boolean takeAnwsers) {
-		this.takeAnwsers = takeAnwsers;
+	public void setTakeAnswers(boolean takeAnswers) {
+		this.takeAnswers = takeAnswers;
 	}
 
 	public int getTimer() {
@@ -93,6 +100,38 @@ public class LobbyJSON {
 
 	public void setState(LobbyState state) {
 		this.state = state;
+	}
+
+	public String getAuthor() {
+		return author;
+	}
+
+	public void setAuthor(String author) {
+		this.author = author;
+	}
+
+	public String getGameDescription() {
+		return gameDescription;
+	}
+
+	public void setGameDescription(String gameDescription) {
+		this.gameDescription = gameDescription;
+	}
+
+	public String getGameName() {
+		return gameName;
+	}
+
+	public void setGameName(String gameName) {
+		this.gameName = gameName;
+	}
+
+	public int getnOfQuiz() {
+		return nOfQuiz;
+	}
+
+	public void setnOfQuiz(int nOfQuiz) {
+		this.nOfQuiz = nOfQuiz;
 	}
 
 }

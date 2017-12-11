@@ -22,8 +22,10 @@ public class RoutesController {
 	"/reset",
 	"/register",
 	"/test",
-	"/",
-	"/"
+	"/lobby",
+	"/lobby/**",
+	"/game/**",
+	"/game"
 	})
    public String index() {
        return "forward:/index.html";

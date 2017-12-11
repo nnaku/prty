@@ -4,14 +4,78 @@
     <figure>
       <img src="../images/prty_image.png" alt="PRTY.fi">
     </figure>
-    <input class="gameToken" id="token" :placeholder="$t('message.gametoken')">
-    <button class="gameToken" id="token-btn"> {{ $t('message.go') }}</button>
+    <p v-if="invalidToken">{{ $t('message.invalidToken') }}</p>
+
+    <div v-if="!showUsernameForm">
+      <input v-model="token" class="gameToken" id="token" :placeholder="$t('message.gametoken')">
+      <button class="gameToken" @click="validateToken" id="token-btn"> {{ $t('message.go') }}</button>
+    </div>
+    <div v-else>
+      <input v-model="username" class="gameToken" id="token" :placeholder="$t('message.username')">
+      <button class="gameToken" @click="joinLobby" id="token-btn"> {{ $t('message.join') }}</button>
+    </div>
   </div>
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   name: "Home",
+  data() {
+    return {
+      token: "",
+      username: "",
+      invalidToken: false,
+      showUsernameForm: false,
+      errors:[]
+    };
+  },
+  methods: {
+    validateToken() {
+      axios
+        .post("/lobbieexist", {
+          key: this.token
+        })
+        .then(response => {
+          if (response.data.lobbieExist) {
+            this.showUsernameForm = true;
+            this.invalidToken = false;
+          } else {
+            this.invalidToken = true;
+          }
+        })
+        .catch(e => {
+          this.errors.push(e);
+        });
+    },
+    joinLobby() {
+      axios
+        .post("/addplayer", {
+          key: this.token,
+          name: this.username
+        })
+        .then(response => {
+          var playerInfo = {
+            gameToken: this.token,
+            name: this.username,
+            playerID: response.data.playerID,
+            receiveAddress: response.data.receiveAddress,
+            sendAddress: response.data.sendAddress
+          };
+          this.$cookie.delete("playerInfo");
+          this.$cookie.set("playerInfo", JSON.stringify(playerInfo), 1);
+          this.$router.push('/game/'+this.token);
+        })
+        .catch(e => {
+          this.errors.push(e);
+        });
+    }
+  },
+  mounted() {
+    // if player has played game in 24h hours, app offers last username as default.
+    this.username = JSON.parse(this.$cookie.get("playerInfo")).name;
+  }
 };
 </script>
 
@@ -21,10 +85,10 @@ input.gameToken {
   height: 3em;
   margin: 0 auto;
   margin-top: 25px;
-  display:block;
+  display: block;
   font-size: 190%;
   text-align: center;
-  border: 1px solid #8DB9B0;
+  border: 1px solid #8db9b0;
   border-radius: 1em;
 }
 button.gameToken {
@@ -33,7 +97,7 @@ button.gameToken {
   margin-top: 1em;
   padding: 1em;
   font-size: 100%;
-  background-color: #8DB9B0;
+  background-color: #8db9b0;
   border: none;
 }
 
@@ -51,7 +115,6 @@ figure {
 }
 
 @media only screen and (max-width: 768px) {
-
   button.gameToken {
     width: 30%;
     padding: 1em;
@@ -64,11 +127,10 @@ figure {
     height: 3em;
     margin: 0 auto;
     margin-top: 25px;
-    display:block;
+    display: block;
     font-size: 230%;
     text-align: center;
     border: none;
-  
   }
 
   img {
@@ -77,5 +139,4 @@ figure {
     margin-top: 25;
   }
 }
-
 </style>  

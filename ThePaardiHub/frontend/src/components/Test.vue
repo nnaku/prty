@@ -77,8 +77,6 @@ export default {
         frame => {
           this.connected = true;
           this.stompClient.subscribe("/lobby/host/show", tick => {
-            console.log("tämä on tick");
-            console.log(tick);
             this.received_messages.push(tick);
           });
         },

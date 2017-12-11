@@ -12,6 +12,7 @@ import Games from '@/components/Games'
 import Logout from '@/components/Logout'
 import Test from '@/components/Test'
 import Lobby from '@/components/Lobby'
+import Game from '@/components/Game'
 
 
 
@@ -46,7 +47,12 @@ export default new Router({
     }, {
       path: "/lobby/:token",
       name: 'Lobby',
+      meta: { auth: true },
       component: Lobby
+    }, {
+      path: "/game/:token",
+      name: 'Game',
+      component: Game
     }, {
       path: "/login",
       name: 'Login',

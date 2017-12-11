@@ -4,36 +4,36 @@ import java.util.ArrayList;
 
 import fi.thepaardihub.models.LobbyState;
 
-public class AnwserOptionsJSON {
+public class AnswerOptionsJSON {
 
 	private String option1;
 	private String option2;
 	private String option3;
 	private String option4;
 	private boolean playGame;
-	private boolean takeAnwser;
+	private boolean takeAnswer;
 	private int timer;
 	private LobbyState state;
 
-	public AnwserOptionsJSON(LobbyState state) {
+	public AnswerOptionsJSON(LobbyState state) {
 		this.state = state;
 		option1 = null;
 		option2 = null;
 		option3 = null;
 		option4 = null;
 		this.playGame = false;
-		this.takeAnwser = false;
+		this.takeAnswer = false;
 		this.timer = -404;
 	}
 
-	public AnwserOptionsJSON(ArrayList<String> options, boolean playGame, boolean takeAnwser, int timer,
+	public AnswerOptionsJSON(ArrayList<String> options, boolean playGame, boolean takeAnswer, int timer,
 			LobbyState state) {
 		option1 = options.get(0);
 		option2 = options.get(1);
 		option3 = options.get(2);
 		option4 = options.get(3);
 		this.playGame = playGame;
-		this.takeAnwser = takeAnwser;
+		this.takeAnswer = takeAnswer;
 		this.timer = timer;
 		this.state = state;
 	}
@@ -59,8 +59,8 @@ public class AnwserOptionsJSON {
 
 	}
 
-	public boolean isTakeAnwser() {
-		return takeAnwser;
+	public boolean isTakeAnswer() {
+		return takeAnswer;
 	}
 
 	public int getTimer() {

@@ -1,16 +1,11 @@
 <template>
-  <div id="lobby">
-    <div>
-        <h1>dev data</h1>
-        <h2>Connected? {{connected}}</h2>
-        <button @click="tickleConnection">{{connected ? 'disconnect' : 'connect'}}</button>
-        <label for="getData">Get Data</label>
-        <input type="checkbox" v-model="getData.getData" id="getData">
-        <label for="terminateLobby">End Game</label>
-        <input type="checkbox" v-model="getData.terminateLobby" id="terminateLobby">
-        <button @click="send">refresh</button>
-        <p>{{body}}</p>
-    </div>
+  <div id="game">
+      <p>{{body}}</p>
+      <ready v-if="state === 'GAME_READY'" v-bind:body="body"/>
+      <asking v-else-if="state == 'ASKING_QUESTION'" v-bind:body="body"/>
+      <next v-else-if="state == 'CHANING_QUESTION'" v-bind:body="body"/>
+      <end v-else-if="state == 'GAME_FINISHED'" v-bind:body="body"/>
+      <lost v-else/>
   </div>
 </template>
 
@@ -19,31 +14,38 @@ import SockJS from "sockjs-client";
 import Stomp from "webstomp-client";
 import axios from "axios";
 
+// Game states
+import ready from "./GameStates/GameReady.vue";
+import asking from "./GameStates/AskingQuestion.vue";
+import next from "./GameStates/NextQuestion.vue";
+import end from "./GameStates/GameEnd.vue";
+import lost from "./GameStates/NoGame.vue";
+
 export default {
-  name: "lobby",
-  props: {
-    token: ""
-  },
+  name: "game",
   data() {
     return {
       received_messages: {},
       body: {},
-      getData: {
-        startGame: 1,
-        getData: "true",
-        terminateLobby: false
-      },
+      state:"",
+      playerInfo: {},
+      playerLeave: false,
       send_message: null,
       connected: false,
       erros: []
     };
   },
   methods: {
-    send() {
+    send(option) {
+      var data = {
+        id: this.playerInfo.playerID,
+        answer: option,
+        leave: this.playerLeave
+      };
       if (this.stompClient && this.stompClient.connected) {
         this.stompClient.send(
-          "/prty/game/host",
-          JSON.stringify(this.getData),
+          this.playerInfo.receiveAddress,
+          JSON.stringify(data),
           {}
         );
       }
@@ -75,23 +77,29 @@ export default {
       this.connected ? this.disconnect() : this.connect();
     }
   },
+  beforeMount() {
+    if (JSON.parse(this.$cookie.get("playerInfo"))) {
+      this.playerInfo = JSON.parse(this.$cookie.get("playerInfo"));
+    } else {
+      this.$router.push("/");
+    }
+  },
   mounted() {
-    this.$nextTick(function() {
-      axios
-        .post("/createlobby", { id: "1" })
-        .then(response => {
-          this.errors = [];
-        })
-        .catch(e => {
-          this.errors.push(e);
-        });
-    });
     this.connect();
   },
   watch: {
     received_messages: function(data) {
       this.body = JSON.parse(data.body);
-    }
+      this.state = this.body.state;
+    },
+
+  },
+  components: {
+    ready,
+    asking,
+    next,
+    end,
+    lost
   }
 };
 </script>

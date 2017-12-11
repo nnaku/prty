@@ -11,10 +11,11 @@ import org.springframework.stereotype.Controller;
 
 import fi.thepaardihub.models.Lobby;
 import fi.thepaardihub.models.LobbyState;
-import fi.thepaardihub.socket.jsonobject.AnwserOptionsJSON;
+import fi.thepaardihub.socket.jsonobject.AnswerOptionsJSON;
 import fi.thepaardihub.socket.jsonobject.HostAction;
 import fi.thepaardihub.socket.jsonobject.LobbyJSON;
 import fi.thepaardihub.socket.jsonobject.PlayerInfo;
+
 
 @Controller
 public class LobbySocket implements Observer {
@@ -30,25 +31,19 @@ public class LobbySocket implements Observer {
 
 	}
 
-	@SendTo("/lobby/testOut")
-	@MessageMapping("/testIn")
-	public String testInOut(String data) {
-		return "You said " + data + "!";
-	}
-
 	@SendTo("/lobby/play")
 	@MessageMapping("/game")
-	public AnwserOptionsJSON setAnwser(PlayerInfo player) {
+	public AnswerOptionsJSON setAnswer(PlayerInfo player) {
 
 		if (lobby != null) {
 			if (player.getId().equals("internal")) {
 				return lobby.getAwnserOptions();
 			} else {
-				lobby.setAnwser(player);
+				lobby.setAnswer(player);
 				return lobby.getAwnserOptions();
 			}
 		} else {
-			return new AnwserOptionsJSON(LobbyState.LOBBY_NULL);
+			return new AnswerOptionsJSON(LobbyState.LOBBY_NULL);
 		}
 	}
 
