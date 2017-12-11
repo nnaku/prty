@@ -139,7 +139,7 @@ public class Lobby extends Observable implements Runnable {
 				// setChanged();
 				// notifyObservers();
 
-			} while ((timer > 0) || !allAnswersGiven());
+			} while ((timer > 0) && !allAnswersGiven());
 
 			takeAnswers = false;
 			checkCorrectAndReset();
@@ -194,7 +194,6 @@ public class Lobby extends Observable implements Runnable {
 			if (state != LobbyState.GAME_FINISHED) {
 				synchronized (this) {
 					state = LobbyState.GAME_READY;
-					notifyObservers();
 				}
 				while (playGame) {
 					playGame();

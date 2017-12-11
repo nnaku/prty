@@ -38,7 +38,6 @@ export default {
 }
 
 .game-answers-options > .game-answer {
-  margin: 35px;
 }
 .game-answers-options > .game-answer:nth-child(1) {
   background-color: Tomato;

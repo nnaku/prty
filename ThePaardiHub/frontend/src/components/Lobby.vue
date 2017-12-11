@@ -1,16 +1,57 @@
 <template>
   <div id="lobby">
-    <div>
-        <h1>dev data</h1>
-        <h2>Connected? {{connected}}</h2>
-        <button @click="tickleConnection">{{connected ? 'disconnect' : 'connect'}}</button>
-        <label for="getData">Get Data</label>
-        <input type="checkbox" v-model="getData.getData" id="getData">
-        <label for="terminateLobby">End Game</label>
-        <input type="checkbox" v-model="getData.terminateLobby" id="terminateLobby">
-        <button @click="send">refresh</button>
-        <p>{{body}}</p>
-    </div>
+       <!-- dev data -->
+       <!--
+      <p>{{body}}</p>
+      -->
+
+      <!-- waiting players -->
+      <div class="game-ready" v-if="body.state === 'GAME_READY'">
+        <h1>Lobby</h1>
+        <p>{{$t('message.lobbyKey')}} : {{body.lobbyKey}}</p>
+        <p class="game-status">{{$t('message.waitingPlayers')}}</p>
+        <h2 class="game-name">{{body.gameName}}</h2>
+        <p class="game-desc">{{body.gameDescription}}</p>
+        <p class="game-author">{{body.author}}</p>
+        <button @click="send()">{{$t('message.startGame')}}</button>
+        <ul class="player-list">
+          <li class="player" v-for="(player,index) in body.players" :key="index">
+            {{player.name}}
+          </li>
+        </ul>
+      </div>
+
+      <!-- display questions options -->
+      <div class="game-show-question" v-else-if="body.state == 'ASKING_QUESTION'">
+        <p class="timer">{{body.timer}}</p>
+        <p class="question" v-html="body.question"></p>
+      </div>
+
+      <!-- waiting next question -->
+      <div class="game-scores"v-else-if="body.state == 'CHANING_QUESTION'">
+        <p class="game-status">{{$t('message.waitingQuestion')}}</p>
+        <p class="game-timer">{{$t('message.gameTimer')}} {{body.timer}}</p>
+        <ul class="player-list">
+          <li class="player" v-for="(player,score,index) in orderedUsers " :key="index">
+            {{player.name}} {{player.score}}
+          </li>
+        </ul>
+      </div>
+
+      <!-- game end -->
+      <div class="game-end" v-else-if="body.state == 'GAME_FINISHED'">
+        <p class="game-status">{{$t('message.gameEnd')}}</p>
+        <ul class="player-list">
+          <li class="player" v-for="(player,score,index) in orderedUsers " :key="index">
+            {{player.name}} {{player.score}}
+          </li>
+        </ul>
+      </div>
+
+      <!-- bad game state -->
+      <div class="game-not-found" v-else>
+        <p class="game-status">{{$t('message.noGame')}}</p>
+      </div>
   </div>
 </template>
 
@@ -18,19 +59,25 @@
 import SockJS from "sockjs-client";
 import Stomp from "webstomp-client";
 import axios from "axios";
+var _ = require("lodash");
 
 export default {
   name: "lobby",
   props: {
     token: ""
   },
+  computed: {
+    orderedUsers: function() {
+      return _.orderBy(this.body.players, "score", "desc");
+    }
+  },
   data() {
     return {
       received_messages: {},
       body: {},
-      getData: {
-        startGame: 1,
-        getData: "true",
+      hostCommand: {
+        startGame: true,
+        getData: true,
         terminateLobby: false
       },
       send_message: null,
@@ -43,7 +90,7 @@ export default {
       if (this.stompClient && this.stompClient.connected) {
         this.stompClient.send(
           "/prty/game/host",
-          JSON.stringify(this.getData),
+          JSON.stringify(this.hostCommand),
           {}
         );
       }
@@ -95,3 +142,43 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.game-show-question > .question {
+  font-size: 50px;
+}
+
+.game-end > .player-list,
+.game-scores > .player-list {
+  list-style-type: none;
+}
+.game-scores > .player-list > .player:nth-child(1) {
+  font-size: 150px;
+}
+.game-scores > .player-list > .player:nth-child(2) {
+  font-size: 100px;
+}
+.game-scores > .player-list > .player:nth-child(3) {
+  font-size: 75px;
+}
+.game-scores > .player-list > .player {
+  font-size: 55px;
+}
+
+.game-end > .player-list > .player:nth-child(1) {
+  font-size: 150px;
+  background-color: #d4af37;
+}
+.game-end > .player-list > .player:nth-child(2) {
+  font-size: 100px;
+  background-color: #c0c0c0;
+}
+.game-end > .player-list > .player:nth-child(3) {
+  font-size: 75px;
+  background-color: #cd7f32;
+}
+.game-end > .player-list > .player {
+  font-size: 55px;
+}
+</style>
+

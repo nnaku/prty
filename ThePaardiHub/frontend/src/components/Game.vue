@@ -1,33 +1,54 @@
 <template>
   <div id="game">
+
+      <!-- dev data for debug -->
+      <!--
       <p>{{body}}</p>
-      <ready v-if="state === 'GAME_READY'" v-bind:body="body"/>
-      <asking v-else-if="state == 'ASKING_QUESTION'" v-bind:body="body"/>
-      <next v-else-if="state == 'CHANING_QUESTION'" v-bind:body="body"/>
-      <end v-else-if="state == 'GAME_FINISHED'" v-bind:body="body"/>
-      <lost v-else/>
+      <div v-for="(key,data,index) in body" :key="index">{{key}} : {{data}}</div>
+      -->
+
+      <!-- waiting players -->
+      <div class="game-ready" v-if="body.state === 'GAME_READY'">
+        <p class="game-status">{{$t('message.waitingPlayers')}}</p>
+      </div>
+
+      <!-- display questions options -->
+      <div class="game-answers-options" v-else-if="body.state == 'ASKING_QUESTION'">
+        <div class="game-answer" :id="index" v-for="(option,index) in body.options":key="index" :disabled="answered">
+          <a v-on:click.once="answer(option)" v-html="option"></a>
+        </div>
+      </div>
+
+      <!-- waiting next question -->
+      <div v-else-if="body.state == 'CHANING_QUESTION'">
+        <p class="game-status">{{$t('message.waitingQuestion')}}</p>
+      </div>
+
+      <!-- game end -->
+      <div class="game-end" v-else-if="body.state == 'GAME_FINISHED'">
+        <p class="game-status">{{$t('message.gameEnd')}}</p>
+      </div>
+
+      <!-- bad game state -->
+      <div class="game-not-found" v-else>
+        <p class="game-status">{{$t('message.noGame')}}</p>
+      </div>
+
+
   </div>
 </template>
 
 <script>
 import SockJS from "sockjs-client";
 import Stomp from "webstomp-client";
-import axios from "axios";
-
-// Game states
-import ready from "./GameStates/GameReady.vue";
-import asking from "./GameStates/AskingQuestion.vue";
-import next from "./GameStates/NextQuestion.vue";
-import end from "./GameStates/GameEnd.vue";
-import lost from "./GameStates/NoGame.vue";
 
 export default {
   name: "game",
   data() {
     return {
       received_messages: {},
+      answered: false,
       body: {},
-      state:"",
       playerInfo: {},
       playerLeave: false,
       send_message: null,
@@ -36,6 +57,10 @@ export default {
     };
   },
   methods: {
+    answer(option) {
+      this.answered = true;
+      this.send(option);
+    },
     send(option) {
       var data = {
         id: this.playerInfo.playerID,
@@ -57,7 +82,7 @@ export default {
         {},
         frame => {
           this.connected = true;
-          this.stompClient.subscribe("/lobby/host/show", tick => {
+          this.stompClient.subscribe(this.playerInfo.sendAddress, tick => {
             this.received_messages = tick;
           });
         },
@@ -90,16 +115,48 @@ export default {
   watch: {
     received_messages: function(data) {
       this.body = JSON.parse(data.body);
-      this.state = this.body.state;
-    },
-
-  },
-  components: {
-    ready,
-    asking,
-    next,
-    end,
-    lost
+    }
   }
 };
 </script>
+
+<style scoped>
+.game-answers-options {
+  width: 80%;
+  margin: 150px auto;
+}
+
+.game-answers-options > .game-answer {
+  display: inline-block;
+    margin: 15px;
+    width: 40%;
+    height: 150px;
+    line-height: 150px;
+}
+
+.game-answers-options > .game-answer > a {
+  font-size: 30px;
+  text-align: center;
+  display: block;
+  height: 100%;
+  line-height: inherit;
+  width: 100%;
+  text-decoration: none;
+}
+
+.game-answers-options > .game-answer:nth-child(1) {
+  background-color: Tomato;
+}
+.game-answers-options > .game-answer:nth-child(2) {
+  background-color: MediumSeaGreen;
+}
+.game-answers-options > .game-answer:nth-child(3) {
+  background-color: Orange;
+}
+.game-answers-options > .game-answer:nth-child(4) {
+  background-color: DodgerBlue;
+}
+.game-answers-options > .game-answer:visited {
+  color: red;
+}
+</style>

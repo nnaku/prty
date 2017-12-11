@@ -7,7 +7,7 @@
   </div>
 </template>
 
-<style>
+<style scoped>
 .appfooter {
   position: fixed;
   bottom: 0;

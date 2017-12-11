@@ -47,7 +47,7 @@ export default new Router({
     }, {
       path: "/lobby/:token",
       name: 'Lobby',
-      meta: { auth: true },
+      //meta: { auth: true },
       component: Lobby
     }, {
       path: "/game/:token",
