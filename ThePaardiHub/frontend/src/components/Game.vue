@@ -48,12 +48,7 @@ export default {
     return {
       received_messages: {},
       answered: false,
-      body: {},
-      playerInfo: {},
-      playerLeave: false,
-      send_message: null,
-      connected: false,
-      erros: []
+      body: {}
     };
   },
   methods: {
@@ -128,10 +123,10 @@ export default {
 
 .game-answers-options > .game-answer {
   display: inline-block;
-    margin: 15px;
-    width: 40%;
-    height: 150px;
-    line-height: 150px;
+  margin: 15px;
+  width: 40%;
+  height: 150px;
+  line-height: 150px;
 }
 
 .game-answers-options > .game-answer > a {

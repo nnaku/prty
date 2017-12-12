@@ -85,7 +85,7 @@ public class Lobby extends Observable implements Runnable {
 		}
 		options.add(current.getCorrect());
 		Collections.shuffle(options);
-		
+
 		AnswerOptionsJSON data = new AnswerOptionsJSON(options, playGame, takeAnswers, timer, state);
 		return data;
 
@@ -117,11 +117,9 @@ public class Lobby extends Observable implements Runnable {
 	public void playGame() {
 		int questionIndex = 0;
 		Collections.shuffle(this.questions);
-
 		while (questionIndex < questions.size()) {
 			state = LobbyState.ASKING_QUESTION;
 			this.current = questions.get(questionIndex);
-
 			timer = 5;
 			setChanged();
 			notifyObservers();
@@ -145,8 +143,8 @@ public class Lobby extends Observable implements Runnable {
 			checkCorrectAndReset();
 			state = LobbyState.CHANING_QUESTION;
 			timer = 2;
-				setChanged();
-				notifyObservers();
+			setChanged();
+			notifyObservers();
 			do {
 
 				synchronized (this) {
@@ -170,7 +168,7 @@ public class Lobby extends Observable implements Runnable {
 		for (String s : players.keySet()) {
 			if (players.get(s).getAnswer().equals("")) {
 				return false;
-				//  ei mittää jarruja ku returni suoraa
+				// ei mittää jarruja ku returni suoraa
 				// retVal = false;
 				// break;
 			}
@@ -193,19 +191,36 @@ public class Lobby extends Observable implements Runnable {
 		while (!terminate) {
 			if (state != LobbyState.GAME_FINISHED) {
 				synchronized (this) {
-					state = LobbyState.GAME_READY;
-				}
-				while (playGame) {
-					playGame();
-					synchronized (this) {
-						state = LobbyState.GAME_FINISHED;
-						playGame = false;
+					try {
+						state = LobbyState.GAME_READY;
 						setChanged();
 						notifyObservers();
+						wait(1000);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
 					}
 				}
+				while (playGame && !terminate) {
+					playGame();
+					synchronized (this) {
+						playGame = false;
+						state = LobbyState.GAME_FINISHED;
+						setChanged();
+						notifyObservers();
+
+					}
+				}
+			} else {
+				// auto close/terminate lobby
+				try {
+					wait(60000);
+					terminate();
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
-			
 		}
 		service.removeLobby(lobbyKey);
 

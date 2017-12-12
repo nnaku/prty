@@ -4,7 +4,7 @@
        <!--
       <p>{{body}}</p>
       -->
-
+      <button @click="refresh()">{{$t('message.refreshLobby')}}</button><button @click="quit()">{{$t('message.closeLobby')}}</button>
       <!-- waiting players -->
       <div class="game-ready" v-if="body.state === 'GAME_READY'">
         <h1>Lobby</h1>
@@ -13,6 +13,7 @@
         <h2 class="game-name">{{body.gameName}}</h2>
         <p class="game-desc">{{body.gameDescription}}</p>
         <p class="game-author">{{body.author}}</p>
+        <button @click="refresh()">{{$t('message.refreshLobby')}}</button>
         <button @click="send()">{{$t('message.startGame')}}</button>
         <ul class="player-list">
           <li class="player" v-for="(player,index) in body.players" :key="index">
@@ -86,6 +87,32 @@ export default {
     };
   },
   methods: {
+    quit() {
+      if (this.stompClient && this.stompClient.connected) {
+        this.stompClient.send(
+          "/prty/game/host",
+          JSON.stringify({
+            startGame: false,
+            getData: true,
+            terminateLobby: true
+          }),
+          {}
+        );
+      }
+    },
+    refresh() {
+      if (this.stompClient && this.stompClient.connected) {
+        this.stompClient.send(
+          "/prty/game/host",
+          JSON.stringify({
+            startGame: false,
+            getData: true,
+            terminateLobby: false
+          }),
+          {}
+        );
+      }
+    },
     send() {
       if (this.stompClient && this.stompClient.connected) {
         this.stompClient.send(
