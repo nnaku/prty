@@ -28,6 +28,13 @@ public class Lobby extends Observable implements Runnable {
 	private LobbyState state;
 	private LobbyService service;
 	private AnswerOptionsJSON anwserOptions;
+	private final int ROUND_TIME = 30;
+	private final int PAUSE_TIME = 10;
+	private final int ANWSER_TIER1 = 250;
+	private final int ANWSER_TIER2 = 100;
+	private final int ANWSER_TIER3 = 50;
+	private final int ANWSER_TIER4 = 25;
+	private final int ANWSER_TIER5 = 10;
 
 	public Lobby(Games gameData, ArrayList<Questions> questions, String lobbyKey, LobbyService service) {
 
@@ -101,7 +108,8 @@ public class Lobby extends Observable implements Runnable {
 
 		LobbyJSON data = new LobbyJSON();
 		data.setAuthor(gameData.getAuthor());
-		data.setnOfQuiz(gameData.getQuestions().length());
+		data.setPauseTime(this.PAUSE_TIME);
+		data.setRoundTime(this.ROUND_TIME);
 		data.setGameName(gameData.getGameName());
 		data.setGameDescription(gameData.getDescription());
 		data.setPlayGame(playGame);
@@ -127,7 +135,7 @@ public class Lobby extends Observable implements Runnable {
 			state = LobbyState.ASKING_QUESTION;
 			this.current = questions.get(questionIndex);
 			generateAnswerOptions();
-			timer = 35;
+			timer = ROUND_TIME;
 			setChanged();
 			notifyObservers();
 			do {
@@ -136,6 +144,8 @@ public class Lobby extends Observable implements Runnable {
 				synchronized (this) {
 					try {
 						wait(1000);
+						setChanged();
+						notifyObservers();
 					} catch (InterruptedException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -152,7 +162,7 @@ public class Lobby extends Observable implements Runnable {
 			checkCorrectAndReset();
 			state = LobbyState.CHANING_QUESTION;
 			this.anwserOptions.setState(state);
-			timer = 15;
+			timer = PAUSE_TIME;
 			setChanged();
 			notifyObservers();
 			do {
@@ -160,6 +170,8 @@ public class Lobby extends Observable implements Runnable {
 				synchronized (this) {
 					try {
 						wait(1000);
+						setChanged();
+						notifyObservers();
 					} catch (InterruptedException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -192,17 +204,23 @@ public class Lobby extends Observable implements Runnable {
 		for (String s : players.keySet()) {
 			if (current.getCorrect().equals(players.get(s).getAnswer())) {
 				if (players.get(s).getAnwserTime() >= 20) {
-					players.get(s).setScore(players.get(s).getScore() + 250);
+					players.get(s).setScore(players.get(s).getScore() + ANWSER_TIER1);
+					players.get(s).setAddedPoints(ANWSER_TIER1);
 
 				} else if (players.get(s).getAnwserTime() >= 15) {
-					players.get(s).setScore(players.get(s).getScore() + 100);
+					players.get(s).setScore(players.get(s).getScore() + ANWSER_TIER2);
+					players.get(s).setAddedPoints(ANWSER_TIER2);
 
 				} else if (players.get(s).getAnwserTime() >= 10) {
-					players.get(s).setScore(players.get(s).getScore() + 50);
+					players.get(s).setScore(players.get(s).getScore() + ANWSER_TIER3);
+					players.get(s).setAddedPoints(ANWSER_TIER3);
 				} else if (players.get(s).getAnwserTime() >= 5) {
-					players.get(s).setScore(players.get(s).getScore() + 25);
+					players.get(s).setScore(players.get(s).getScore() + ANWSER_TIER4);
+					players.get(s).setAddedPoints(ANWSER_TIER4);
+					
 				} else {
-					players.get(s).setScore(players.get(s).getScore() + 10);
+					players.get(s).setScore(players.get(s).getScore() + ANWSER_TIER5);
+					players.get(s).setAddedPoints(ANWSER_TIER5);
 				}
 
 			}
@@ -242,7 +260,7 @@ public class Lobby extends Observable implements Runnable {
 			} else {
 				// auto close/terminate lobby
 				try {
-					wait(60000);
+					wait(30000);
 					terminate();
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
@@ -260,7 +278,7 @@ public class Lobby extends Observable implements Runnable {
 		}
 		if (action.isGetData()) {
 			setChanged();
-			notifyObservers("SomeData");
+			notifyObservers();
 		}
 		if (action.isTerminateLobby()) {
 			terminate();
@@ -274,6 +292,16 @@ public class Lobby extends Observable implements Runnable {
 	public void terminate() {
 		terminate = true;
 		state = LobbyState.TERMINATING_LOBBY;
+		setChanged();
+		notifyObservers();
+		synchronized(this) {
+			try {
+				wait(100);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		this.anwserOptions.setState(state);
 	}
 }

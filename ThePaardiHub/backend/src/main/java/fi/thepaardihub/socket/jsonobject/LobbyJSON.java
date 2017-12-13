@@ -11,7 +11,6 @@ public class LobbyJSON {
 	private String gameName;
 	private String gameDescription;
 	private String question;
-	private int nOfQuiz;
 	private ArrayList<String> options;
 	private ArrayList<Player> players;
 	private String lobbyKey;
@@ -20,23 +19,13 @@ public class LobbyJSON {
 	private boolean takeAnswers;
 	private int timer;
 	private LobbyState state;
+	private int roundTime;
+	private int pauseTime;
 
 	public LobbyJSON() {
 
 	}
 
-	public LobbyJSON(LobbyState state) {
-		this.state = state;
-		options = null;
-		gameName = null;
-		gameDescription = null;
-		players = null;
-		lobbyKey = null;
-		author = null;
-		playGame = false;
-		takeAnswers = false;
-		timer = -404;
-	}
 
 	public String getLobbyKey() {
 		return lobbyKey;
@@ -126,12 +115,17 @@ public class LobbyJSON {
 		this.gameName = gameName;
 	}
 
-	public int getnOfQuiz() {
-		return nOfQuiz;
+	public int getRoundTime() {
+		return roundTime;
 	}
-
-	public void setnOfQuiz(int nOfQuiz) {
-		this.nOfQuiz = nOfQuiz;
+	public void setRoundTime(int roundTime) {
+		this.roundTime = roundTime;
+	}
+	public int getPauseTime() {
+		return pauseTime;
+	}
+	public void setPauseTime(int pauseTime) {
+		this.pauseTime = pauseTime;
 	}
 
 }
