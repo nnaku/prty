@@ -1,0 +1,387 @@
+[
+  {
+    "gameName": "Neitsyt matka",
+    "gameDescription": "testi pelin dessu",
+    "question": "Virgin Trains, Virgin Atlantic and Virgin Racing, are all companies owned by which famous entrepreneur?",
+    "options": [
+      "Alan Sugar",
+      "Bill Gates",
+      "Richard Branson",
+      "Donald Trump"
+    ],
+    "players": [
+      {
+        "name": "Aku",
+        "score": 0,
+        "answer": "",
+        "anwserTime": 0,
+        "addedPoints": 0
+      },
+      {
+        "name": "Mauri",
+        "score": 0,
+        "answer": "",
+        "anwserTime": 0,
+        "addedPoints": 0
+      },
+      {
+        "name": "pekka",
+        "score": 0,
+        "answer": "",
+        "anwserTime": 0,
+        "addedPoints": 0
+      },
+      {
+        "name": "tiina",
+        "score": 0,
+        "answer": "",
+        "anwserTime": 0,
+        "addedPoints": 0
+      },
+      {
+        "name": "maarit",
+        "score": 0,
+        "answer": "",
+        "anwserTime": 0,
+        "addedPoints": 0
+      },
+      {
+        "name": "pelaaja",
+        "score": 0,
+        "answer": "",
+        "anwserTime": 0,
+        "addedPoints": 0
+      },
+      {
+        "name": "matti",
+        "score": 0,
+        "answer": "",
+        "anwserTime": 0,
+        "addedPoints": 0
+      },
+      {
+        "name": "pirkko",
+        "score": 0,
+        "answer": "",
+        "anwserTime": 0,
+        "addedPoints": 0
+      }
+    ],
+    "lobbyKey": "qwerty",
+    "author": "kangasaku@gmail.com",
+    "playGame": false,
+    "takeAnswers": false,
+    "timer": 0,
+    "state": "GAME_READY",
+    "roundTime": 30,
+    "pauseTime": 10
+  },
+  {
+    "gameName": "Neitsyt matka",
+    "gameDescription": "testi pelin dessu",
+    "question": "What is the largest organ of the human body?",
+    "options": [
+      "Heart",
+      "Skin",
+      "Liver",
+      "large Intestine"
+    ],
+    "players": [
+      {
+        "name": "Aku",
+        "score": 0,
+        "answer": "",
+        "anwserTime": 0,
+        "addedPoints": 0
+      },
+      {
+        "name": "Mauri",
+        "score": 0,
+        "answer": "",
+        "anwserTime": 0,
+        "addedPoints": 0
+      },
+      {
+        "name": "pekka",
+        "score": 0,
+        "answer": "",
+        "anwserTime": 0,
+        "addedPoints": 0
+      },
+      {
+        "name": "tiina",
+        "score": 0,
+        "answer": "",
+        "anwserTime": 0,
+        "addedPoints": 0
+      },
+      {
+        "name": "maarit",
+        "score": 0,
+        "answer": "",
+        "anwserTime": 0,
+        "addedPoints": 0
+      },
+      {
+        "name": "pelaaja",
+        "score": 0,
+        "answer": "",
+        "anwserTime": 0,
+        "addedPoints": 0
+      },
+      {
+        "name": "matti",
+        "score": 0,
+        "answer": "",
+        "anwserTime": 0,
+        "addedPoints": 0
+      },
+      {
+        "name": "pirkko",
+        "score": 0,
+        "answer": "",
+        "anwserTime": 0,
+        "addedPoints": 0
+      }
+    ],
+    "lobbyKey": "qwerty",
+    "author": "kangasaku@gmail.com",
+    "playGame": true,
+    "takeAnswers": true,
+    "timer": 25,
+    "state": "ASKING_QUESTION",
+    "roundTime": 30,
+    "pauseTime": 10
+  },
+  {
+    "gameName": "Neitsyt matka",
+    "gameDescription": "testi pelin dessu",
+    "question": "What is the largest organ of the human body?",
+    "options": [
+      "Heart",
+      "Skin",
+      "Liver",
+      "large Intestine"
+    ],
+    "players": [
+      {
+        "name": "Aku",
+        "score": 0,
+        "answer": "",
+        "anwserTime": 0,
+        "addedPoints": 0
+      },
+      {
+        "name": "Mauri",
+        "score": 0,
+        "answer": "",
+        "anwserTime": 0,
+        "addedPoints": 0
+      },
+      {
+        "name": "pekka",
+        "score": 0,
+        "answer": "",
+        "anwserTime": 0,
+        "addedPoints": 0
+      },
+      {
+        "name": "tiina",
+        "score": 0,
+        "answer": "",
+        "anwserTime": 0,
+        "addedPoints": 0
+      },
+      {
+        "name": "maarit",
+        "score": 0,
+        "answer": "",
+        "anwserTime": 0,
+        "addedPoints": 0
+      },
+      {
+        "name": "pelaaja",
+        "score": 0,
+        "answer": "",
+        "anwserTime": 0,
+        "addedPoints": 0
+      },
+      {
+        "name": "matti",
+        "score": 0,
+        "answer": "",
+        "anwserTime": 0,
+        "addedPoints": 0
+      },
+      {
+        "name": "pirkko",
+        "score": 0,
+        "answer": "",
+        "anwserTime": 0,
+        "addedPoints": 0
+      }
+    ],
+    "lobbyKey": "qwerty",
+    "author": "kangasaku@gmail.com",
+    "playGame": true,
+    "takeAnswers": false,
+    "timer": 7,
+    "state": "CHANING_QUESTION",
+    "roundTime": 30,
+    "pauseTime": 10
+  },
+  {
+    "gameName": "Neitsyt matka",
+    "gameDescription": "testi pelin dessu",
+    "question": "What is the world&#039;s most expensive spice by weight?",
+    "options": [
+      "Saffron",
+      "Cinnamon",
+      "Cardamom",
+      "Vanilla"
+    ],
+    "players": [
+      {
+        "name": "Aku",
+        "score": 0,
+        "answer": "",
+        "anwserTime": 0,
+        "addedPoints": 0
+      },
+      {
+        "name": "Mauri",
+        "score": 0,
+        "answer": "",
+        "anwserTime": 0,
+        "addedPoints": 0
+      },
+      {
+        "name": "pekka",
+        "score": 0,
+        "answer": "",
+        "anwserTime": 0,
+        "addedPoints": 0
+      },
+      {
+        "name": "tiina",
+        "score": 0,
+        "answer": "",
+        "anwserTime": 0,
+        "addedPoints": 0
+      },
+      {
+        "name": "maarit",
+        "score": 750,
+        "answer": "",
+        "anwserTime": 0,
+        "addedPoints": 250
+      },
+      {
+        "name": "pelaaja",
+        "score": 0,
+        "answer": "",
+        "anwserTime": 0,
+        "addedPoints": 0
+      },
+      {
+        "name": "matti",
+        "score": 0,
+        "answer": "",
+        "anwserTime": 0,
+        "addedPoints": 0
+      },
+      {
+        "name": "pirkko",
+        "score": 0,
+        "answer": "",
+        "anwserTime": 0,
+        "addedPoints": 0
+      }
+    ],
+    "lobbyKey": "qwerty",
+    "author": "kangasaku@gmail.com",
+    "playGame": false,
+    "takeAnswers": false,
+    "timer": 0,
+    "state": "GAME_FINISHED",
+    "roundTime": 30,
+    "pauseTime": 10
+  },
+  {
+    "gameName": "Neitsyt matka",
+    "gameDescription": "testi pelin dessu",
+    "question": "What is the world&#039;s most expensive spice by weight?",
+    "options": [
+      "Saffron",
+      "Cinnamon",
+      "Cardamom",
+      "Vanilla"
+    ],
+    "players": [
+      {
+        "name": "Aku",
+        "score": 0,
+        "answer": "",
+        "anwserTime": 0,
+        "addedPoints": 0
+      },
+      {
+        "name": "Mauri",
+        "score": 0,
+        "answer": "",
+        "anwserTime": 0,
+        "addedPoints": 0
+      },
+      {
+        "name": "pekka",
+        "score": 0,
+        "answer": "",
+        "anwserTime": 0,
+        "addedPoints": 0
+      },
+      {
+        "name": "tiina",
+        "score": 0,
+        "answer": "",
+        "anwserTime": 0,
+        "addedPoints": 0
+      },
+      {
+        "name": "maarit",
+        "score": 750,
+        "answer": "",
+        "anwserTime": 0,
+        "addedPoints": 250
+      },
+      {
+        "name": "pelaaja",
+        "score": 0,
+        "answer": "",
+        "anwserTime": 0,
+        "addedPoints": 0
+      },
+      {
+        "name": "matti",
+        "score": 0,
+        "answer": "",
+        "anwserTime": 0,
+        "addedPoints": 0
+      },
+      {
+        "name": "pirkko",
+        "score": 0,
+        "answer": "",
+        "anwserTime": 0,
+        "addedPoints": 0
+      }
+    ],
+    "lobbyKey": "qwerty",
+    "author": "kangasaku@gmail.com",
+    "playGame": false,
+    "takeAnswers": false,
+    "timer": 0,
+    "state": "TERMINATING_LOBBY",
+    "roundTime": 30,
+    "pauseTime": 10
+  }
+]

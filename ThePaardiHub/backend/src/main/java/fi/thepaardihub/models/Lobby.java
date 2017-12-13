@@ -137,8 +137,6 @@ public class Lobby extends Observable implements Runnable {
 			this.current = questions.get(questionIndex);
 			generateAnswerOptions();
 			timer = ROUND_TIME;
-			setChanged();
-			notifyObservers();
 			do {
 				setChanged();
 				notifyObservers();
@@ -153,8 +151,6 @@ public class Lobby extends Observable implements Runnable {
 						e.printStackTrace();
 					}
 				}
-				setChanged();
-				notifyObservers();
 			} while ((timer > 0) && !allAnswersGiven());
 
 			takeAnswers = false;
@@ -163,8 +159,6 @@ public class Lobby extends Observable implements Runnable {
 			state = LobbyState.CHANING_QUESTION;
 			this.anwserOptions.setState(state);
 			timer = PAUSE_TIME;
-			setChanged();
-			notifyObservers();
 			do {
 				setChanged();
 				notifyObservers();
@@ -186,7 +180,7 @@ public class Lobby extends Observable implements Runnable {
 
 	private boolean allAnswersGiven() {
 		for (String s : players.keySet()) {
-			if (players.get(s).getAnswer() == null) {
+			if (players.get(s).getAnswer().equals("")) {
 				return false;
 			}
 		}
