@@ -6,8 +6,7 @@ import fi.thepaardihub.models.LobbyState;
 import fi.thepaardihub.models.Player;
 
 public class LobbyJSON {
-	
-	
+
 	private String gameName;
 	private String gameDescription;
 	private String question;
@@ -26,6 +25,9 @@ public class LobbyJSON {
 
 	}
 
+	public LobbyJSON(LobbyState state) {
+		this.state = state;
+	}
 
 	public String getLobbyKey() {
 		return lobbyKey;
@@ -118,12 +120,15 @@ public class LobbyJSON {
 	public int getRoundTime() {
 		return roundTime;
 	}
+
 	public void setRoundTime(int roundTime) {
 		this.roundTime = roundTime;
 	}
+
 	public int getPauseTime() {
 		return pauseTime;
 	}
+
 	public void setPauseTime(int pauseTime) {
 		this.pauseTime = pauseTime;
 	}
