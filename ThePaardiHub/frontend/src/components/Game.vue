@@ -1,12 +1,6 @@
 <template>
   <div id="game">
-
-      <!-- dev data for debug -->
-      <!--
-      <p>{{body}}</p>
-      <div v-for="(key,data,index) in body" :key="index">{{key}} : {{data}}</div>
-      -->
-
+      <div class="fullscreen-button" v-if="!this.$parent.fullscreen"><a  @click="fullScreenOn()">{{$t('message.fullscreenOn')}}</a></div>
       <!-- waiting players -->
       <div class="game-ready" v-if="body.state === 'GAME_READY'">
         <p class="game-status">{{$t('message.waitingPlayers')}}</p>
@@ -14,13 +8,14 @@
 
       <!-- display questions options -->
       <div class="game-answers-options" v-else-if="body.state == 'ASKING_QUESTION'">
-        <div class="game-answer" :id="index" v-for="(option,index) in body.options":key="index" :disabled="answered">
-          <a v-on:click.once="answer(option)" v-html="option"></a>
+        <div class="player-answers" v-if="answered">{{$t('message.yourAnswer')}}</div>
+        <div class="game-answer" v-bind:class="{ answer: !answerId[index] && answered}" :id="'index_'+index" v-for="(option,index) in body.options":key="index" :disabled="answered">
+          <a v-on:click.once="answer(option,index)" v-html="option"></a>
         </div>
       </div>
 
       <!-- waiting next question -->
-      <div v-else-if="body.state == 'CHANING_QUESTION'">
+      <div class="game-wait-answer"v-else-if="body.state == 'CHANING_QUESTION'">
         <p class="game-status">{{$t('message.waitingQuestion')}}</p>
       </div>
 
@@ -33,8 +28,6 @@
       <div class="game-not-found" v-else>
         <p class="game-status">{{$t('message.noGame')}}</p>
       </div>
-
-
   </div>
 </template>
 
@@ -48,12 +41,19 @@ export default {
     return {
       received_messages: {},
       answered: false,
-      body: {}
+      answerId: [false, false, false, false],
+      body: {
+        state: null
+    }
     };
   },
   methods: {
-    answer(option) {
+    fullScreenOn() {
+      this.$parent.fullscreen = true;
+    },
+    answer(option, index) {
       this.answered = true;
+      this.answerId[index] = true;
       this.send(option);
     },
     send(option) {
@@ -106,16 +106,41 @@ export default {
   },
   mounted() {
     this.connect();
+    this.$parent.fullscreen = true;
   },
   watch: {
     received_messages: function(data) {
       this.body = JSON.parse(data.body);
+      if (this.body.state == 'CHANING_QUESTION') {
+        this.answered = false;
+        this.answerId = [false, false, false, false];
+      }
     }
   }
 };
 </script>
 
 <style scoped>
+.game-not-found > .game-status {
+  margin: 200px auto;
+  font-size: 80px;
+}
+
+.answer {
+  display: none !important;
+}
+
+.game-wait-answer,
+.game-ready {
+  max-width: 100%;
+  background-image: url("../images/waiting.gif");
+  background-size: auto;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+  height: 640px;
+}
+
 .game-answers-options {
   width: 80%;
   margin: 150px auto;
@@ -139,19 +164,47 @@ export default {
   text-decoration: none;
 }
 
-.game-answers-options > .game-answer:nth-child(1) {
+.game-answers-options > #index_0 {
   background-color: Tomato;
 }
-.game-answers-options > .game-answer:nth-child(2) {
+.game-answers-options > #index_1 {
   background-color: MediumSeaGreen;
 }
-.game-answers-options > .game-answer:nth-child(3) {
+.game-answers-options > #index_2 {
   background-color: Orange;
 }
-.game-answers-options > .game-answer:nth-child(4) {
+.game-answers-options > #index_3 {
   background-color: DodgerBlue;
 }
-.game-answers-options > .game-answer:visited {
-  color: red;
+
+@media only screen and (max-width: 767px) {
+  #game {
+    width: 100%;
+  }
+  .game-answers-options {
+    margin: 50px 0;
+    width: 100%;
+  }
+
+  .game-answer {
+    width: 75% !important;
+    height: 50px !important;
+    margin: 15px !important;
+    padding: 0px;
+  }
+
+  .game-answer > a {
+    font-size: 1.4em !important;
+    text-align: center;
+    display: block;
+    height: 50px;
+    line-height: 50px !important;
+    width: 100%;
+    text-decoration: none;
+  }
+  .game-not-found > .game-status {
+    margin-top: 150px;
+    font-size: 350%;
+  }
 }
 </style>

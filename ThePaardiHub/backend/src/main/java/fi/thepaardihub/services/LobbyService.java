@@ -49,7 +49,7 @@ public class LobbyService {
 				new Thread(lobbies.get(lobbieKey)).start();
 				HashMap<String, String> retVal = new HashMap<>();
 				retVal.put("sendAddress", "/lobby/host/show");
-				retVal.put("receiveAddress", "prty/game/host");
+				retVal.put("receiveAddress", "/prty/game/host");
 				// { "/lobby/host/show", "prty/game/host" };
 				return retVal;
 			} else {

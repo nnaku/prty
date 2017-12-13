@@ -26,11 +26,11 @@ export default new Router({
       path: '/',
       name: 'Home',
       component: Home
-    }, {
+    }, /*{
       path: '/test',
       name: 'Test',
       component: Test
-    }, {
+    },*/ {
       path: "/about",
       name: 'About',
       component: About
@@ -45,9 +45,9 @@ export default new Router({
       meta: { auth: true },
       component: Games
     }, {
-      path: "/lobby/:token",
+      path: "/lobby",
       name: 'Lobby',
-      //meta: { auth: true },
+      meta: { auth: true },
       component: Lobby
     }, {
       path: "/game/:token",
@@ -60,6 +60,7 @@ export default new Router({
     }, {
       path: "/logout",
       name: 'Logout',
+      meta: { auth: true },
       component: Logout
     }, {
       path: "/register",

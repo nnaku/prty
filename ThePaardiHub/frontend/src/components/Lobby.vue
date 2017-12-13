@@ -1,17 +1,30 @@
 <template>
   <div id="lobby">
+    <div class="fullscreen-button" v-if="!this.$parent.fullscreen"><a  @click="fullScreenOn()">{{$t('message.fullscreenOn')}}</a></div>
       <!-- waiting players -->
       <div class="game-ready" v-if="body.state === 'GAME_READY'">
-        <h1>Lobby</h1>
-        <p class="game-status">{{$t('message.waitingPlayers')}}</p>
-
-        <button @click="send()">{{$t('message.startGame')}}</button>
-        <button @click="quit()">{{$t('message.closeLobby')}}</button>
-        <p>{{$t('message.lobbyKey')}}: {{body.lobbyKey}}</p>
-        
-        <h2 class="game-name">{{body.gameName}}</h2>
+        <h1 class="game-name">{{body.gameName}}</h1>
         <p class="game-desc">{{body.gameDescription}}</p>
-        <p class="game-author">{{$t('message.author')}}: {{body.author}}</p>
+        <table class="game-info">
+          <tr>
+            <td class="left">{{$t('message.gameType')}}</td>
+            <td class="right">Quiz</td>
+          </tr>
+          <tr>
+            <td class="left">{{$t('message.lobbyKey')}}</td>
+            <td class="right">{{body.lobbyKey}}</td>
+          </tr>
+          <tr>
+            <td class="left">{{$t('message.author')}}</td>
+            <td class="right">{{body.author}}</td>
+          </tr>
+        </table>
+        <div class="buttons">
+          <div class="start"><a @click="start()">{{$t('message.startGame')}}</a></div>
+          <div class="close"><a @click="quit()">{{$t('message.closeLobby')}}</a></div>
+        </div>
+        <p class="game-status">{{$t('message.waitingPlayers')}}</p>
+        <p>{{$t('message.playerConnected')}}</p>
         <ul class="player-list-small">
           <li class="player" v-for="(player,index) in body.players" :key="index">
             {{player.name}}
@@ -24,7 +37,7 @@
         <p class="timer">{{body.timer}}</p>
         <p class="timer-text">{{$t('message.timeLeft')}}</p>
         <p class="question" v-html="body.question"></p>
-        <div class="game-answer" :id="index" v-for="(option,index) in body.options":key="index">
+        <div class="game-answer" :id="'index_'+index" v-for="(option,index) in body.options":key="index">
           <p class="colored" v-html="option"></p>
         </div>
       </div>
@@ -44,7 +57,7 @@
       <div class="game-end" v-else-if="body.state == 'GAME_FINISHED'">
         <p class="game-status">{{$t('message.gameEnd')}}</p>
         <ul class="player-list">
-          <li class="player" v-for="(player,score,index) in orderedUsers " :key="index">
+          <li class="player" :id="'index_'+index"  v-for="(player,score,index) in orderedUsers " :key="index">
             {{player.name}} {{player.score}}
           </li>
         </ul>
@@ -60,15 +73,10 @@
 <script>
 import SockJS from "sockjs-client";
 import Stomp from "webstomp-client";
-import axios from "axios";
 var _ = require("lodash");
-import debugData from "../LobbyDebug.json";
 
 export default {
   name: "lobby",
-  props: {
-    token: ""
-  },
   computed: {
     orderedUsers: function() {
       return _.orderBy(this.body.players, "score", "desc");
@@ -76,12 +84,11 @@ export default {
   },
   data() {
     return {
+      receiveAddress: "/prty/game/host",
+      sendAddress: "/lobby/host/show",
       received_messages: {},
-      body: debugData[3],
-      hostCommand: {
-        startGame: true,
-        getData: true,
-        terminateLobby: false
+      body: {
+        state:null
       },
       send_message: null,
       connected: false,
@@ -89,10 +96,13 @@ export default {
     };
   },
   methods: {
+    fullScreenOn() {
+      this.$parent.fullscreen = true;
+    },
     quit() {
       if (this.stompClient && this.stompClient.connected) {
         this.stompClient.send(
-          "/prty/game/host",
+          this.receiveAddress,
           JSON.stringify({
             startGame: false,
             getData: true,
@@ -105,7 +115,7 @@ export default {
     refresh() {
       if (this.stompClient && this.stompClient.connected) {
         this.stompClient.send(
-          "/prty/game/host",
+          this.receiveAddress,
           JSON.stringify({
             startGame: false,
             getData: true,
@@ -115,11 +125,15 @@ export default {
         );
       }
     },
-    send() {
+    start() {
       if (this.stompClient && this.stompClient.connected) {
         this.stompClient.send(
-          "/prty/game/host",
-          JSON.stringify(this.hostCommand),
+          this.receiveAddress,
+          JSON.stringify({
+            startGame: true,
+            getData: true,
+            terminateLobby: false
+          }),
           {}
         );
       }
@@ -131,7 +145,7 @@ export default {
         {},
         frame => {
           this.connected = true;
-          this.stompClient.subscribe("/lobby/host/show", tick => {
+          this.stompClient.subscribe(this.sendAddress, tick => {
             this.received_messages = tick;
           });
         },
@@ -152,16 +166,7 @@ export default {
     }
   },
   mounted() {
-    this.$nextTick(function() {
-      axios
-        .post("/createlobby", { id: "1" })
-        .then(response => {
-          this.errors = [];
-        })
-        .catch(e => {
-          this.errors.push(e);
-        });
-    });
+    this.$parent.fullscreen = true;
     this.connect();
   },
   watch: {
@@ -174,10 +179,32 @@ export default {
 
 <style scoped>
 #lobby {
-  margin: 30px;
+}
+.buttons {
+  margin: 10px auto;
+  width: 45%;
+}
+.start,
+.close {
+  height: 50px;
+  line-height: 50px;
+  width: 47%;
+  cursor: pointer;
 }
 
-.game-not-found > .game-status{
+.start {
+  background-color: MediumSeaGreen;
+  float: left;
+}
+.close {
+  background-color: tomato;
+  float: right;
+}
+.game-ready > .game-status {
+  margin-top: 75px;
+  padding: 0;
+}
+.game-not-found > .game-status {
   margin: 200px auto;
   font-size: 80px;
 }
@@ -188,7 +215,7 @@ export default {
 .game-end,
 .game-not-found {
   width: 80%;
-  margin: 30px auto;
+  margin: 0 auto;
 }
 
 .timer {
@@ -208,32 +235,40 @@ export default {
 
 ul {
   list-style-type: none;
+  padding: 0px;
+}
+.game-info {
+  margin: auto;
+}
+.game-info > tr > td {
+  text-align: left;
+  padding: 5px 10px;
 }
 
-.player-list-small{
+.player-list-small {
   font-size: 30px;
 }
 
-.player-list > .player:nth-child(1) {
+.player-list > #index_0 {
   font-size: 130px;
 }
-.player-list > .player:nth-child(2) {
+.player-list > #index_1 {
   font-size: 90px;
 }
-.player-list > .player:nth-child(3) {
+.player-list > #index_3 {
   font-size: 70px;
 }
 .player-list > .player {
   font-size: 50px;
 }
 
-.game-end > .player-list > .player:nth-child(1) {
+.game-end > .player-list > #index_0 {
   background-color: #d4af37;
 }
-.game-end > .player-list > .player:nth-child(2) {
+.game-end > .player-list > #index_1 {
   background-color: #c0c0c0;
 }
-.game-end > .player-list > .player:nth-child(3) {
+.game-end > .player-list > #index_2 {
   background-color: #cd7f32;
 }
 

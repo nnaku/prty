@@ -1,33 +1,36 @@
 <template>
   <div id="app">
      <!-- Message is from locale/locales.json -->
-    <appHeader/>
-    <button class="changeLanguage"><a v-on:click="changeLanguage()">{{$t('message.language')}}</a></button>
+    <div class="fullscreen-button" v-if="fullscreen" ><a @click="fullScreenOff()">{{$t('message.fullscreenOff')}}</a></div>
+    <appHeader v-if="!fullscreen"/>
     <router-view class="main-container"/>
-    <appFooter/>
+    <appFooter v-if="!fullscreen"/>
   </div>
 </template>
 
 <script>
 import appHeader from "./components/Header";
 import appFooter from "./components/Footer";
-import {i18n} from './main.js';
+
 
 export default {
-  name: "app",
-  methods:{
-    changeLanguage(){
-      if(i18n.locale === "fr"){
-        i18n.locale = 'en'
-      }else{
-        i18n.locale = 'fr'
-      }
+  data() {
+    return {
+      fullscreen: false
+    };
+  },
+  methods: {
+    fullScreenOn() {
+      this.fullscreen = true;
+    },
+    fullScreenOff() {
+      this.fullscreen = false;
     }
   },
-  metaInfo : {
+  metaInfo: {
     meta: [
-      { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1'}
+      { charset: "utf-8" },
+      { name: "viewport", content: "width=device-width, initial-scale=1" }
     ]
   },
   components: {
@@ -44,7 +47,7 @@ body {
   padding: 0;
   height: 100%;
 }
-.main-container{
+.main-container {
   padding-bottom: 50px;
 }
 #app {
@@ -54,20 +57,24 @@ body {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
 }
-.changeLanguage {
-  text-align: right;
-  float: right;
-  height: 2em;
-  background-color: #8DB9B0;
-  font-size: 13px;
-  margin-top: 0.3em;
-  margin-right: 0.3em;
+.fullscreen-button {
+  top: 0;
+  height: 25px;
+  line-height: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: #db6e2d;
+  color: #f2f2f2;
+  border-radius: 0 0 25px 25px;
+  cursor: pointer;
 }
-
 @media only screen and (max-width: 768px) {
-  html,body {
+  html,
+  body {
     font-size: 0.9em;
   }
+
+
 }
 </style>
 

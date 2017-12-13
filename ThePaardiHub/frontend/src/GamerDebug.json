@@ -1,0 +1,57 @@
+[
+    {
+        "playGame": false,
+        "takeAnswer": false,
+        "state": "GAME_READY",
+        "options": [
+            "Alan Sugar",
+            "Richard Branson",
+            "Donald Trump",
+            "Bill Gates"
+        ]
+    },
+    {
+        "playGame": true,
+        "takeAnswer": true,
+        "state": "ASKING_QUESTION",
+        "options": [
+            "Alan Sugar",
+            "Richard Branson",
+            "Donald Trump",
+            "Bill Gates"
+        ]
+    },
+    {
+        "playGame": true,
+        "takeAnswer": false,
+        "state": "CHANING_QUESTION",
+        "options": [
+            "Alan Sugar",
+            "Richard Branson",
+            "Donald Trump",
+            "Bill Gates"
+        ]
+    },
+    {
+        "playGame": true,
+        "takeAnswer": true,
+        "state": "GAME_FINISHED",
+        "options": [
+            "Alan Sugar",
+            "Richard Branson",
+            "Donald Trump",
+            "Bill Gates"
+        ]
+    },
+    {
+        "playGame": true,
+        "takeAnswer": true,
+        "state": "TERMINATING_LOBBY",
+        "options": [
+            "Alan Sugar",
+            "Richard Branson",
+            "Donald Trump",
+            "Bill Gates"
+        ]
+    }
+]

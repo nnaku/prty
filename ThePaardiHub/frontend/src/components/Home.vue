@@ -75,6 +75,11 @@ export default {
   mounted() {
     // if player has played game in 24h hours, app offers last username as default.
     this.username = JSON.parse(this.$cookie.get("playerInfo")).name;
+    if(this.$route.query.token){
+      this.$parent.fullscreen = true;
+      this.token=this.$route.query.token
+    this.validateToken()
+    }
   }
 };
 </script>
@@ -128,9 +133,8 @@ figure {
     margin: 0 auto;
     margin-top: 25px;
     display: block;
-    font-size: 230%;
+    font-size: 150%;
     text-align: center;
-    border: none;
   }
 
   img {

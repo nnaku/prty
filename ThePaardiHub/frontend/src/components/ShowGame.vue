@@ -11,12 +11,13 @@
             <div v-for=" (question, index) in newGame.questions" :key="index" >
                 <p v-html="question.question"/>
             </div>
-            <button @click="editGame()">{{ $t('message.editGame') }}</button>
+            <button @click="createLobby()">{{ $t('message.createLobby') }}</button>
         </div>
     </div>
 </template>
 
 <script>
+import axios from "axios";
 export default {
   name: "showGame",
   props: {
@@ -36,8 +37,16 @@ export default {
     };
   },
   methods: {
-    editGame() {
-      this.$parent.display = "newgame";
+    createLobby() {
+      axios
+        .post("/createlobby", { id: this.game.id })
+        .then(response => {
+          console.log(response.data)
+          this.$router.push("/lobby");
+        })
+        .catch(e => {
+          this.errors.push(e);
+        });
     }
   },
   watch: {
@@ -50,7 +59,9 @@ export default {
       this.axios
         .get("/question?id=" + val.questions)
         .then(response => {
-           this.newGame.questions = JSON.parse(JSON.stringify(response.data.questions));
+          this.newGame.questions = JSON.parse(
+            JSON.stringify(response.data.questions)
+          );
         })
         .catch(e => {
           this.errors.push(e);

@@ -23,8 +23,6 @@ public class RoutesController {
 	"/register",
 	"/test",
 	"/lobby",
-	"/lobby/**",
-	"/game/**",
 	"/game"
 	})
    public String index() {
