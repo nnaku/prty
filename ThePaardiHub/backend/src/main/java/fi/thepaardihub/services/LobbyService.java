@@ -88,6 +88,7 @@ public class LobbyService {
 
 	}
 	public void removeLobby(String key) {
+		socket.removeLobby(lobbies.get(key));
 		lobbies.remove(key);
 		socket.setLobby(null);
 	}

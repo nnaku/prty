@@ -41,10 +41,9 @@ public class LobbySocket implements Observer {
 				try {
 					wait(100);
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				
+
 			}
 			return lobby.getAwnserOptions();
 
@@ -66,7 +65,7 @@ public class LobbySocket implements Observer {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				
+
 			}
 			return lobby.getLobbyData();
 
@@ -88,6 +87,12 @@ public class LobbySocket implements Observer {
 
 		}
 
+	}
+
+	public void removeLobby(Lobby lobby) {
+		if (lobby == this.lobby) {
+			this.lobby.deleteObserver(this);
+		}
 	}
 
 }
