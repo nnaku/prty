@@ -24,12 +24,13 @@ public class Lobby extends Observable implements Runnable {
 	private boolean terminate = false;
 	private boolean playGame = false;
 	private boolean takeAnswers = false;
-	private int timer = 0;
+	private final int ROUND_TIME = 30;
+	private final int PAUSE_TIME = 10;
+	private int timer;
 	private LobbyState state;
 	private LobbyService service;
 	private AnswerOptionsJSON anwserOptions;
-	private final int ROUND_TIME = 30;
-	private final int PAUSE_TIME = 10;
+
 	private final int ANWSER_TIER1 = 250;
 	private final int ANWSER_TIER2 = 100;
 	private final int ANWSER_TIER3 = 50;
@@ -139,22 +140,21 @@ public class Lobby extends Observable implements Runnable {
 			setChanged();
 			notifyObservers();
 			do {
+				setChanged();
+				notifyObservers();
 				takeAnswers = true;
 				this.anwserOptions.setTakeAnswer(takeAnswers);
 				synchronized (this) {
 					try {
+						timer--;
 						wait(1000);
-						setChanged();
-						notifyObservers();
 					} catch (InterruptedException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}
-				timer--;
-				// setChanged();
-				// notifyObservers();
-
+				setChanged();
+				notifyObservers();
 			} while ((timer > 0) && !allAnswersGiven());
 
 			takeAnswers = false;
@@ -166,18 +166,17 @@ public class Lobby extends Observable implements Runnable {
 			setChanged();
 			notifyObservers();
 			do {
-
+				setChanged();
+				notifyObservers();
 				synchronized (this) {
 					try {
+						timer--;
 						wait(1000);
-						setChanged();
-						notifyObservers();
 					} catch (InterruptedException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}
-				timer--;
 			} while ((timer > 0));
 
 			questionIndex++;
@@ -186,17 +185,12 @@ public class Lobby extends Observable implements Runnable {
 	}
 
 	private boolean allAnswersGiven() {
-		boolean retVal = true;
 		for (String s : players.keySet()) {
-			if (players.get(s).getAnswer().equals("")) {
+			if (players.get(s).getAnswer() == null) {
 				return false;
-				// ei mittää jarruja ku returni suoraa
-				// retVal = false;
-				// break;
 			}
 		}
-		return retVal;
-
+		return true;
 	}
 
 	private void checkCorrectAndReset() {
