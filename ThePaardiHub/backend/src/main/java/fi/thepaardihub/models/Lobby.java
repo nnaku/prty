@@ -147,32 +147,32 @@ public class Lobby extends Observable implements Runnable {
 						timer--;
 						wait(1000);
 					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}
 			} while ((timer > 0) && !allAnswersGiven());
-
-			takeAnswers = false;
-			this.anwserOptions.setTakeAnswer(takeAnswers);
-			checkCorrectAndReset();
-			state = LobbyState.CHANING_QUESTION;
-			this.anwserOptions.setState(state);
-			timer = PAUSE_TIME;
-			do {
+			if (questionIndex < questions.size() - 1) {
+				takeAnswers = false;
+				this.anwserOptions.setTakeAnswer(takeAnswers);
+				checkCorrectAndReset();
+				state = LobbyState.CHANING_QUESTION;
+				this.anwserOptions.setState(state);
+				timer = PAUSE_TIME;
 				setChanged();
 				notifyObservers();
-				synchronized (this) {
-					try {
-						timer--;
-						wait(1000);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+				do {
+					setChanged();
+					notifyObservers();
+					synchronized (this) {
+						try {
+							timer--;
+							wait(1000);
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
 					}
-				}
-			} while ((timer > 0));
-
+				} while ((timer > 0));
+			}
 			questionIndex++;
 
 		}
@@ -205,7 +205,7 @@ public class Lobby extends Observable implements Runnable {
 				} else if (players.get(s).getAnwserTime() >= 5) {
 					players.get(s).setScore(players.get(s).getScore() + ANWSER_TIER4);
 					players.get(s).setAddedPoints(ANWSER_TIER4);
-					
+
 				} else {
 					players.get(s).setScore(players.get(s).getScore() + ANWSER_TIER5);
 					players.get(s).setAddedPoints(ANWSER_TIER5);
@@ -230,7 +230,6 @@ public class Lobby extends Observable implements Runnable {
 						notifyObservers();
 						wait(1000);
 					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}
@@ -251,13 +250,11 @@ public class Lobby extends Observable implements Runnable {
 					wait(30000);
 					terminate();
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
 		}
 		service.removeLobby(lobbyKey);
-
 	}
 
 	public void hostAction(HostAction action) {
@@ -282,11 +279,10 @@ public class Lobby extends Observable implements Runnable {
 		state = LobbyState.TERMINATING_LOBBY;
 		setChanged();
 		notifyObservers();
-		synchronized(this) {
+		synchronized (this) {
 			try {
 				wait(100);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
