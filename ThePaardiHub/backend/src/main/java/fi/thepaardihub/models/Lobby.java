@@ -137,8 +137,7 @@ public class Lobby extends Observable implements Runnable {
 			this.current = questions.get(questionIndex);
 			generateAnswerOptions();
 			timer = ROUND_TIME;
-			setChanged();
-			notifyObservers();
+
 			do {
 				setChanged();
 				notifyObservers();
@@ -153,32 +152,31 @@ public class Lobby extends Observable implements Runnable {
 						e.printStackTrace();
 					}
 				}
-				setChanged();
-				notifyObservers();
+
 			} while ((timer > 0) && !allAnswersGiven());
-
-			takeAnswers = false;
-			this.anwserOptions.setTakeAnswer(takeAnswers);
-			checkCorrectAndReset();
-			state = LobbyState.CHANING_QUESTION;
-			this.anwserOptions.setState(state);
-			timer = PAUSE_TIME;
-			setChanged();
-			notifyObservers();
-			do {
+			if (questionIndex < questions.size() - 1) {
+				takeAnswers = false;
+				this.anwserOptions.setTakeAnswer(takeAnswers);
+				checkCorrectAndReset();
+				state = LobbyState.CHANING_QUESTION;
+				this.anwserOptions.setState(state);
+				timer = PAUSE_TIME;
 				setChanged();
 				notifyObservers();
-				synchronized (this) {
-					try {
-						timer--;
-						wait(1000);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+				do {
+					setChanged();
+					notifyObservers();
+					synchronized (this) {
+						try {
+							timer--;
+							wait(1000);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 					}
-				}
-			} while ((timer > 0));
-
+				} while ((timer > 0));
+			}
 			questionIndex++;
 
 		}
@@ -211,7 +209,7 @@ public class Lobby extends Observable implements Runnable {
 				} else if (players.get(s).getAnwserTime() >= 5) {
 					players.get(s).setScore(players.get(s).getScore() + ANWSER_TIER4);
 					players.get(s).setAddedPoints(ANWSER_TIER4);
-					
+
 				} else {
 					players.get(s).setScore(players.get(s).getScore() + ANWSER_TIER5);
 					players.get(s).setAddedPoints(ANWSER_TIER5);
@@ -288,7 +286,7 @@ public class Lobby extends Observable implements Runnable {
 		state = LobbyState.TERMINATING_LOBBY;
 		setChanged();
 		notifyObservers();
-		synchronized(this) {
+		synchronized (this) {
 			try {
 				wait(100);
 			} catch (InterruptedException e) {
