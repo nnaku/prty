@@ -16,7 +16,6 @@ import fi.thepaardihub.socket.jsonobject.HostAction;
 import fi.thepaardihub.socket.jsonobject.LobbyJSON;
 import fi.thepaardihub.socket.jsonobject.PlayerInfo;
 
-
 @Controller
 public class LobbySocket implements Observer {
 
@@ -36,12 +35,19 @@ public class LobbySocket implements Observer {
 	public AnswerOptionsJSON setAnswer(PlayerInfo player) {
 
 		if (lobby != null) {
-			if (player.getId().equals("internal")) {
-				return lobby.getAwnserOptions();
-			} else {
-				lobby.setAnswer(player);
-				return lobby.getAwnserOptions();
+
+			lobby.setAnswer(player);
+			synchronized (this) {
+				try {
+					wait(100);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
 			}
+			return lobby.getAwnserOptions();
+
 		} else {
 			return new AnswerOptionsJSON(LobbyState.LOBBY_NULL);
 		}
@@ -51,12 +57,19 @@ public class LobbySocket implements Observer {
 	@MessageMapping("/game/host")
 	public LobbyJSON hostAction(HostAction action) {
 		if (lobby != null) {
-			if (action.isInternal()) {
-				return lobby.getLobbyData();
-			} else {
-				lobby.hostAction(action);
-				return lobby.getLobbyData();
+
+			lobby.hostAction(action);
+			synchronized (this) {
+				try {
+					wait(100);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
 			}
+			return lobby.getLobbyData();
+
 		} else {
 			return new LobbyJSON(LobbyState.LOBBY_NULL);
 		}
