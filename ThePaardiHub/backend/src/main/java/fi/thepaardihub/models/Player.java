@@ -5,6 +5,7 @@ public class Player {
 	private String name;
 	private int score;
 	private String answer;
+	private int anwserTime = 0;
 
 	public Player() {
 		name = "unknown";
@@ -40,5 +41,12 @@ public class Player {
 	public void setAnswer(String answer) {
 		this.answer = answer;
 	}
+	public int getAnwserTime() {
+		return anwserTime;
+	}
+	public void setAnwserTime(int anwserTime) {
+		this.anwserTime = anwserTime;
+	}
+	
 
 }

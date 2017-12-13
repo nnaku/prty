@@ -6,10 +6,6 @@ import fi.thepaardihub.models.LobbyState;
 
 public class AnswerOptionsJSON {
 
-	// private String option1;
-	// private String option2;
-	// private String option3;
-	// private String option4;
 	private boolean playGame;
 	private boolean takeAnswer;
 	private LobbyState state;
@@ -17,10 +13,6 @@ public class AnswerOptionsJSON {
 
 	public AnswerOptionsJSON(LobbyState state) {
 		this.state = state;
-		// option1 = null;
-		// option2 = null;
-		// option3 = null;
-		// option4 = null;
 		this.playGame = false;
 		this.takeAnswer = false;
 	}
@@ -53,6 +45,22 @@ public class AnswerOptionsJSON {
 
 	public ArrayList<String> getOptions() {
 		return options;
+	}
+
+	public void setPlayGame(boolean playGame) {
+		this.playGame = playGame;
+	}
+
+	public void setTakeAnswer(boolean takeAnswer) {
+		this.takeAnswer = takeAnswer;
+	}
+
+	public void setState(LobbyState state) {
+		this.state = state;
+	}
+
+	public void setOptions(ArrayList<String> options) {
+		this.options = options;
 	}
 	
 

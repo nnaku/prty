@@ -27,6 +27,7 @@ public class Lobby extends Observable implements Runnable {
 	private int timer = 0;
 	private LobbyState state;
 	private LobbyService service;
+	private AnswerOptionsJSON anwserOptions;
 
 	public Lobby(Games gameData, ArrayList<Questions> questions, String lobbyKey, LobbyService service) {
 
@@ -35,6 +36,7 @@ public class Lobby extends Observable implements Runnable {
 		this.questions = questions;
 		this.current = questions.get(0);
 		this.lobbyKey = lobbyKey;
+		generateAnswerOptions();
 		players = new HashMap<String, Player>();
 	}
 
@@ -43,6 +45,7 @@ public class Lobby extends Observable implements Runnable {
 
 			if (players.containsKey(player.getId()) && takeAnswers) {
 				players.get(player.getId()).setAnswer(player.getAnswer());
+				players.get(player.getId()).setAnwserTime(timer);
 			}
 		} else {
 			removePlayer(player.getId());
@@ -67,6 +70,10 @@ public class Lobby extends Observable implements Runnable {
 	}
 
 	public synchronized AnswerOptionsJSON getAwnserOptions() {
+		return this.anwserOptions;
+	}
+
+	private void generateAnswerOptions() {
 
 		ArrayList<String> options = new ArrayList<>();
 
@@ -86,8 +93,7 @@ public class Lobby extends Observable implements Runnable {
 		options.add(current.getCorrect());
 		Collections.shuffle(options);
 
-		AnswerOptionsJSON data = new AnswerOptionsJSON(options, playGame, takeAnswers, timer, state);
-		return data;
+		this.anwserOptions = new AnswerOptionsJSON(options, playGame, takeAnswers, timer, state);
 
 	}
 
@@ -120,11 +126,13 @@ public class Lobby extends Observable implements Runnable {
 		while (questionIndex < questions.size()) {
 			state = LobbyState.ASKING_QUESTION;
 			this.current = questions.get(questionIndex);
-			timer = 5;
+			generateAnswerOptions();
+			timer = 35;
 			setChanged();
 			notifyObservers();
 			do {
 				takeAnswers = true;
+				this.anwserOptions.setTakeAnswer(takeAnswers);
 				synchronized (this) {
 					try {
 						wait(1000);
@@ -140,9 +148,11 @@ public class Lobby extends Observable implements Runnable {
 			} while ((timer > 0) && !allAnswersGiven());
 
 			takeAnswers = false;
+			this.anwserOptions.setTakeAnswer(takeAnswers);
 			checkCorrectAndReset();
 			state = LobbyState.CHANING_QUESTION;
-			timer = 2;
+			this.anwserOptions.setState(state);
+			timer = 15;
 			setChanged();
 			notifyObservers();
 			do {
@@ -178,11 +188,27 @@ public class Lobby extends Observable implements Runnable {
 	}
 
 	private void checkCorrectAndReset() {
+
 		for (String s : players.keySet()) {
 			if (current.getCorrect().equals(players.get(s).getAnswer())) {
-				players.get(s).setScore(players.get(s).getScore() + 10);
+				if (players.get(s).getAnwserTime() >= 20) {
+					players.get(s).setScore(players.get(s).getScore() + 250);
+
+				} else if (players.get(s).getAnwserTime() >= 15) {
+					players.get(s).setScore(players.get(s).getScore() + 100);
+
+				} else if (players.get(s).getAnwserTime() >= 10) {
+					players.get(s).setScore(players.get(s).getScore() + 50);
+				} else if (players.get(s).getAnwserTime() >= 5) {
+					players.get(s).setScore(players.get(s).getScore() + 25);
+				} else {
+					players.get(s).setScore(players.get(s).getScore() + 10);
+				}
+
 			}
+			players.get(s).setAnwserTime(0);
 			players.get(s).setAnswer("");
+
 		}
 	}
 
@@ -193,6 +219,7 @@ public class Lobby extends Observable implements Runnable {
 				synchronized (this) {
 					try {
 						state = LobbyState.GAME_READY;
+						this.anwserOptions.setState(state);
 						setChanged();
 						notifyObservers();
 						wait(1000);
@@ -201,11 +228,12 @@ public class Lobby extends Observable implements Runnable {
 						e.printStackTrace();
 					}
 				}
-				while (playGame && !terminate) {
+				while (playGame) {
 					playGame();
 					synchronized (this) {
 						playGame = false;
 						state = LobbyState.GAME_FINISHED;
+						this.anwserOptions.setState(state);
 						setChanged();
 						notifyObservers();
 
@@ -246,5 +274,6 @@ public class Lobby extends Observable implements Runnable {
 	public void terminate() {
 		terminate = true;
 		state = LobbyState.TERMINATING_LOBBY;
+		this.anwserOptions.setState(state);
 	}
 }
