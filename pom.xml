@@ -16,8 +16,8 @@
 	</parent>
 
 	<modules>
-		<module>backend</module>
 		<module>frontend</module>
+		<module>backend</module>
 	</modules>
 	<properties>
 		<main.basedir>${project.basedir}</main.basedir>
