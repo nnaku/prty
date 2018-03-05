@@ -1,18 +1,13 @@
+/prty/.settings
+/prty/.classpath
+/prty/.project
 
-
-/ThePaardiHub/.settings
-/ThePaardiHub/.classpath
-/ThePaardiHub/.project
-
-/ThePaardihub/frontend/.settings
-/ThePaardiHub/frontend/.classpath
-/ThePaardiHub/frontend/.project
-/ThePaardiHub/backend/.settings
-/ThePaardiHub/backend/.classpath
-/ThePaardiHub/backend/.project
-public/
-
-
+/prty/frontend/.settings
+/prty/frontend/.classpath
+/prty/frontend/.project
+/prty/backend/.settings
+/prty/backend/.classpath
+/prty/backend/.project
 
 #Java
 # Compiled class file

@@ -14,7 +14,6 @@ import fi.prty.security.Password;
 public class UsersDao {
 
     private UserAccountsRepository userAccRepo;
-    private Password password;
     private UserRolesRepository userRolesRepo;
 
     @Autowired
