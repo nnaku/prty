@@ -23,6 +23,7 @@ public class UserService {
 	public UserService(UsersDao usersDao) {
 		this.users = usersDao;
 		this.passwordTools = new Password();
+		sample();
 	}
 
 	/**

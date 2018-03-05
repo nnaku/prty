@@ -29,7 +29,7 @@ public class Games {
 		this.gameName = gameName;
 		this.isPrivate = isPrivate;
 		this.questions = questions;
-                this.description = description;
+        this.description = description;
 	}
 	public int getId() {
 		return id;

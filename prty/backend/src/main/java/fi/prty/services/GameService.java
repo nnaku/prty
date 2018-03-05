@@ -17,6 +17,7 @@ public class GameService {
   
     public GameService(GamesDao gamesdao) {
         this.gamesdao = gamesdao;
+        sample();
     }
 
 	// Games
@@ -84,12 +85,26 @@ public class GameService {
 			add.setFalse6(wrong[5]);
 			add.setFalse7(wrong[6]);
 			add.setPrivate(privat);
-			return gamesdao.saveOrUpdateAccount(add);
+			return gamesdao.saveOrUpdateQuestion(add);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return null;
 
+	}
+	
+	private void sample() {
+		try {
+			createQuestion("admin@prty.fi", "Which sorting algorithm has an upper bound of O(n lg n)?", "Merge Sort", new String[] {"Bubble Sort","Insertion Sort","Quicksort",null,null,null,null}, false);
+			createQuestion("admin@prty.fi", "What is the worst case running time for finding an element in a Splay Tree?", "O(n)", new String[] {"O(n^2)","O(lg n)","O(n lg n)",null,null,null,null}, false);
+			createQuestion("admin@prty.fi", "0xb - 0xe + 0xd?", "0xa", new String[] {"0xb","0xc","0xd",null,null,null,null}, false);
+			createQuestion("admin@prty.fi", "Which operation takes more than O(1) time with the Hash Table data structure?", "Sort", new String[] {"Search","Inser","Delete",null,null,null,null}, false);
+			createQuestion("admin@prty.fi", "What was Java called before it was Java?", "Oak", new String[] {"Maple","Snoo","C++ 2.0",null,null,null,null}, false);
+			createGame("admin@prty.fi", "1st Game", false, "1;2;3;4;5", "Just a little test game");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }

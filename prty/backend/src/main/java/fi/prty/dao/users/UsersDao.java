@@ -18,7 +18,6 @@ public class UsersDao {
 
     @Autowired
     public UsersDao(UserAccountsRepository userAccRepo, UserRolesRepository userRolesRepo) {
-        this.password = new Password();
         this.userAccRepo = userAccRepo;
         this.userRolesRepo = userRolesRepo;
     }

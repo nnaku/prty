@@ -73,7 +73,7 @@ public class GamesDao {
 
 
 
-	public Questions saveOrUpdateAccount(Questions add) {
+	public Questions saveOrUpdateQuestion(Questions add) {
 		return quizRepo.save(add);
 	}
 

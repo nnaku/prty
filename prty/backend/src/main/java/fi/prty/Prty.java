@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 @SpringBootApplication
-public class ThePaardiHub {
+public class Prty {
 	
 	/**
 	 * root mapping
@@ -21,7 +21,7 @@ public class ThePaardiHub {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		SpringApplication.run(ThePaardiHub.class, args);
+		SpringApplication.run(Prty.class, args);
 	}
 	
 }
