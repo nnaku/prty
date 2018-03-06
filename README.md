@@ -5,7 +5,7 @@ Prty was an school project, and development is discontinue.  The project runs on
 ### Requirements
 * Maven
 * Java
-* Node.js
+* Node.js ?
 * SQL Database
 
 ### Prerequisites
@@ -27,7 +27,7 @@ Environment variable [instructions](http://google.com "instructions") here
 cd backend
 mvn spring-boot:run
 ```
-app runs is [localhost:8080](http://localhost:8080/ "localhost:8080")
+app runs at [localhost:8080](http://localhost:8080/ "localhost:8080")
 
 ###### Login with default user credentials
 -u admin@prty.fi
