@@ -12,6 +12,7 @@
   "dependencies": {
     "@websanova/vue-auth": "^2.20.4-beta",
     "axios": "^0.17.1",
+    "dev-server": "0.0.2",
     "lodash": "^4.17.4",
     "sockjs-client": "^1.1.4",
     "vue": "^2.5.2",
@@ -70,5 +71,7 @@
     "> 1%",
     "last 2 versions",
     "not ie <= 8"
-  ]
+  ],
+  "main": ".postcssrc.js",
+  "license": "ISC"
 }
