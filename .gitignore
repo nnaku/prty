@@ -1,13 +1,13 @@
-/prty/.settings
-/prty/.classpath
-/prty/.project
+/.settings
+/.classpath
+/.project
 
-/prty/frontend/.settings
-/prty/frontend/.classpath
-/prty/frontend/.project
-/prty/backend/.settings
-/prty/backend/.classpath
-/prty/backend/.project
+/frontend/.settings
+/frontend/.classpath
+/frontend/.project
+/backend/.settings
+/backend/.classpath
+/backend/.project
 
 #Java
 # Compiled class file
@@ -153,7 +153,6 @@ target
 *.iws
 .classpath
 dependency-reduced-pom.xml
-build
 .classpath
 .project
 .settings
