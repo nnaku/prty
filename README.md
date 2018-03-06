@@ -1,99 +1,50 @@
-### Requirement
-* Maven 3.5
-* JDK 1.7
-* Node.js
-* MySql
-
-### Frameworks 
-* Spring-Boot
-* Vue.js
-* Bootstrap
-
-
 # Project Title
+Prty is a school project, and development is discontinue.  Prty runs on Java VM with Spring-boot and frontend uses Vue.ja framework.
 
-prty is an school project
-
-## Getting Started
-
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+------------
+### Requirements
+* Maven
+* Java
+* Node.js
+* SQL Database
 
 ### Prerequisites
+Install at least what is listed on *requirements*
 
-What things you need to install the software and how to install them
-
+##### Create database and user
 ```
-Give examples
-```
-
-### Installing
-
-A step by step series of examples that tell you have to get a development env running
-
-Say what the step will be
-
-```
-Give the example
+CREATE DATABASE prty;
+CREATE USER 'prty'@'localhost' IDENTIFIED BY 'password';
+GRANT ALL PRIVILEGES ON prty . * TO 'prty'@'localhost';
+FLUSH PRIVILEGES;
 ```
 
-And repeat
+------------
 
+##### Set JAVA_HOME
+Environment variable [instructions](http://google.com "instructions") here
+
+
+### Run it
 ```
-until finished
+cd backend
+mvn spring-boot:run
 ```
+app runs is [localhost:8080](http://localhost:8080/ "localhost:8080")
 
-End with an example of getting some data out of the system or using it for a little demo
+###### Login with default user credentials
+-u admin@prty.fi
+-p AdminSecr3t!
 
-## Running the tests
+##### Build it
+Not going happen atm :cry:
 
-Explain how to run the automated tests for this system
-
-### Break down into end to end tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-### And coding style tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-## Deployment
-
-Add additional notes about how to deploy this on a live system
-
-## Built With
-
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
-
-## Contributing
-
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
-
-## Versioning
-
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
-
-## Authors
-
-* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
-
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+# Authors
+**Aku Kangas** - [Github](https://github.com/nnaku "Github")
+**Matti Holopainen** - [Github](https://github.com/MattiJH "Github")
+**Tiina Ojala** - [Github](https://github.com/Tiunu "Github")
+**Maarit Saariniemi** - [Github](http://https://github.com/maaritti "Github")
 
 ## Acknowledgments
 
-* Hat tip to anyone who's code was used
-* Inspiration
-* etc
+**We were in a hurry and it is also visible**
