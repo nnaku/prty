@@ -31,6 +31,7 @@ app runs is [localhost:8080](http://localhost:8080/ "localhost:8080")
 
 ###### Login with default user credentials
 -u admin@prty.fi
+
 -p AdminSecr3t!
 
 ##### Build it
