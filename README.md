@@ -1,4 +1,4 @@
-# Project Title
+# PRTY
 Prty was an school project, and development is discontinue.  The project runs on JVM with Spring-boot and frontend is povered by Vue.js framework.
 
 ------------
