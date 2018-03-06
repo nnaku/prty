@@ -1,5 +1,5 @@
 # Project Title
-Prty is a school project, and development is discontinue.  Prty runs on Java VM with Spring-boot and frontend uses Vue.ja framework.
+Prty was an school project, and development is discontinue.  The project runs on JVM with Spring-boot and frontend is povered by Vue.js framework.
 
 ------------
 ### Requirements
@@ -23,7 +23,6 @@ FLUSH PRIVILEGES;
 
 ##### Set JAVA_HOME
 Environment variable [instructions](http://google.com "instructions") here
-
 
 ### Run it
 ```
