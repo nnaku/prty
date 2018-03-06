@@ -44,6 +44,7 @@ Other players can join by giving lobby token "qwerty" and name, from web root.
 Start a game.
 
 Its a bit tricky, because its unfinished. :cry:
+
 ------------
 # Authors
 **Aku Kangas** - [Github](https://github.com/nnaku "Github")
