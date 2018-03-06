@@ -38,11 +38,27 @@ app runs is [localhost:8080](http://localhost:8080/ "localhost:8080")
 ##### Build it
 Not going happen atm :cry:
 
+## How to play
+Login, select game and start an lobby.
+
+Other player can join with their pda, just give a lobby token and username on web root ```/```
+
+Start a game.
+
+Its a bit tricky, because its unfinished. :cry:
+
+
+
+
 # Authors
 **Aku Kangas** - [Github](https://github.com/nnaku "Github")
+
 **Matti Holopainen** - [Github](https://github.com/MattiJH "Github")
+
 **Tiina Ojala** - [Github](https://github.com/Tiunu "Github")
+
 **Maarit Saariniemi** - [Github](http://https://github.com/maaritti "Github")
+
 
 ## Acknowledgments
 
