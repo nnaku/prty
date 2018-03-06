@@ -19,8 +19,6 @@ GRANT ALL PRIVILEGES ON prty . * TO 'prty'@'localhost';
 FLUSH PRIVILEGES;
 ```
 
-------------
-
 ##### Set JAVA_HOME
 Environment variable [instructions](http://google.com "instructions") here
 
@@ -46,7 +44,7 @@ Other players can join by giving lobby token "qwerty" and name, from web root.
 Start a game.
 
 Its a bit tricky, because its unfinished. :cry:
-
+------------
 # Authors
 **Aku Kangas** - [Github](https://github.com/nnaku "Github")
 
