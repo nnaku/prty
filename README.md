@@ -45,6 +45,8 @@ Start a game.
 
 Its a bit tricky, because its unfinished. :cry:
 
+Do not hesitate to reboot jvm again
+
 ------------
 # Authors
 **Aku Kangas** - [Github](https://github.com/nnaku "Github")
