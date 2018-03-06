@@ -41,7 +41,7 @@ Not going happen atm :cry:
 ## How to play
 Login, select game and start an lobby.
 
-Other player can join with their pda, just give a lobby token and username on web root ```/```
+Other players can join by giving lobby token "qwerty" and name, from web root.
 
 Start a game.
 
